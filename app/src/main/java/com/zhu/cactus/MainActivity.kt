@@ -1,6 +1,4 @@
 package com.zhu.cactus
-
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -37,9 +35,11 @@ class MainActivity : AppCompatActivity() {
             .addAction(R.drawable.icon_cactus_small, "Pause", pendingIntent) // #1
 //            .addAction(R.drawable.ic_next, "Next", nextPendingIntent) // #2
             // Apply the media style template
-            .setStyle(MediaNotificationCompat.MediaStyle()
+            .setStyle(
+                androidx.media.app.NotificationCompat.MediaStyle()
                 .setShowActionsInCompactView(1 /* #1: pause button \*/)
-                .setMediaSession(mediaSession.getSessionToken()))
+//                .setMediaSession(mediaSession.getSessionToken())
+            )
             .setContentTitle("Wonderful music")
             .setContentText("My Awesome Band")
             .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.raw.d))
