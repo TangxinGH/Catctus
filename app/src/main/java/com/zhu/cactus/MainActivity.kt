@@ -19,37 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val pendingIntent =
-            PendingIntent.getActivity(this, 0, Intent().apply {
-                setClass(this@MainActivity, MainActivity::class.java)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }, PendingIntent.FLAG_UPDATE_CURRENT)
-
-//        请注意，NotificationCompat.Builder 构造函数要求您提供渠道 ID。这是兼容 Android 8.0（API 级别 26）及更高版本所必需的，但会被较旧版本忽略。
-        var builder = NotificationCompat.Builder(this,CHANNEL_ID )
-            .setSmallIcon(R.drawable.icon_cactus_small)
-            // Show controls on lock screen even when user hides sensitive content.
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            // Add media control buttons that invoke intents in your media service
-            .addAction(R.drawable.icon_cactus_small, "Previous", pendingIntent) // #0
-            .addAction(R.drawable.icon_cactus_small, "Pause", pendingIntent) // #1
-//            .addAction(R.drawable.ic_next, "Next", nextPendingIntent) // #2
-            // Apply the media style template
-            .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(1 /* #1: pause button \*/)
-//                .setMediaSession(mediaSession.getSessionToken())
-            )
-            .setContentTitle("Wonderful music")
-            .setContentText("My Awesome Band")
-            .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.raw.d))
-
-        createNotificationChannel()
-        with(NotificationManagerCompat.from(this)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(45, builder.build())
-        }
-
+        showNotifcation()//通知
 //        //储存当前用户
 //        var sharedPref = getSharedPreferences(
 //            getString(R.string.preference_user_key), Context.MODE_PRIVATE
@@ -72,7 +42,39 @@ class MainActivity : AppCompatActivity() {
 //            loop  用findviewid 有loop 问题
         })
     }
+    fun  showNotifcation(){
+        val pendingIntent =
+            PendingIntent.getActivity(this, 0, Intent().apply {
+                setClass(this@MainActivity, MainActivity::class.java)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }, PendingIntent.FLAG_UPDATE_CURRENT)
 
+//        请注意，NotificationCompat.Builder 构造函数要求您提供渠道 ID。这是兼容 Android 8.0（API 级别 26）及更高版本所必需的，但会被较旧版本忽略。
+        var builder = NotificationCompat.Builder(this,CHANNEL_ID )
+            .setSmallIcon(R.drawable.icon_cactus_small)
+            // Show controls on lock screen even when user hides sensitive content.
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            // Add media control buttons that invoke intents in your media service
+//            .addAction(R.drawable.icon_cactus_small, "Previous", pendingIntent) // #0
+//            .addAction(R.drawable.icon_cactus_small, "Pause", pendingIntent) // #1
+//            .addAction(R.drawable.ic_next, "Next", nextPendingIntent) // #2
+            // Apply the media style template
+            .setStyle( //见官网  https://developer.android.com/training/notify-user/expanded
+                androidx.media.app.NotificationCompat.MediaStyle()
+//                    .setShowActionsInCompactView(1 /* #1: pause button \*/)
+//                .setMediaSession(mediaSession.getSessionToken())
+            )
+            .setContentTitle("Wonderful music")
+            .setContentText("My Awesome Band")
+            .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.raw.d))
+
+        createNotificationChannel()
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(45, builder.build())
+        }
+
+    }
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
