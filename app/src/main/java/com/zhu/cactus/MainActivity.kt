@@ -1,4 +1,5 @@
 package com.zhu.cactus
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -11,40 +12,63 @@ import android.widget.RemoteViews
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.norbsoft.typefacehelper.TypefaceHelper
+import com.zhu.cactus.method.MainListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_drawer.*
+
 class MainActivity : AppCompatActivity() {
-    companion object var CHANNEL_ID = "12"
+    companion object
+
+    var CHANNEL_ID = "12"
+    private lateinit var mainListAdapter: MainListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         TypefaceHelper.typeface(this)//应用字体
+
+        drawer_icon.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) } //左则菜单
+
+        // RecyclerView Init
+        mainListAdapter = MainListAdapter(this)
+        recycler_view.adapter = mainListAdapter
+        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.setHasFixedSize(true)
+
+        save.setOnClickListener {
+            //储存当前用户
+            var sharedPref = getSharedPreferences(
+                getString(R.string.preference_user_key), Context.MODE_PRIVATE
+            )
+            val userID: String? = sharedPref.getString("user", "")
+            if (sharedPref == null || userID.equals("") || userID == null) {
+                sharedPref = getSharedPreferences(
+                    getString(R.string.preference_user_key),
+                    Context.MODE_PRIVATE
+                )
+                with(sharedPref.edit()) {
+                    putString("user",  editTextTextPersonName.text.toString())
+                    putString("pass", editTextTextPassword.text.toString())
+                    commit()
+                }
+            }
+        }
+
         showNotifcation()//通知
-//        //储存当前用户
-//        var sharedPref = getSharedPreferences(
-//            getString(R.string.preference_user_key), Context.MODE_PRIVATE
-//        )
-//        val userID: String? = sharedPref.getString("user", "")
-//        if (sharedPref == null || userID.equals("") || userID == null) {
-//            sharedPref = getSharedPreferences(
-//                getString(R.string.preference_user_key),
-//                Context.MODE_PRIVATE
-//            )
-//            with(sharedPref.edit()) {
-//                putString("user", text.toString())
-//                commit()
-//            }
-//        }
 
         App.log_Print.observe(this, Observer<String> {
-          textView.text = it
+            textView.text = it
 //            https://juejin.im/entry/6844903497033318408
 //            loop  用findviewid 有loop 问题
         })
     }
-    fun  showNotifcation(){
+
+    fun showNotifcation() {
         val pendingIntent =
             PendingIntent.getActivity(this, 0, Intent().apply {
                 setClass(this@MainActivity, MainActivity::class.java)
@@ -52,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             }, PendingIntent.FLAG_UPDATE_CURRENT)
 
 //        请注意，NotificationCompat.Builder 构造函数要求您提供渠道 ID。这是兼容 Android 8.0（API 级别 26）及更高版本所必需的，但会被较旧版本忽略。
-        var builder = NotificationCompat.Builder(this,CHANNEL_ID )
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.icon_cactus_small)
             // Show controls on lock screen even when user hides sensitive content.
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -69,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             .setContentTitle("Wonderful music")
             .setContentText("My Awesome Band")
             .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.raw.d))
-
+            .setContentIntent(pendingIntent)
         createNotificationChannel()
         with(NotificationManagerCompat.from(this)) {
             // notificationId is a unique int for each notification that you must define
@@ -77,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library

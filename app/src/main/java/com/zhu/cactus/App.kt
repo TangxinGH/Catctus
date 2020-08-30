@@ -59,14 +59,13 @@ class App: Application(),CactusCallback {
     }
     override fun doWork(times: Int) {
         log_Print.postValue("dowork enter")
-//另一种方法
         val networkCallback =
             NetworkCallbackImpl()
         val builder = NetworkRequest.Builder()
         val request = builder.build()
         val connMgr =
             this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connMgr?.registerNetworkCallback(request, networkCallback)
+        connMgr.registerNetworkCallback(request, networkCallback)
     }
 
     override fun onStop() {
