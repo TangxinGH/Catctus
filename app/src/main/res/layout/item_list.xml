@@ -86,7 +86,7 @@ too. layout_gravity="center_horizontal" is a lot simpler.
                     android:layout_toEndOf="@id/subtitle1"
                     android:background="@drawable/ic_pill"
                     android:backgroundTint="@color/subtitle_color" />
-
+<!--扩展面板？-->
                 <LinearLayout
                     android:id="@+id/expand_view"
                     android:layout_width="match_parent"

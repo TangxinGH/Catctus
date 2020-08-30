@@ -28,7 +28,7 @@ android {
     }
 //    https://medium.com/@imstudio/android-cannot-inline-bytecode-built-with-jvm-target-1-8-8dcde8bbfc14
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_1_8  //解决内联 问题
     }
 }
 

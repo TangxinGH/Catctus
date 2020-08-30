@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
@@ -17,15 +18,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.method.MainListAdapter
+import com.zhu.cactus.method.ToolbarBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
 
-var animationPlaybackSpeed: Double = 0.8
+var animationPlaybackSpeed: Double = 0.8  //动画播放速度
 
 class MainActivity : AppCompatActivity() {
     companion object
 
-    var CHANNEL_ID = "12"
+    private var CHANNEL_ID = "12"
     private lateinit var mainListAdapter: MainListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,10 @@ class MainActivity : AppCompatActivity() {
         TypefaceHelper.typeface(this)//应用字体
 
         drawer_icon.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) } //左则菜单
+
+
+        // Appbar behavior init 一种跟随着行为， 顶栏 随着 列表 下拉 隐藏
+        (appbar.layoutParams as CoordinatorLayout.LayoutParams).behavior = ToolbarBehavior()
 
         // RecyclerView Init
         mainListAdapter = MainListAdapter(this)
