@@ -18,13 +18,17 @@ import com.zhu.cactus.method.NetworkCallbackImpl
 
 class App: Application(),CactusCallback {
     companion object {
-        var sno = "3172052051626"
-        var password = "123456"
+        lateinit var sno:String
+        lateinit var password :String
         val log_Print = MutableLiveData<String>()
     }
 
     override fun onCreate() {
         super.onCreate()
+// init sno pass
+        val sp = getSharedPreferences(getString(R.string.preference_user_key), Context.MODE_PRIVATE)
+        sno = sp.getString("sno", "141213").toString()
+        password = sp.getString("pass", "123456").toString()
 
 // Initialize typeface helper
         // Initialize typeface helper

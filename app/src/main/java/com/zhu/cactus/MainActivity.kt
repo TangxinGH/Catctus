@@ -5,21 +5,22 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.widget.RemoteViews
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.method.MainListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
+
+var animationPlaybackSpeed: Double = 0.8
 
 class MainActivity : AppCompatActivity() {
     companion object
@@ -42,22 +43,16 @@ class MainActivity : AppCompatActivity() {
 
         save.setOnClickListener {
             //储存当前用户
-            var sharedPref = getSharedPreferences(
-                getString(R.string.preference_user_key), Context.MODE_PRIVATE
-            )
-            val userID: String? = sharedPref.getString("user", "")
-            if (sharedPref == null || userID.equals("") || userID == null) {
-                sharedPref = getSharedPreferences(
+            val sharedPref: SharedPreferences = getSharedPreferences(
                     getString(R.string.preference_user_key),
                     Context.MODE_PRIVATE
                 )
                 with(sharedPref.edit()) {
-                    putString("user",  editTextTextPersonName.text.toString())
+                    putString("sno",  editTextTextPersonName.text.toString())
                     putString("pass", editTextTextPassword.text.toString())
                     commit()
                 }
             }
-        }
 
         showNotifcation()//通知
 
