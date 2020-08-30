@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Observer
+import com.norbsoft.typefacehelper.TypefaceHelper
 import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     companion object var CHANNEL_ID = "12"
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        TypefaceHelper.typeface(this)//应用字体
         showNotifcation()//通知
 //        //储存当前用户
 //        var sharedPref = getSharedPreferences(
@@ -93,16 +95,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-    private fun getRemoteViews(): RemoteViews? {
-        val remoteViews =
-            RemoteViews(this.packageName, R.layout.notification_mobile_play)
-//        val bitmap=BitmapFactory.decodeFile()
-        val bitmap = BitmapFactory.decodeResource(this.resources, R.raw.d)
-    remoteViews.setImageViewBitmap(
-        R.mipmap.ic_launcher,
-        BitmapFactory.decodeResource(this.resources, R.raw.d));
-        return remoteViews
-    }
 }

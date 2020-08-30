@@ -4,13 +4,17 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkRequest
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.gyf.cactus.callback.CactusCallback
 import com.gyf.cactus.ext.cactus
+import com.norbsoft.typefacehelper.TypefaceCollection
+import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.method.NetworkCallbackImpl
+
 
 class App: Application(),CactusCallback {
     companion object {
@@ -21,6 +25,17 @@ class App: Application(),CactusCallback {
 
     override fun onCreate() {
         super.onCreate()
+
+// Initialize typeface helper
+        // Initialize typeface helper
+        val typeface = TypefaceCollection.Builder()
+            .set(
+                Typeface.NORMAL,
+                Typeface.createFromAsset(assets, "fonts/STXINWEI.TTF")
+            )
+            .create()
+        TypefaceHelper.init(typeface)
+
         //可选，设置通知栏点击事件
         val pendingIntent =
             PendingIntent.getActivity(this, 0, Intent().apply {
