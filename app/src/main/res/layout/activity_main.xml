@@ -53,6 +53,13 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/item_list" />
 
+        <com.zhu.cactus.filter.FiltersMotionLayout
+            android:id="@+id/filters_motion_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layoutDescription="@xml/scene_filter" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"

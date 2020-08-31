@@ -1,5 +1,6 @@
 package com.zhu.cactus
 
+import android.animation.ValueAnimator
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -14,6 +15,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
@@ -27,8 +29,18 @@ var animationPlaybackSpeed: Double = 0.8  //动画播放速度
 class MainActivity : AppCompatActivity() {
     companion object
 
-    private var CHANNEL_ID = "12"
+     var CHANNEL_ID = "12"
     private lateinit var mainListAdapter: MainListAdapter
+
+    /**
+     * Used by FiltersLayout since we don't want to expose mainListAdapter (why?)
+     * (Option: Combine everything into one activity if & when necessary)
+     */
+    var isAdapterFiltered: Boolean
+        get() = mainListAdapter.isFiltered
+        set(value) {
+            mainListAdapter.isFiltered = value
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
 
+        useFiltersMotionLayout(true)
         save.setOnClickListener {
             //储存当前用户
             val sharedPref: SharedPreferences = getSharedPreferences(
@@ -67,6 +80,14 @@ class MainActivity : AppCompatActivity() {
 //            https://juejin.im/entry/6844903497033318408
 //            loop  用findviewid 有loop 问题
         })
+    }
+    /**
+     * Callback for motionLayoutCheckbox
+     * isChecked = true -> Use [FiltersMotionLayout]
+     * isChecked = false -> Use [FiltersLayout]
+     */
+    private fun useFiltersMotionLayout(isChecked: Boolean) {
+        filters_motion_layout.isVisible = isChecked
     }
 
     fun showNotifcation() {
@@ -120,5 +141,9 @@ class MainActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
-
+    /**
+     * Called from FiltersLayout to get adapter scale down animator
+     */
+    fun getAdapterScaleDownAnimator(isScaledDown: Boolean): ValueAnimator =
+        mainListAdapter.getScaleDownAnimator(isScaledDown)
 }
