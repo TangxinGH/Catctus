@@ -60,6 +60,16 @@
                 android:layout_marginEnd="66dp"
                 android:layout_marginTop="8dp"
                 android:text="save" />
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchMaterial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginTop="50dp"
+                android:text="文本滚动" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 </merge>

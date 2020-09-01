@@ -1,5 +1,6 @@
 package com.zhu.cactus
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
@@ -18,6 +19,8 @@ import com.zhu.cactus.method.NetworkCallbackImpl
 
 class App: Application(),CactusCallback {
     companion object {
+        @SuppressLint("StaticFieldLeak")
+        lateinit var context: Context
         lateinit var sno:String
         lateinit var password :String
         val log_Print = MutableLiveData<String>()
@@ -25,6 +28,7 @@ class App: Application(),CactusCallback {
 
     override fun onCreate() {
         super.onCreate()
+        context = applicationContext
 // init sno pass
         val sp = getSharedPreferences(getString(R.string.preference_user_key), Context.MODE_PRIVATE)
         sno = sp.getString("sno", "141213").toString()

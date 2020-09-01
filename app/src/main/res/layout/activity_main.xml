@@ -67,6 +67,7 @@
             android:layout_gravity="center"
             android:fadeScrollbars="false"
             android:scrollbars="vertical"
+            android:clickable="false"
             android:text="TextView" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
