@@ -42,9 +42,10 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.gyf.cactus:cactus:1.1.3-beta10'
-    implementation 'androidx.media:media:1.1.0'
-    implementation 'com.norbsoft.typefacehelper:library:0.9.0'
+    implementation 'com.gyf.cactus:cactus:1.1.3-beta10'//保活
+    implementation 'androidx.media:media:1.1.0' //通知栏媒体style
+    implementation 'com.norbsoft.typefacehelper:library:0.9.0'//    字体库
+
 
     // Kotlin + Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
