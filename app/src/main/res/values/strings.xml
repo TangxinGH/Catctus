@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cactus</string>
+
+    <string name="restaurant">Food</string>
+    <string name="preference_user_key">student</string>
+    <string name="channel_name">bigview</string>
+    <string name="channel_description">大视图用的</string>
+
+</resources>
