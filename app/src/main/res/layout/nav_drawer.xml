@@ -69,7 +69,30 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="60dp"
                 android:layout_marginTop="50dp"
-                android:text="文本滚动" />
+                android:text="服务" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+            <EditText
+                android:id="@+id/editTextNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="GPS ID"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginTop="50dp"
+                android:text="10086"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/GpsID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="GpsID" />
+        </LinearLayout>
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 </merge>

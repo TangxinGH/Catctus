@@ -1,4 +1,4 @@
-package com.zhu.cactus.utils
+package com.zhu.cactus.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,10 +9,10 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.zhu.cactus.MainActivity
 import com.zhu.cactus.R
-
+import java.lang.ref.WeakReference
+@Deprecated("参考用，mediaStyle样式 NotificationUtils 代替 ")
 fun showNotification(context: Context,CHANNEL_ID:String ,ContentTitle:String,ContentText:String,notifyId:Int) {
     val pendingIntent =
         PendingIntent.getActivity(context, 0, Intent().apply {
@@ -39,7 +39,7 @@ fun showNotification(context: Context,CHANNEL_ID:String ,ContentTitle:String,Con
         .setContentText(ContentText)
         .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.raw.d))
         .setContentIntent(pendingIntent)
-    createNotificationChannel(context,CHANNEL_ID)
+    createNotificationChannel(context, CHANNEL_ID)
     with(NotificationManagerCompat.from(context)) {
         // notificationId is a unique int for each notification that you must define
         notify(notifyId, builder.build())

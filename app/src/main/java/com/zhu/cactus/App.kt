@@ -6,15 +6,15 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.net.ConnectivityManager
-import android.net.NetworkRequest
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.gyf.cactus.callback.CactusCallback
 import com.gyf.cactus.ext.cactus
 import com.norbsoft.typefacehelper.TypefaceCollection
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.zhu.cactus.method.NetworkCallbackImpl
+import com.zhu.cactus.services.Location
+import com.zhu.cactus.services.network
+import com.zhu.cactus.services.component_impl
 
 
 class App: Application(),CactusCallback {
@@ -24,6 +24,7 @@ class App: Application(),CactusCallback {
         lateinit var sno:String
         lateinit var password :String
         val log_Print = MutableLiveData<String>()
+        val COMPONENTS:ArrayList<component_impl> = ArrayList()
     }
 
     override fun onCreate() {
@@ -67,13 +68,10 @@ class App: Application(),CactusCallback {
     }
     override fun doWork(times: Int) {
         log_Print.postValue("dowork enter")
-        val networkCallback =
-            NetworkCallbackImpl()
-        val builder = NetworkRequest.Builder()
-        val request = builder.build()
-        val connMgr =
-            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connMgr.registerNetworkCallback(request, networkCallback)
+            COMPONENTS.add(network()) // plus 是返回新的 数组而不原来的
+            COMPONENTS.add(Location())
+        COMPONENTS.forEach { components: component_impl ->  components.start() }
+
     }
 
     override fun onStop() {

@@ -12,7 +12,7 @@ import com.zhu.cactus.App
 import com.zhu.cactus.App.Companion.password
 import com.zhu.cactus.App.Companion.sno
 import com.zhu.cactus.utils.isApkInDebug
-import com.zhu.cactus.utils.showNotification
+import com.zhu.cactus.services.showNotification
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -116,7 +116,13 @@ class NetworkCallbackImpl : NetworkCallback() {
 
 //                val test=" dr1004({\"result\":1,\"aolno\":4616,\"m46\":0,\"v46ip\":\"172.20.65.36\",\"myv6ip\":\"\",\"sms\":0,\"ufee\":0,\"NID\":\"朱晓锋\",\"olno\":0,\"udate\":\"\",\"olmac\":\"000000000000\",\"ollm\":0,\"olm1\":\"00000000\",\"olm2\":\"0000\",\"olm3\":0,\"olmm\":2,\"olm5\":0,\"gid\":4,\"mac1\":\"\",\"mac2\":\"\",\"mac3\":\"\",\"mac4\":\"\",\"mac5\":\"\",\"mac6\":\"\",\"ac0\":\"MzE3MjA1MjA1MTYyNg==\",\"oltime\":4294967295,\"olflow\":4294967295,\"lip\":\"172.20.65.36\",\"stime\":\"2020-09-01 22:03:10\",\"etime\":\"2020-09-01 22:06:15\",\"uid\":\"3172052051626\",\"sv\":0})   "
                 val jsonObj = JSONObject(result.toString().replaceBefore("{","").dropLast(1))
-                if (jsonObj["result"] == 1)showNotification(App.context,"14","登录成功",jsonObj["NID"].toString()+jsonObj["v46ip"],200)//通知
+                if (jsonObj["result"] == 1) showNotification(
+                    App.context,
+                    "14",
+                    "登录成功",
+                    jsonObj["NID"].toString() + jsonObj["v46ip"],
+                    200
+                )//通知
 
             } catch (e: MalformedURLException) {
                 e.printStackTrace()

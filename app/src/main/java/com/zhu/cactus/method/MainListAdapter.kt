@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zhu.cactus.R
 import com.zhu.cactus.animationPlaybackSpeed
 import com.zhu.cactus.utils.*
+import kotlinx.android.synthetic.main.item_list.view.*
 
 /*展开动画由本类实现，以及内容？？*/
 data class MainListModel(val id: Int)
@@ -73,7 +74,7 @@ class MainListAdapter(context: Context) : RecyclerView.Adapter<MainListAdapter.L
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val model = adapterList[position]
-
+       holder.scaleContainer.title.text="你好， 世界！"
         expandItem(holder, model == expandedModel, animate = false)
         scaleDownItem(holder, position, isScaledDown)
         //展开监听
