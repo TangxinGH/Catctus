@@ -67,16 +67,18 @@ fun getONE(type: Int, url: String, position: Int, okHttpClient: OkHttpClient) {
 
                     when (type) {
                         0 -> {
-                             val json=JSONObject(result)
-                            val newsList=(json["newslist"] as JSONArray).get(0).toString()
+                            val json = JSONObject(result)
+                            val newsList = (json["newslist"] as JSONArray).get(0).toString()
                             val mapper = ObjectMapper().registerModule(KotlinModule())
                             if (MainListAdapter.data.size > position) MainListAdapter.data[position].postValue(
                                 mapper.readValue(newsList)
                             )
                         }
                         1 -> {
+
                             val json = JSONObject(result)
-                            MainListAdapter.data[position].value?.date =(json["data"] as JSONObject).get("origin") as String?
+                            MainListAdapter.data[position].value?.date =
+                                (json["data"] as JSONObject).get("origin") as String?
 //                            val re= "origin\": \".*\"".toRegex().find(result)?.value?.substringAfter(" \"")?.substringBeforeLast("\"")
 //                            if (MainListAdapter.data.size > position) MainListAdapter.data[position].(MainListAdapter.data[position].value)
                         }
