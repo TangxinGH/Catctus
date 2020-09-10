@@ -14,14 +14,8 @@ import java.util.*
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-class Newslist : MutableLiveData<String>() {
-    Override fun setValue( value:String)
-    {
-        super.setValue(value);
+class Newslist {
 
-        //listen to property changes
-        value.addOnPropertyChangedCallback(callback)
-    }
     var oneid = 0
     var word: String? = null
     var wordfrom: String? = null

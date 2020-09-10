@@ -24,6 +24,7 @@ import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.R
 import com.zhu.cactus.animationPlaybackSpeed
 import com.zhu.cactus.utils.*
+import kotlinx.android.synthetic.main.filter_layout_1.view.*
 import kotlinx.android.synthetic.main.item_list.view.*
 
 /*展开动画由本类实现，以及内容？？*/

@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/filter_pill_1"
-            android:layout_width="100dp"
-            android:layout_height="48dp"
+            android:layout_width="250dp"
+            android:layout_height="248dp"
             app:srcCompat="@drawable/ic_pill"
             app:tint="@color/filter_pill_color" />
 

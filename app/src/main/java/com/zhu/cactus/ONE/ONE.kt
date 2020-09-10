@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.zhu.cactus.App
+import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.method.MainListAdapter
 import okhttp3.*
 import org.json.JSONArray
@@ -31,16 +32,8 @@ fun getONEFor(Count: Int) {
     val pattern = "yyyy-MM-dd"
     val simpleDateFormat = SimpleDateFormat(pattern, Locale.CHINA)
     for (x in 0..Count) {
-        getONE(
-            0,
-            "http://api.tianapi.com/txapi/one/index?key=121939b0c5048ac82af5fbaa4b1c792e&date=" + simpleDateFormat.format(
-                c1.time
-            ),
-            x,
-            okHttpClient
-        )
+        getONE(0,"http://api.tianapi.com/txapi/one/index?key=121939b0c5048ac82af5fbaa4b1c792e&date=" + simpleDateFormat.format(c1.time),x,okHttpClient)
 //       getONE("https://api.berryapi.net/?service=App.Dairy.Words&app_key=LGGVnRstIT2yb4dZ&source=one",x,okHttpClient) one 作者
-        getONE(1, "https://v1.alapi.cn/api/shici?type=shuqing", x, okHttpClient)//诗词
         c1.add(Calendar.DATE, -1)
     }
 }
@@ -70,16 +63,23 @@ fun getONE(type: Int, url: String, position: Int, okHttpClient: OkHttpClient) {
                             val json = JSONObject(result)
                             val newsList = (json["newslist"] as JSONArray).get(0).toString()
                             val mapper = ObjectMapper().registerModule(KotlinModule())
-                            if (MainListAdapter.data.size > position) MainListAdapter.data[position].postValue(
-                                mapper.readValue(newsList)
-                            )
+                            val newslistBean:Newslist= mapper.readValue(newsList)
+
+//                            val origin= wen(okHttpClient,"http://v1.hitokoto.cn",false)// 相同地址不要缓存
+//                            origin.let {
+//                                if (it != null) {
+//                                    newslistBean.date= it["creator"].toString()
+//                                    newslistBean.imgauthor=it["from"].toString()
+//                                    newslistBean.wordfrom=it["hitokoto"].toString()
+//                                }
+//                            }
+
+                            if (MainListAdapter.data.size > position) MainListAdapter.data[position].postValue(newslistBean)
                         }
                         1 -> {
 
                             val json = JSONObject(result)
-                            MainListAdapter.data[position].value?.date =
-                                (json["data"] as JSONObject).get("origin") as String?
-//                            val re= "origin\": \".*\"".toRegex().find(result)?.value?.substringAfter(" \"")?.substringBeforeLast("\"")
+                            MainListAdapter.data[position].value?.date =(json["data"] as JSONObject).get("origin") as String?
 //                            if (MainListAdapter.data.size > position) MainListAdapter.data[position].(MainListAdapter.data[position].value)
                         }
                     }
@@ -88,6 +88,27 @@ fun getONE(type: Int, url: String, position: Int, okHttpClient: OkHttpClient) {
 
         }
     })
+}
+//同步方法
+fun wen(okHttpClient: OkHttpClient,url: String,cache: Boolean): JSONObject? {
+    //    url 相同的不能缓存
+    val okhttp = OkHttpClient()
+    val request = Request.Builder()
+        .url(url)
+        .build()
+    val response = okhttp.newCall(request).execute() //同步会
+    val data=response.body?.string()
+    if (data != null)
+    {
+//        if (data.contains("\"code\": 200")) {
+            val date = JSONObject(data)
+            return date
+//            (date["data"] as JSONObject)
+
+        }
+return null
+//                                val re= "origin\": \".*\"".toRegex().find(result)?.value?.substringAfter(" \"")?.substringBeforeLast("\"")
+
 }
 //                                    {
 //	"code": 200,
