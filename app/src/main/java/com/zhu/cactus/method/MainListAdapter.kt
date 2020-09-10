@@ -13,7 +13,6 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,13 +20,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.zhu.cactus.App
-import com.zhu.cactus.POJO.JsonRootOneBean
+import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.R
 import com.zhu.cactus.animationPlaybackSpeed
 import com.zhu.cactus.utils.*
-import kotlinx.android.synthetic.main.item_list.*
 import kotlinx.android.synthetic.main.item_list.view.*
-import java.lang.ref.WeakReference
 
 /*展开动画由本类实现，以及内容？？*/
 data class MainListModel(val id: Int)
@@ -50,7 +47,7 @@ class MainListAdapter(context: Context) : RecyclerView.Adapter<MainListAdapter.L
     private val modelListFiltered = modelList.filter { it.id !in filteredItems }
     private val adapterList: List<MainListModel> get() = if (isFiltered) modelListFiltered else modelList
 companion object{
-    var data=ArrayList<MutableLiveData<JsonRootOneBean>>()
+    var data=ArrayList<MutableLiveData<Newslist>>()
 }
     lateinit var life: LifecycleOwner
 
@@ -94,12 +91,12 @@ companion object{
         val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(RoundedCorners(20))
 
             data[position]//注意越界问题
-                .observe(life,androidx.lifecycle.Observer<JsonRootOneBean>{
-                    holder.scaleContainer.title.text= it.newslist?.get(0)?.date.toString()
-                    holder.scaleContainer.OneWord.text= it.newslist?.get(0)?.word.toString()
-                    holder.scaleContainer.wordFrom.text= it.newslist?.get(0)?.wordfrom.toString()
-                    holder.scaleContainer.imgAuthor.text= it.newslist?.get(0)?.imgauthor.toString()
-                    Glide.with(App.context).load(it.newslist?.get(0)?.imgurl).apply(options) .into(holder.scaleContainer.myImageView)
+                .observe(life,androidx.lifecycle.Observer<Newslist>{
+                    holder.scaleContainer.title.text= it.date.toString()
+                    holder.scaleContainer.OneWord.text= it.word.toString()
+                    holder.scaleContainer.wordFrom.text= it.wordfrom.toString()
+                    holder.scaleContainer.imgAuthor.text= it.imgauthor.toString()
+                    Glide.with(App.context).load(it.imgurl).apply(options) .into(holder.scaleContainer.myImageView)
                 } )
         expandItem(holder, model == expandedModel, animate = false)
         scaleDownItem(holder, position, isScaledDown)

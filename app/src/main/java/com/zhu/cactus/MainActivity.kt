@@ -15,10 +15,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
-import com.zhu.cactus.POJO.JsonRootOneBean
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.ONE.getONEFor
+import com.zhu.cactus.POJO.Newslist
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
 
@@ -77,9 +77,9 @@ class MainActivity : AppCompatActivity() {
 
         // RecyclerView Init
         mainListAdapter = MainListAdapter(this)
-        val data= ArrayList<MutableLiveData<JsonRootOneBean>>()
+        val data= ArrayList<MutableLiveData<Newslist>>()
         for (x in 0..19)  // 输出 0 到 10（含10）
-            data.add( MutableLiveData(JsonRootOneBean()))
+            data.add( MutableLiveData(Newslist()))
         MainListAdapter.data=data
         getONEFor(20 - 1)
         mainListAdapter.life = this
