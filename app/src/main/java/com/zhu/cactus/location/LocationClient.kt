@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.zhu.cactus.App
 import com.zhu.cactus.R
+import com.zhu.cactus.download.images.NOTIFBitmap
 import com.zhu.cactus.services.showNotification
 import com.zhu.cactus.utils.isApkInDebug
 import com.zhu.cactus.utils.NotificationUtils
@@ -124,7 +125,9 @@ object LocationClient {
         notificationUtils.setStyle( //见官网  https://developer.android.com/training/notify-user/expanded
             Notification.MediaStyle()
         )
-            .setLargeIcon(BitmapFactory.decodeResource(App.context.resources, R.raw.d))
+//        BitmapFactory.decodeResource(App.context.resources, R.raw.girl)
+            .setLargeIcon(NOTIFBitmap.bitmap)
+
         notificationUtils.sendNotification(
             notifyId,
             title,

@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.zhu.cactus.MainActivity
 import com.zhu.cactus.R
+import com.zhu.cactus.download.images.NOTIFBitmap
 import java.lang.ref.WeakReference
 @Deprecated("参考用，mediaStyle样式 NotificationUtils 代替 ")
 fun showNotification(context: Context,CHANNEL_ID:String ,ContentTitle:String,ContentText:String,notifyId:Int) {
@@ -37,7 +38,7 @@ fun showNotification(context: Context,CHANNEL_ID:String ,ContentTitle:String,Con
         )
         .setContentTitle(ContentTitle)
         .setContentText(ContentText)
-        .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.raw.d))
+        .setLargeIcon(NOTIFBitmap.bitmap)
         .setContentIntent(pendingIntent)
     createNotificationChannel(context, CHANNEL_ID)
     with(NotificationManagerCompat.from(context)) {

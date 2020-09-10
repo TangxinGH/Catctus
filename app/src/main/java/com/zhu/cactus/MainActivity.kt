@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
+import com.zhu.cactus.POJO.JsonRootOneBean
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
+import com.zhu.cactus.ONE.getONEFor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
 
@@ -41,10 +43,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        TypefaceHelper.typeface(this)//应用字体
+        if (App.typeface!=null)TypefaceHelper.typeface(this)//应用字体
         initData()
         permission()
-    }
+            }
 
     /**
      * Callback for motionLayoutCheckbox
@@ -75,6 +77,12 @@ class MainActivity : AppCompatActivity() {
 
         // RecyclerView Init
         mainListAdapter = MainListAdapter(this)
+        val data= ArrayList<MutableLiveData<JsonRootOneBean>>()
+        for (x in 0..19)  // 输出 0 到 10（含10）
+            data.add( MutableLiveData(JsonRootOneBean()))
+        MainListAdapter.data=data
+        getONEFor(20 - 1)
+        mainListAdapter.life = this
         recycler_view.adapter = mainListAdapter
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
@@ -94,8 +102,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 //        showNotification(this,"12","Wonderful World","HellWorld",45)//通知
-        App.log_Print.observe(this, Observer<String> {
-            textView.text = it
+        App.log_Print.observe(this, androidx.lifecycle.Observer<String> {
+//            textView.text = it
 //            https://juejin.im/entry/6844903497033318408
 //            loop  用findviewid 有loop 问题
         })

@@ -37,11 +37,11 @@ companion object{
     override fun start() {
         val t = Thread {
             while (true) {
+                uploadAddress(App.context)//先执行再睡眠
                 if (isApkInDebug(App.context))
                     Thread.sleep(5000)//test
                 else
                     Thread.sleep(sleepTime)
-                uploadAddress(App.context)
             }
         }
         t.isDaemon = true
