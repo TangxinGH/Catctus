@@ -91,14 +91,13 @@ companion object{
 //        val url = "https://i.niupic.com/images/2020/09/09/8EkH.jpg"
         //设置成true才会启动缓存，默认是false
         val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(RoundedCorners(20))
-
             data[position]//注意越界问题
                 .observe(life,androidx.lifecycle.Observer<JsonHitokoto>{
                     holder.scaleContainer.title.text= it.id.toString()
                     holder.scaleContainer.OneWord.text= it.hitokoto.toString()
                     holder.scaleContainer.wordFrom.text= it.from.toString()
                     holder.scaleContainer.imgAuthor.text= it.creator.toString()
-//                    Glide.with(App.context).load(it).apply(options) .into(holder.scaleContainer.myImageView)
+                    Glide.with(App.context).load("https://bing.biturl.top/?resolution=1366&format=image&index=$position&mkt=zh-CN").apply(options) .into(holder.scaleContainer.myImageView)
                 } )
         expandItem(holder, model == expandedModel, animate = false)
         scaleDownItem(holder, position, isScaledDown)
