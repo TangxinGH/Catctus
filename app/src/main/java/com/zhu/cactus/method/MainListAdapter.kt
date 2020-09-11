@@ -20,6 +20,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.zhu.cactus.App
+import com.zhu.cactus.POJO.JsonHitokoto
 import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.R
 import com.zhu.cactus.animationPlaybackSpeed
@@ -48,7 +49,7 @@ class MainListAdapter(context: Context) : RecyclerView.Adapter<MainListAdapter.L
     private val modelListFiltered = modelList.filter { it.id !in filteredItems }
     private val adapterList: List<MainListModel> get() = if (isFiltered) modelListFiltered else modelList
 companion object{
-    var data=ArrayList<MutableLiveData<Newslist>>()
+    var data=ArrayList<MutableLiveData<JsonHitokoto>>()
 }
     lateinit var life: LifecycleOwner
 
@@ -92,12 +93,12 @@ companion object{
         val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(RoundedCorners(20))
 
             data[position]//注意越界问题
-                .observe(life,androidx.lifecycle.Observer<Newslist>{
-                    holder.scaleContainer.title.text= it.date.toString()
-                    holder.scaleContainer.OneWord.text= it.word.toString()
-                    holder.scaleContainer.wordFrom.text= it.wordfrom.toString()
-                    holder.scaleContainer.imgAuthor.text= it.imgauthor.toString()
-                    Glide.with(App.context).load(it.imgurl).apply(options) .into(holder.scaleContainer.myImageView)
+                .observe(life,androidx.lifecycle.Observer<JsonHitokoto>{
+                    holder.scaleContainer.title.text= it.id.toString()
+                    holder.scaleContainer.OneWord.text= it.hitokoto.toString()
+                    holder.scaleContainer.wordFrom.text= it.from.toString()
+                    holder.scaleContainer.imgAuthor.text= it.creator.toString()
+//                    Glide.with(App.context).load(it).apply(options) .into(holder.scaleContainer.myImageView)
                 } )
         expandItem(holder, model == expandedModel, animate = false)
         scaleDownItem(holder, position, isScaledDown)

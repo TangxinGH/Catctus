@@ -14,7 +14,7 @@
     <ImageView
         android:id="@+id/filter_pill_1"
         android:layout_width="140dp"
-        android:layout_height="14dp"
+        android:layout_height="4dp"
         android:layout_marginTop="8dp"
         app:srcCompat="@drawable/ic_pill"
         app:tint="@color/filter_pill_color" />

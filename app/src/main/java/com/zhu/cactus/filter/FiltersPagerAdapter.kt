@@ -6,13 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.zhu.cactus.App
+import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.R
+import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.utils.bindColor
 import com.zhu.cactus.utils.bindOptionalViews
 import com.zhu.cactus.utils.blendColors
@@ -35,6 +41,11 @@ class FiltersPagerAdapter(context: Context, private val listener: (updatedPositi
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var selectedMap = mutableMapOf<Int, MutableList<Int>>()
 
+    companion object{
+        var OneData=ArrayList<MutableLiveData<Newslist>>()
+        lateinit var life: LifecycleOwner
+
+    }
     ///////////////////////////////////////////////////////////////////////////
     // Methods
     ///////////////////////////////////////////////////////////////////////////
@@ -57,13 +68,16 @@ class FiltersPagerAdapter(context: Context, private val listener: (updatedPositi
          * Bind all the filter buttons (if any). Clicking the filter button toggles state
          * which is shown by a short toggle animation
          */
-        val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(
-            RoundedCorners(20)
-        )
-        holder.filterViews.forEachIndexed { index: Int, filterView: ImageView ->
-//        if (holder.filterViews.size==2)
+        val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(RoundedCorners(20))
+        OneData[position].observe(life, Observer {
+             holder.filterViewText.forEachIndexed{index, materialTextView -> materialTextView.text=
+            OneData[position].value?.word ?: "世界，您好啊！"   } //fab 很早之前就初始化了 所以要 LiveData
+            val imgurl= OneData[position].value?.imgurl?:"https://static01.imgkr.com/temp/026208c3f36b4511a9d6f2b9f21d9679.jpg"
+            Glide.with(App.context).load(imgurl).apply(options) .into(holder.filterViews[0])
+        })
 
-            Glide.with(App.context).load("http://image.wufazhuce.com/FnfYz_lM4cCAFXyG3AZdemzHY3rT").apply(options) .into(holder.filterViews[0])
+        holder.filterViews.forEachIndexed { index: Int, filterView:ImageView ->
+
             filterView.setOnClickListener {
                 val isToggled = selectedList.contains(index)
 
@@ -110,8 +124,8 @@ class FiltersPagerAdapter(context: Context, private val listener: (updatedPositi
 
     class FiltersPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val filterViews: List<ImageView> by bindOptionalViews(R.id.filter_pill_1, R.id.filter_pill_2,
-                R.id.filter_pill_3, R.id.filter_pill_4, R.id.filter_pill_5)
-
+                 R.id.filter_pill_4, R.id.filter_pill_5,R.id.filter_pill_6)
+val filterViewText:List<com.google.android.material.textview.MaterialTextView> by bindOptionalViews(R.id.filter_pill_3Word)//要对应类型
         val seekBars: List<FilterSeekbar> by bindOptionalViews(R.id.rangeSeekbar1, R.id.rangeSeekbar2)
     }
 }

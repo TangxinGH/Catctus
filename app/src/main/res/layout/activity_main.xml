@@ -68,7 +68,7 @@
             android:fadeScrollbars="true"
             android:scrollbars="vertical"
             android:clickable="false"
-            android:text="Log" />
+            android:text=" " />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

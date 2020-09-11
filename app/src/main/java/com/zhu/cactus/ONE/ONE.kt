@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.zhu.cactus.App
 import com.zhu.cactus.POJO.Newslist
-import com.zhu.cactus.method.MainListAdapter
+import com.zhu.cactus.filter.FiltersPagerAdapter
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -32,20 +32,21 @@ fun getONEFor(Count: Int) {
     val pattern = "yyyy-MM-dd"
     val simpleDateFormat = SimpleDateFormat(pattern, Locale.CHINA)
     for (x in 0..Count) {
-        getONE(0,"http://api.tianapi.com/txapi/one/index?key=121939b0c5048ac82af5fbaa4b1c792e&date=" + simpleDateFormat.format(c1.time),x,okHttpClient)
-//       getONE("https://api.berryapi.net/?service=App.Dairy.Words&app_key=LGGVnRstIT2yb4dZ&source=one",x,okHttpClient) one 作者
+        getONE(
+            "http://api.tianapi.com/txapi/one/index?key=121939b0c5048ac82af5fbaa4b1c792e&date=" + simpleDateFormat.format(c1.time),
+            x,
+            okHttpClient
+        )
         c1.add(Calendar.DATE, -1)
     }
 }
 
-fun getONE(type: Int, url: String, position: Int, okHttpClient: OkHttpClient) {
+fun getONE(url: String, position: Int, okHttpClient: OkHttpClient) {
 //   val url= "http://api.tianapi.com/txapi/one/index?key=121939b0c5048ac82af5fbaa4b1c792e&date=$date"
 
-//        if (isApkInDebug(App.context)) return//调试用阻断网络
     val request = Request.Builder()
         .url(url)
         .build()
-//            val response = client.newCall(request).execute() 同步会
     val call: Call = okHttpClient.newCall(request)//异步 线程请求
     call.enqueue(object : Callback {
         override fun onFailure(call: Call, e: IOException) {
@@ -58,69 +59,19 @@ fun getONE(type: Int, url: String, position: Int, okHttpClient: OkHttpClient) {
             if (result != null) {
                 if (result.contains("\"code\":200") || result.contains("\"code\": 200")) {//请求成功
 
-                    when (type) {
-                        0 -> {
+
                             val json = JSONObject(result)
                             val newsList = (json["newslist"] as JSONArray).get(0).toString()
                             val mapper = ObjectMapper().registerModule(KotlinModule())
                             val newslistBean:Newslist= mapper.readValue(newsList)
 
-//                            val origin= wen(okHttpClient,"http://v1.hitokoto.cn",false)// 相同地址不要缓存
-//                            origin.let {
-//                                if (it != null) {
-//                                    newslistBean.date= it["creator"].toString()
-//                                    newslistBean.imgauthor=it["from"].toString()
-//                                    newslistBean.wordfrom=it["hitokoto"].toString()
-//                                }
-//                            }
+                            if (FiltersPagerAdapter.OneData.size > position) FiltersPagerAdapter.OneData[position].postValue(newslistBean)
 
-                            if (MainListAdapter.data.size > position) MainListAdapter.data[position].postValue(newslistBean)
-                        }
-                        1 -> {
-
-                            val json = JSONObject(result)
-                            MainListAdapter.data[position].value?.date =(json["data"] as JSONObject).get("origin") as String?
-//                            if (MainListAdapter.data.size > position) MainListAdapter.data[position].(MainListAdapter.data[position].value)
-                        }
-                    }
                 }
             }
 
         }
     })
 }
-//同步方法
-fun wen(okHttpClient: OkHttpClient,url: String,cache: Boolean): JSONObject? {
-    //    url 相同的不能缓存
-    val okhttp = OkHttpClient()
-    val request = Request.Builder()
-        .url(url)
-        .build()
-    val response = okhttp.newCall(request).execute() //同步会
-    val data=response.body?.string()
-    if (data != null)
-    {
-//        if (data.contains("\"code\": 200")) {
-            val date = JSONObject(data)
-            return date
-//            (date["data"] as JSONObject)
 
-        }
-return null
-//                                val re= "origin\": \".*\"".toRegex().find(result)?.value?.substringAfter(" \"")?.substringBeforeLast("\"")
-
-}
-//                                    {
-//	"code": 200,
-//	"msg": "success",
-//	"data": {
-//		"content": "低头独长叹，此叹无人喻。",
-//		"origin": "买花 / 牡丹",
-//		"author": "白居易",
-//		"category": "古诗文-抒情-孤独"
-//	},
-//	"author": {
-//		"name": "Alone88",
-//		"desc": "由Alone88提供的免费API 服务，官方文档：www.alapi.cn"
-//	}
-//}
+//val response = okhttp.newCall(request).execute() //同步会
