@@ -57,7 +57,7 @@ class App : Application(), CactusCallback {
             addCallback(this@App)
             //可选，切后台切换回调
             addBackgroundCallback {
-                Toast.makeText(this@App, if (it) "退到后台啦" else "跑到前台啦", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@App, if (it) "退到后台啦" else "跑到前台啦", Toast.LENGTH_SHORT).show()
             }
         }
     }

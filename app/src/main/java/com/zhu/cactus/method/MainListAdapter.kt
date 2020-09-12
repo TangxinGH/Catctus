@@ -1,7 +1,14 @@
 package com.zhu.cactus.method
 
 import android.animation.ValueAnimator
+import android.app.admin.DeviceAdminInfo
+import android.bluetooth.BluetoothClass
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,13 +26,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.zhu.cactus.App
 import com.zhu.cactus.POJO.JsonHitokoto
-import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.R
 import com.zhu.cactus.animationPlaybackSpeed
 import com.zhu.cactus.utils.*
-import kotlinx.android.synthetic.main.filter_layout_1.view.*
 import kotlinx.android.synthetic.main.item_list.view.*
 
 /*展开动画由本类实现，以及内容？？*/
@@ -102,6 +109,8 @@ companion object{
                     else
                         Glide.with(App.context).load("https://api.paugram.com/wallpaper/?f=$position").apply(options) .into(holder.scaleContainer.myImageView)
 
+//                       .fallback( ColorDrawable(Color.GRAY))
+
                 } )
         expandItem(holder, model == expandedModel, animate = false)
         scaleDownItem(holder, position, isScaledDown)
@@ -113,12 +122,36 @@ companion object{
                     // expand clicked view
                     expandItem(holder, expand = true, animate = true)
                     expandedModel = model
+
+//                    Glide.with(App.context).asBitmap() 背景
+//                        .load("https://api.paugram.com/wallpaper/?f=$position")
+//                        .apply(options)
+//                        .into(object : CustomTarget<Bitmap>(){
+//                            override fun onResourceReady(
+//                                resource: Bitmap,
+//                                transition: Transition<in Bitmap>?
+//                            ) {
+//                                val bitmap=   Bitmap.createBitmap( resource,resource.width/3,0,resource.width*2/3,resource.height)
+//                                if (bitmap!=null)
+//                                    holder.scaleContainer.background=BitmapDrawable(App.context.resources, bitmap)
+//                            }
+//
+//                            override fun onLoadCleared(placeholder: Drawable?) {
+//
+//                            }
+//                        })
+
+
                 }
                 model -> {
 
                     // collapse clicked view
                     expandItem(holder, expand = false, animate = true)
                     expandedModel = null
+
+//                   if(isApkInDebug(App.context)) holder.scaleContainer.background= ColorDrawable(Color.GRAY)
+//                    else holder.scaleContainer.background= ColorDrawable(Color.WHITE)
+
                 }
                 else -> {
 
@@ -131,6 +164,7 @@ companion object{
                     // expand clicked view
                     expandItem(holder, expand = true, animate = true)
                     expandedModel = model
+
                 }
             }
         }
