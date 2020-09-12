@@ -6,5 +6,5 @@
     <string name="channel_name">bigview</string>
     <string name="channel_description">大视图用的</string>
     <string name="preference_GPS_user_key">GPSUser</string>
-
+    <string name="preference_TTF_Font_key">GPSUser</string>
 </resources>

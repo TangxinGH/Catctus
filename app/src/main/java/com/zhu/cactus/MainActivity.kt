@@ -63,7 +63,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         drawer_icon.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) } //左则菜单
-        switchMaterial.setOnClickListener { textView.isClickable = switchMaterial.isChecked }//滚动
+        switchMaterial.setOnClickListener {
+            //储存当前用户
+            val sharedPref: SharedPreferences = getSharedPreferences(
+                getString(R.string.preference_TTF_Font_key),
+                Context.MODE_PRIVATE
+            )
+            with(sharedPref.edit()) {
+                putString("font", switchMaterial.isChecked.toString())
+                commit()
+            }
+        }// 服务？
         GpsID.setOnClickListener {
             //储存当前用户
             val sharedPref: SharedPreferences = getSharedPreferences(

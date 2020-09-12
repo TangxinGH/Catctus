@@ -104,8 +104,8 @@ companion object{
                 .observe(life,androidx.lifecycle.Observer<JsonHitokoto>{
                     holder.scaleContainer.title.text= it.id.toString()
                     holder.scaleContainer.OneWord.text= it.hitokoto.toString()
-                    holder.scaleContainer.wordFrom.text= it.from.toString()
-                    holder.scaleContainer.imgAuthor.text= it.creator.toString()
+                    holder.scaleContainer.wordFrom.text="————   "+ it.from.toString()
+                    holder.scaleContainer.imgAuthor.text= "作者：  "+it.creator.toString()
                     if(position<=8)
                     Glide.with(App.context).load("https://bing.biturl.top/?resolution=1366&format=image&index=$position&mkt=zh-CN").apply(options) .into(holder.scaleContainer.myImageView)
                     else
