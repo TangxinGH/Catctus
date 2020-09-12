@@ -93,6 +93,19 @@
                 android:layout_marginTop="50dp"
                 android:text="GpsID" />
         </LinearLayout>
+
+            <Button
+                android:id="@+id/textButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="66dp"
+                android:layout_marginTop="18dp"
+                android:textSize="15sp"
+                android:text="点击打开自启动"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                />
+
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 </merge>

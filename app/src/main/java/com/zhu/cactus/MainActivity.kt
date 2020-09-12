@@ -23,6 +23,7 @@ import com.zhu.cactus.POJO.JsonHitokoto
 import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.filter.FiltersLayout
 import com.zhu.cactus.filter.FiltersPagerAdapter
+import com.zhu.cactus.utils.Util.startToAutoStartSetting
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
 
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         drawer_icon.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) } //左则菜单
+        textButton.setOnClickListener { startToAutoStartSetting(this) }
         switchMaterial.setOnClickListener {
             //储存当前用户
             val sharedPref: SharedPreferences = getSharedPreferences(
