@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.App
 import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.R
@@ -68,6 +69,8 @@ class FiltersPagerAdapter(context: Context, private val listener: (updatedPositi
          * Bind all the filter buttons (if any). Clicking the filter button toggles state
          * which is shown by a short toggle animation
          */
+        if (App.typeface!=null) TypefaceHelper.typeface(holder.itemView) //应用字体
+
         val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(RoundedCorners(20))
         OneData[position].observe(life, Observer {
              holder.filterViewText.forEachIndexed{index, materialTextView -> materialTextView.text=

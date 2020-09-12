@@ -28,6 +28,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.App
 import com.zhu.cactus.POJO.JsonHitokoto
 import com.zhu.cactus.R
@@ -96,6 +97,7 @@ companion object{
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val model = adapterList[position]
 //        val url = "https://i.niupic.com/images/2020/09/09/8EkH.jpg"
+        if (App.typeface!=null) TypefaceHelper.typeface(holder.cardContainer)//应用字体
         //设置成true才会启动缓存，默认是false
         val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(RoundedCorners(20))
             data[position]//注意越界问题

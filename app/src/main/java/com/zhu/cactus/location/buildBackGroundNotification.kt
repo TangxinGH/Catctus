@@ -9,7 +9,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import com.zhu.cactus.R
-
+val NotificationChannel_Id ="BackgroundLocatinService"  //最好不要直接取包名
 val NOTIFICATION_CHANNEL_NAME = "BackgroundLocation"
 private var notificationManager: NotificationManager? = null
 var isCreateChannel = false
@@ -24,7 +24,7 @@ var isCreateChannel = false
                 notificationManager =
                     context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             }
-            val channelId = context.packageName
+            val channelId = NotificationChannel_Id
             if (!isCreateChannel) {
                 val notificationChannel = NotificationChannel(
                     channelId,

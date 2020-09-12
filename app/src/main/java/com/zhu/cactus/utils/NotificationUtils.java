@@ -30,7 +30,7 @@ import androidx.core.app.NotificationCompat;
 public class NotificationUtils extends ContextWrapper {
 
 
-    public static final String CHANNEL_ID = "default";
+    public static final String CHANNEL_ID = "NotificationUtils";
     private static final String CHANNEL_NAME = "Default_Channel";
     private NotificationManager mManager;
     private int[] flags;
