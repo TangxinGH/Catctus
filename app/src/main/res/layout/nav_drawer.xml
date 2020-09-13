@@ -103,7 +103,6 @@
                 android:layout_marginTop="18dp"
                 android:textSize="15sp"
                 android:text="点击打开自启动"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
                 />
 
         </LinearLayout>

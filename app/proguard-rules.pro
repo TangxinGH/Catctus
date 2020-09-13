@@ -28,6 +28,7 @@
 -keep class com.zhu.cactus.POJO.** { *; }
 
 -keep class com.zhu.cactus.ONE.**{*;}
+ -keep class com.gyf.cactus.entity.* {*;}
 -keepnames class androidx.navigation.fragment.NavHostFragment
 #　ｇｌｉｄ文件
 -keep public class * implements com.bumptech.glide.module.GlideModule

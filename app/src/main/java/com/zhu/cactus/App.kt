@@ -43,8 +43,15 @@ class App : Application(), CactusCallback {
         super.onCreate()
         context = applicationContext
         applicationInit()
-
-        //可选，设置通知栏点击事件
+/*
+如果你项目里使用了Thread.UncaughtExceptionHandler或者第三方异常捕获库，比如友盟，bugly等，
+Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比如友盟，bugly等之后注册使用，
+并且建议在Application里注册使用。 为什么要这样操作？因为如果android 8.0以上设备隐藏了通知栏信息，
+当您的app崩溃重启后会出现invalid channel for service notification异常，而该异常属于系统级别的，没法捕获，
+所以Cactus对该异常进行了杀死app的操作，但是并不能保证第三方异常监控还是能捕获它。
+如果第三方后台还是有该异常信息，你又觉得该异常影响你的app崩溃率，请调用hideNotificationAfterO(false)方法，打开通知栏信息。
+可选，设置通知栏点击事件
+*/
         val pendingIntent =
             PendingIntent.getActivity(this, 0, Intent().apply {
                 setClass(this@App, MainActivity::class.java)
@@ -57,6 +64,8 @@ class App : Application(), CactusCallback {
             setBackgroundMusicEnabled(true)
             //可选，设置奔溃可以重启，google原生rom android 10以下可以正常重启
             setCrashRestartUIEnabled(true)
+            setOnePixEnabled(true)
+//            setCrashRestartUIEnabled(false)
             //可选，运行时回调
             addCallback(this@App)
             //可选，切后台切换回调
@@ -71,7 +80,7 @@ class App : Application(), CactusCallback {
         val strategy = UserStrategy(applicationContext)
         strategy.isUploadProcess = getProcessName() == null || getProcessName().equals(packageName)//时增加一个上报进程的策略配置
 // 初始化Bugly
-//        CrashReport.initCrashReport(applicationContext, "284486e9ec", false,strategy)//第三个参数为SDK调试模式开关
+        CrashReport.initCrashReport(applicationContext, "284486e9ec", false,strategy)//第三个参数为SDK调试模式开关
 // init sno pass
         val sp = getSharedPreferences(getString(R.string.preference_user_key), Context.MODE_PRIVATE)
         sno = sp.getString("sno", "141213").toString()

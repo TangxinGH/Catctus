@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
 
+    <!--        android:launchMode="singleInstance" 可以设置一下这个-->
     <application
         android:name=".App"
         android:icon="@mipmap/ic_launcher"
@@ -32,7 +33,7 @@
             android:value="3.2.42" />
 
         <activity
-            android:name=".BotttomNav"
+            android:name=".BottomNab"
             android:label="@string/title_activity_botttom_nav" />
         <activity android:name=".MainActivity">
             <intent-filter>

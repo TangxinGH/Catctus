@@ -3,6 +3,7 @@ package com.zhu.cactus
 import android.Manifest
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -12,22 +13,21 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
-import com.tencent.bugly.crashreport.CrashReport
-import com.zhu.cactus.method.MainListAdapter
-import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.ONE.getONEFor
 import com.zhu.cactus.ONE.gethitokoto
 import com.zhu.cactus.POJO.JsonHitokoto
 import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.filter.FiltersLayout
 import com.zhu.cactus.filter.FiltersPagerAdapter
+import com.zhu.cactus.method.MainListAdapter
+import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
+
 
 var animationPlaybackSpeed: Double = 0.8  //动画播放速度
 
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 putString("font", switchMaterial.isChecked.toString())
                 commit()
             }
-            setContentView(R.layout.activity_botttom_nav)
+//            startActivityForResult(Intent(this@MainActivity, BottomNab::class.java), 1)
         }// 服务？
         GpsID.setOnClickListener {
             //储存当前用户
