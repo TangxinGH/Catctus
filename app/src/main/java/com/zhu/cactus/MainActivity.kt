@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                 putString("font", switchMaterial.isChecked.toString())
                 commit()
             }
+            setContentView(R.layout.activity_botttom_nav)
         }// 服务？
         GpsID.setOnClickListener {
             //储存当前用户
