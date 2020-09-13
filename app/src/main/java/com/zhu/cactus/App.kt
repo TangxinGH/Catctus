@@ -5,11 +5,13 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import android.system.Os
 import androidx.lifecycle.MutableLiveData
 import com.gyf.cactus.callback.CactusCallback
 import com.gyf.cactus.ext.cactus
 import com.norbsoft.typefacehelper.TypefaceCollection
+import com.tencent.bugly.crashreport.CrashReport
+import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import com.zhu.cactus.download.font.iniFont
 import com.zhu.cactus.download.images.initImage
 import com.zhu.cactus.services.Location
@@ -33,6 +35,11 @@ class App : Application(), CactusCallback {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+        /*bugly init */
+        val strategy = UserStrategy(applicationContext)
+        strategy.isUploadProcess = getProcessName() == null || getProcessName().equals(packageName)//时增加一个上报进程的策略配置
+// 初始化Bugly
+        CrashReport.initCrashReport(applicationContext, "284486e9ec", false,strategy)//第三个参数为SDK调试模式开关
 // init sno pass
         val sp = getSharedPreferences(getString(R.string.preference_user_key), Context.MODE_PRIVATE)
         sno = sp.getString("sno", "141213").toString()

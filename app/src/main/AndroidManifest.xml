@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zhu.cactus">
     <!-- 位置 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,6 +13,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 前台通知 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<!--bugly 插件权限-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".App"
@@ -21,9 +26,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="BUGLY_APP_VERSION"
+            android:value="3.2.42" />
+
         <activity
             android:name=".BotttomNav"
-            android:label="@string/title_activity_botttom_nav"></activity>
+            android:label="@string/title_activity_botttom_nav" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

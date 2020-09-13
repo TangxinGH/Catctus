@@ -16,6 +16,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
+import com.tencent.bugly.crashreport.CrashReport
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.ONE.getONEFor
