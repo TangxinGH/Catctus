@@ -17,8 +17,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-//            shrinkResources true//减小apk包大小
+            minifyEnabled true
+            shrinkResources true//减小apk包大小
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled true
+            shrinkResources true//减小apk包大小
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

@@ -47,8 +47,7 @@ fun Hitokoto(
     val request = Request.Builder()
         .url(url)
         .build()
-    val call: Call = okHttpClient.newCall(request)//异步 线程请求
-    call.enqueue(object : Callback {
+    okHttpClient.newCall(request).enqueue(object : Callback {
         override fun onFailure(call: Call, e: IOException) {
             println("请求失败")
         }

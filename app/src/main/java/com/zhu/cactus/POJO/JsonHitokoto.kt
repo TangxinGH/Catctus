@@ -1,5 +1,7 @@
 package com.zhu.cactus.POJO
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
 /**
  * Copyright 2020 bejson.com
  */
@@ -10,6 +12,7 @@ package com.zhu.cactus.POJO
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
+
 class JsonHitokoto {
     var id = 0
     var uuid: String? = " "

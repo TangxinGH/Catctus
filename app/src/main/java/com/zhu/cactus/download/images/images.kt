@@ -15,9 +15,8 @@ object NOTIFBitmap {
  //创建一个默认的白色bitmap
 }
 
-fun initImage() {
-    val images = File(context.getExternalFilesDir(null), "Pictures")
-    if (!images.exists() || !File(context.getExternalFilesDir(null),"Pictures/NOTIFImage.jpg").exists()) {//判断文件或文件夹是否存在
+fun initImage(images:File) {
+
         images.mkdirs()//创建目录
         //默认下载在cache下
         val saveDir = "download"
@@ -43,9 +42,4 @@ fun initImage() {
                         Log.d("font", "下载失败")
                     }
                 })
-
-    } else {
-     NOTIFBitmap.bitmap=BitmapFactory.decodeFile(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+"/NOTIFImage.jpg")
-
-    }
 }

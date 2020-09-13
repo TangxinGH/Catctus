@@ -20,23 +20,15 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-#请避免混淆Bugly，在Proguard混淆文件中增加以下配置：
+#请避免混淆Bugly，在Progua
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 
-#ｏｋｈｔｔｐ的文件
-# JSR 305 annotations are for embedding nullability information.
--dontwarn javax.annotation.**
+#ｏｋｈｔｔｐ的文件  只有不使用R8编译 器时才会有问题 去官网
+-keep class com.zhu.cactus.POJO.** { *; }
 
-# A resource is loaded with a relative path so the package of this class must be preserved.
--keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
-
-# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
--dontwarn org.codehaus.mojo.animal_sniffer.*
-
-# OkHttp platform used only on JVM and when Conscrypt dependency is available.
--dontwarn okhttp3.internal.platform.ConscryptPlatform
-
+-keep class com.zhu.cactus.ONE.**{*;}
+-keepnames class androidx.navigation.fragment.NavHostFragment
 #　ｇｌｉｄ文件
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends com.bumptech.glide.module.AppGlideModule

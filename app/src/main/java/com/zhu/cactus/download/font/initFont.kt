@@ -8,19 +8,18 @@ import com.zhu.cactus.App
 import java.io.File
 import java.io.FilenameFilter
 
-fun fileFilterEmpty(dir:File) :Boolean {
+fun fileFilterEmpty(dir:File,extensio:List<String>) :Boolean {
     return run {
         val fileTree: FileTreeWalk = dir.walk()
         fileTree.maxDepth(1) //需遍历的目录层次为1，即无须检查子目录
             .filter {   it.isFile  }
-            .filter {  it.extension in listOf("ttf","TTF") }
+            .filter {  it.extension in extensio }
             .toList().isEmpty()
     }
 }
 
-fun iniFont() {
-    val fonts = File(App.context.getExternalFilesDir(null), "fonts")
-    if (!fonts.exists() || fileFilterEmpty(fonts)) {//判断文件或文件夹是否存在
+fun iniFont(fonts:File) {
+
       if (!fonts.exists())  fonts.mkdirs()//创建目录
         //默认下载在cache下
         val saveDir="download"
@@ -45,16 +44,5 @@ fun iniFont() {
                     }
                 })
 
-    } else {
-            // Initialize typeface helper
-            App.typeface = TypefaceCollection.Builder()
-                .set(
-                    Typeface.NORMAL,
-                    Typeface.createFromFile(fonts.walk().maxDepth(1).filter {   it.isFile  }
-                        .filter {  it.extension in listOf("ttf","TTF") }.first())
-//                Typeface.createFromAsset(assets, "fonts/STXINWEI.TTF")    File("${App.context.getExternalFilesDir(null)}/fonts/STXINWEI.TTF")
-                )
-                .create()
-            TypefaceHelper.init(App.typeface)
-    }
+
 }
