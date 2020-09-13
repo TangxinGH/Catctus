@@ -7,4 +7,6 @@
     <string name="channel_description">大视图用的</string>
     <string name="preference_GPS_user_key">GPSUser</string>
     <string name="preference_TTF_Font_key">GPSUser</string>
+    <string name="text_label_1">主页</string>
+    <string name="text_label_2">个人</string>
 </resources>

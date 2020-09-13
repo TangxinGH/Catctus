@@ -12,6 +12,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
@@ -160,6 +161,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
+//    override fun onSupportNavigateUp() =findNavController(this, R.id.my_nav_host_fragment).navigateUp()
 
     /**
      * Called from FiltersLayout to get adapter scale down animator
