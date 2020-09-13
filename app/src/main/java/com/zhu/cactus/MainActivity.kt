@@ -3,6 +3,7 @@ package com.zhu.cactus
 import android.Manifest
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (App.typeface!=null)TypefaceHelper.typeface(this)//应用字体
+        startActivity(Intent(this,Nav::class.java))
         initData()
         permission()
             }
