@@ -105,17 +105,29 @@
                 android:text="点击打开自启动"
                 />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="66dp"
-                android:layout_marginTop="18dp"
-                android:textSize="15sp"
-                />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="274dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="15sp" />
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="18dp"
+                android:text="下载进度" />
+        </LinearLayout>
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 </merge>

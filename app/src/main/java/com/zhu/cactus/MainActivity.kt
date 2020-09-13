@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity() {
         })
         FontProgressBar.observe(this,androidx.lifecycle.Observer <Int> {
            progressBar.setProgress(it,true)
+            progress_text.text=it.toString()+"%"
         } )
 
 
