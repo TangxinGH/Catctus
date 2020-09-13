@@ -9,4 +9,8 @@
     <string name="preference_TTF_Font_key">GPSUser</string>
     <string name="text_label_1">主页</string>
     <string name="text_label_2">个人</string>
+    <string name="title_activity_botttom_nav">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
