@@ -1,12 +1,10 @@
 package com.zhu.cactus.download.font
 
-import android.graphics.Typeface
 import android.util.Log
-import com.norbsoft.typefacehelper.TypefaceCollection
-import com.norbsoft.typefacehelper.TypefaceHelper
+import androidx.lifecycle.MutableLiveData
 import com.zhu.cactus.App
 import java.io.File
-import java.io.FilenameFilter
+        var FontProgressBar= MutableLiveData(0)
 
 fun fileFilterEmpty(dir:File,extensio:List<String>) :Boolean {
     return run {
@@ -37,6 +35,7 @@ fun iniFont(fonts:File) {
 
                     override fun onDownloading(progress: Int) {
                         Log.d("font", "下载进度：$progress")
+                        FontProgressBar.postValue(progress)
                     }
 
                     override fun onDownloadFailed() {

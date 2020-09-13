@@ -3,7 +3,6 @@ package com.zhu.cactus
 import android.Manifest
 import android.animation.ValueAnimator
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -13,6 +12,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
@@ -20,6 +20,8 @@ import com.zhu.cactus.ONE.getONEFor
 import com.zhu.cactus.ONE.gethitokoto
 import com.zhu.cactus.POJO.JsonHitokoto
 import com.zhu.cactus.POJO.Newslist
+import com.zhu.cactus.download.font.FontProgressBar
+import com.zhu.cactus.download.font.iniFont
 import com.zhu.cactus.filter.FiltersLayout
 import com.zhu.cactus.filter.FiltersPagerAdapter
 import com.zhu.cactus.method.MainListAdapter
@@ -77,7 +79,6 @@ class MainActivity : AppCompatActivity() {
                 putString("font", switchMaterial.isChecked.toString())
                 commit()
             }
-//            startActivityForResult(Intent(this@MainActivity, BottomNab::class.java), 1)
         }// 服务？
         GpsID.setOnClickListener {
             //储存当前用户
@@ -135,6 +136,10 @@ class MainActivity : AppCompatActivity() {
 //            https://juejin.im/entry/6844903497033318408
 //            loop  用findviewid 有loop 问题
         })
+        FontProgressBar.observe(this,androidx.lifecycle.Observer <Int> {
+           progressBar.setProgress(it,true)
+        } )
+
 
     }
 

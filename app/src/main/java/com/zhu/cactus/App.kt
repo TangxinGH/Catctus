@@ -7,8 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
-import android.os.Environment
-import android.system.Os
 import androidx.lifecycle.MutableLiveData
 import com.gyf.cactus.callback.CactusCallback
 import com.gyf.cactus.ext.cactus
@@ -60,7 +58,7 @@ Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比�
 
         cactus {
             //可选，设置通知栏点击事件
-            setPendingIntent(pendingIntent)
+//            setPendingIntent(pendingIntent)
             setBackgroundMusicEnabled(true)
             //可选，设置奔溃可以重启，google原生rom android 10以下可以正常重启
             setCrashRestartUIEnabled(true)

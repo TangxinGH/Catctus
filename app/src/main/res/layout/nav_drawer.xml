@@ -81,7 +81,7 @@
                 android:ems="10"
                 android:hint="GPS ID"
                 android:layout_marginStart="25dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginTop="50dp"
                 android:text="10086"
                 android:inputType="number" />
@@ -103,6 +103,17 @@
                 android:layout_marginTop="18dp"
                 android:textSize="15sp"
                 android:text="点击打开自启动"
+                />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="66dp"
+                android:layout_marginTop="18dp"
+                android:textSize="15sp"
                 />
 
         </LinearLayout>

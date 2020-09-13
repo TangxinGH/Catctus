@@ -1,5 +1,6 @@
 package com.zhu.cactus.download.font
 
+import androidx.lifecycle.MutableLiveData
 import com.zhu.cactus.App
 import okhttp3.*
 import java.io.File
@@ -9,9 +10,10 @@ import java.io.InputStream
 
 
 
-
 class DownloadUtil private constructor() {
     private val okHttpClient: OkHttpClient = OkHttpClient()
+
+
 
     /**
      * @param url 下载连接
