@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".Nav"
             android:label="@string/title_activity_nav"
             >
         </activity>
@@ -36,7 +36,7 @@
             android:name="BUGLY_APP_VERSION"
             android:value="3.2.42" />
 
-        <activity android:name=".Nav" >
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

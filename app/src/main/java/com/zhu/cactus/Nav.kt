@@ -21,9 +21,13 @@ class Nav : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
+//        Change theme to "Theme.AppCompat.Light.NoActionBar"
+////        Remove codes below
+
+//        val appBarConfiguration = AppBarConfiguration(setOf(
+//            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+//        setupActionBarWithNavController(navController, appBarConfiguration) //我们没有这个东西
         navView.setupWithNavController(navController)
     }
 }

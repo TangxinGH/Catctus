@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.1"
@@ -27,6 +29,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                output -> outputFileName = "Catctus-release-v${variant.versionName}-${releaseTime()}.apk"
+            }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -46,7 +54,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
     implementation 'androidx.navigation:navigation-ui:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'

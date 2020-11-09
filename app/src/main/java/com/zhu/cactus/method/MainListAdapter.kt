@@ -28,6 +28,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.signature.MediaStoreSignature
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.App
 import com.zhu.cactus.POJO.JsonHitokoto
@@ -35,6 +36,9 @@ import com.zhu.cactus.R
 import com.zhu.cactus.animationPlaybackSpeed
 import com.zhu.cactus.utils.*
 import kotlinx.android.synthetic.main.item_list.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 /*展开动画由本类实现，以及内容？？*/
 data class MainListModel(val id: Int)
@@ -99,7 +103,9 @@ companion object{
 //        val url = "https://i.niupic.com/images/2020/09/09/8EkH.jpg"
         if (App.typeface!=null) TypefaceHelper.typeface(holder.cardContainer)//应用字体
         //设置成true才会启动缓存，默认是false
-        val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).transform(RoundedCorners(20))
+        val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).signature(
+            MediaStoreSignature("jpg", SimpleDateFormat("YYYYMMdd", Locale.CHINA).format(Date()).toLong(), 0)
+        ).transform(RoundedCorners(20))
             data[position]//注意越界问题
                 .observe(life,androidx.lifecycle.Observer<JsonHitokoto>{
                     holder.scaleContainer.title.text= it.id.toString()

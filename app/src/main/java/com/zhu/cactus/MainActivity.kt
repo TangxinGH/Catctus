@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (App.typeface!=null)TypefaceHelper.typeface(this)//应用字体
-        startActivity(Intent(this,Nav::class.java))
+//        supportActionBar?.hide()
         initData()
         permission()
             }
@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                 putString("font", switchMaterial.isChecked.toString())
                 commit()
             }
+            startActivity(Intent(this,Nav::class.java))
         }// 服务？
         GpsID.setOnClickListener {
             //储存当前用户

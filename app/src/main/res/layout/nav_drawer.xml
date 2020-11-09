@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="HardcodedText">
 
     <com.google.android.material.navigation.NavigationView
@@ -70,29 +70,41 @@
                 android:layout_marginEnd="60dp"
                 android:layout_marginTop="50dp"
                 android:text="服务" />
-<LinearLayout
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-            <EditText
-                android:id="@+id/editTextNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="GPS ID"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginTop="50dp"
-                android:text="10086"
-                android:inputType="number" />
+   >
 
-            <Button
-                android:id="@+id/GpsID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="GpsID" />
-        </LinearLayout>
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="GPS ID"
+        android:inputType="number"
+        android:text="10086"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/GpsID"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/GpsID"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="GpsID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/editTextNumber"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/textButton"
@@ -105,29 +117,44 @@
                 android:text="点击打开自启动"
                 />
 
-<LinearLayout
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+     >
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="274dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="8dp"
-        android:textSize="15sp" />
-            <TextView
-                android:id="@+id/progress_text"
-                android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/progress_text"
+        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
 
-                android:layout_marginTop="18dp"
-                android:text="下载进度" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/progress_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="下载进度"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 </merge>

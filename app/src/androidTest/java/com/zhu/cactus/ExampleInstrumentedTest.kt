@@ -7,6 +7,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -20,5 +22,6 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.zhu.cactus", appContext.packageName)
+        SimpleDateFormat("YYYY-MM-dd", Locale.CHINA).format(Date()).toLong()
     }
 }
