@@ -1,2 +1,3 @@
+include ':daomengKJ'
 include ':app'
 rootProject.name = "Cactus"

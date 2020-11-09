@@ -21,8 +21,8 @@ import com.zhu.cactus.download.images.initImage
 import com.zhu.cactus.services.Location
 import com.zhu.cactus.services.component_impl
 import com.zhu.cactus.services.network
+import com.zhu.daomengkj.App.Companion.dao_meng_context
 import java.io.File
-
 
 class App : Application(), CactusCallback {
 
@@ -40,6 +40,7 @@ class App : Application(), CactusCallback {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+        dao_meng_context= context
         applicationInit()
 /*
 如果你项目里使用了Thread.UncaughtExceptionHandler或者第三方异常捕获库，比如友盟，bugly等，
