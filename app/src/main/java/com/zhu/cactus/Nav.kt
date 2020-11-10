@@ -11,14 +11,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.zhu.daomengkj.App
+import com.zhu.daomengkj.Py_invoke_Java
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_nav.*
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.nav_drawer.*
 
 
 class Nav : AppCompatActivity() {
 
-    @SuppressLint("ShowToast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
@@ -36,16 +39,6 @@ class Nav : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration) //我们没有这个东西
         navView.setupWithNavController(navController)
 
-        daomeng_login.setOnClickListener {
-            if (daomeng_login.text != null && daomeng_pass.text != null) {
-                val sharedPreference = getSharedPreferences("daomengKJ", Context.MODE_PRIVATE)
-                val editor = sharedPreference.edit()
-                editor.putString("username", daomeng_login.text.toString())
-                editor.putString("password", daomeng_pass.text.toString())
-                editor.apply()
-                Toast.makeText(this, "保存成功！", Toast.LENGTH_SHORT)
-            } else Toast.makeText(this, "输入为空:`${daomeng_login}+${daomeng_pass}`", Toast.LENGTH_SHORT)
 
-        }
     }
 }

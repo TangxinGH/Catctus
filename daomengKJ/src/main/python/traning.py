@@ -2,6 +2,9 @@ import time
 import unittest
 from datetime import datetime
 
+def  java(java_object):
+    java_object.showinfo(title="xxx",mess="xxxxjjfd")
+    print("testjava_object")
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):

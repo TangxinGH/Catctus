@@ -6,7 +6,7 @@ from Crypto.Cipher import AES
 import urllib.parse
 from pyDes import des, ECB, PAD_PKCS5
 import binascii
-
+from urllib.parse import urlencode
 
 class AES_CBC:
     # str不是16的倍数那就补足为16的倍数
@@ -64,14 +64,18 @@ def get_signtoken(str):
 
 
 class Login:
-    a = {"channelName": "dmkj_Android", "countryCode": "CN", "createTime": int(100 * time.time()),
-         "device": "Xiaomi Mi MIX 2S", "hardware": "qcom", "modifyTime": int(100 * time.time()),
-         "operator": "%E6%9C%AA%E7%9F%A5", "screenResolution": "1080-2116",
-         "startTime": int(100 * time.time()) + 19606523,
-         "sysVersion": "Android 29 10", "system": "android", "uuid": "A4:60:46:1F:74:BF", "version": "4.2.6"}
-
+    # a = {"channelName": "dmkj_Android", "countryCode": "CN", "createTime": int(100 * time.time()),
+    #      "device": "Xiaomi Mi MIX 2S", "hardware": "qcom", "modifyTime": int(100 * time.time()),
+    #      "operator": "%E6%9C%AA%E7%9F%A5", "screenResolution": "1080-2116",
+    #      "startTime": int(100 * time.time()) + 19606523,
+    #      "sysVersion": "Android 29 10", "system": "android", "uuid": "A4:60:46:1F:74:BF", "version": "4.2.6"}
+    standardUA = {"channelName": "dmkj_Android", "countryCode": "US", "createTime": int(100 * time.time()),
+         "device": "xiaomi Redmi Note 7 Pro", "hardware": "qcom", "modifyTime": int(100 * time.time()),
+         "operator": "%E4%B8%AD%E5%9B%BD%E7%A7%BB%E5%8A%A8", "screenResolution": "1080-2131",
+         "startTime": int(100 * time.time()) + 19606523, "sysVersion": "Android 29 10", "system": "android",
+         "uuid": "7C:03:AB:21:F1:DD", "version": "4.3.6"}
     headers = {
-        'standardUA': str(a),
+        'standardUA': str(standardUA),
         'Content-Type': 'application/x-www-form-urlencoded',
         'Host': 'appdmkj.5idream.net',
         'Connection': 'Keep-Alive',
@@ -81,14 +85,14 @@ class Login:
 
 
     def get_token_pho(self, acc, pwd):
-        sss = '{"account":"' + acc + '","pwd":"' + pwd_encrypt(pwd) + '","version":"4.2.4"}'
-        sss = '{"account":"' + acc + '","pwd":"' + pwd_encrypt(pwd) + '","signToken":"' + get_signtoken(
-            str(sss)) + '","version":"4.2.4"}'
+        sss = {"account": acc, "pwd": pwd_encrypt(pwd), "version": "4.3.6"}  # 加密方法 还有版本限制 ？？？
+        # sss = '{"account":"' + acc + '","pwd":"' + pwd_encrypt(pwd) + '","signToken":"' + get_signtoken(
+        #     str(sss)) + '","version":"4.2.4"}'
         url = "https://appdmkj.5idream.net/v2/login/phone"
-        data = "dataKey=t%2BZ88oeo2xscPIEBzd1JWLr%2Faae06xI9WOwwXOVRupB%2BsAsl1nj2HDpZPc3ygHRlgm0glZajSvF7FsxbGiBe%2FcykCvyhloLZfYPGGLrCZV6ZBVDBHgwg6%2Fkq87A6A%2Bp%2BmTeUyp3eZz4voIGytVkwmlofr0Jn5bgBOitzBJtnq0I%3D&data={}".format(
-            jiami(sss))
+        # data = "dataKey=t%2BZ88oeo2xscPIEBzd1JWLr%2Faae06xI9WOwwXOVRupB%2BsAsl1nj2HDpZPc3ygHRlgm0glZajSvF7FsxbGiBe%2FcykCvyhloLZfYPGGLrCZV6ZBVDBHgwg6%2Fkq87A6A%2Bp%2BmTeUyp3eZz4voIGytVkwmlofr0Jn5bgBOitzBJtnq0I%3D&data={}".format(
+        #     jiami(sss))
 
-        res = requests.post(url, headers=self.headers, data=data).json()
+        res = requests.post(url, headers=self.headers, data=urlencode(sss)).json()
         if res['code'] == '100':
             self.name = res['data']['name']
             self.uid = str(res['data']['uid'])
@@ -102,6 +106,7 @@ class Login:
 def get_token(acc, pwd,path):
     login = Login()
     if login.get_token_pho(acc, pwd):
+        print("登录成功，第一次登录，或者token失效后的登录，正在写入文件")
         with open(path+'/'+'a.ini', 'w+', encoding='utf-8') as f:
             f.write(login.token + '\n')
             f.write(login.name + '\n')
