@@ -124,19 +124,19 @@ object Py_invoke_Java {
 
     fun result_messagebox(title: String, message: String) {
         /*从python中返回一些消息提示！！*/
-        Toast.makeText(App.dao_meng_context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(App.dao_meng_context, "${title}，${message}", Toast.LENGTH_SHORT).show()
     }
 
 
     fun showwarning(title: String, message: String) {
-        Toast.makeText(App.dao_meng_context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(App.dao_meng_context, "${title}，${message}", Toast.LENGTH_SHORT).show()
 
     }
 
 
     fun showinfo(title: String, message: String) {
         println("showinfo${title}和${message}")
-        Toast.makeText(App.dao_meng_context, message, Toast.LENGTH_SHORT)
+        Toast.makeText(App.dao_meng_context, "${title}，${message}", Toast.LENGTH_SHORT).show()
 
     }
 

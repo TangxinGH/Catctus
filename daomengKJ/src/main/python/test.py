@@ -7,14 +7,13 @@ from jiami import *
 from java import jclass
 
 
+
 class Post:
     def __init__(self):
         java__static = jclass("com.zhu.daomengkj.Py_invoke_Java")
-        self.instance_father=java__static.INSTANCE
+        self.instance=java__static.INSTANCE
 
-    instance_father = None #则父类的属性不会被初始化，因而此时调用子类中name属性不存在
-
-
+    instance = None #则父类的属性不会被初始化，因而此时调用子类中name属性不存在
 
     standardUA = {"channelName": "dmkj_Android", "countryCode": "US", "createTime": int(100 * time.time()),
                   "device": "xiaomi Redmi Note 7 Pro", "hardware": "qcom", "modifyTime": int(100 * time.time()),
@@ -107,8 +106,9 @@ class Post:
             pass
 
     def join(self, id, token, uid,act_start_time):
-        print("打印instance_father",self.instance_father)
-        self.instance_father.showinfo("报名instance","进入流程")
+        print("打印instance",self.instance)
+        self.instance.showinfo("测试","子类的属性调用")
+        self.instance.showinfo("报名instance","进入流程")
         str2={
             "uid":uid,
             "activityId":id,
@@ -124,17 +124,17 @@ class Post:
         print("开始报名")
         print("报名时间为：" , act_start_time)
         if not act_start_time:
-            self.instance_father.showwarning("出错了","报名时间出问题")
+            self.instance.showwarning("出错了","报名时间出问题")
             return False
         # 对时间进行转换
         start_time = datetime.strptime(act_start_time, '%Y.%m.%d %H:%M')
         # '2020.11.07 15:00-2020.11.07 18:00'
         if start_time < datetime.now():
             print("过时了或者正在报名，")
-            self.instance_father.showinfo("正在报名",str(id))
+            self.instance.showinfo("正在报名",str(id))
             res = requests.post(url, headers=self.headers, data=urlencode(str2))
             try:
-                self.instance_father.showinfo("报名结果",res.json())
+                self.instance.showinfo("报名结果",res.json())
                 return res.json()
             except:
                 return False
@@ -142,7 +142,7 @@ class Post:
         # start_time = datetime(2020, 11, 5, 19, 49)  # 用 指定日期时间创建datetime
         now_time = datetime.now()  # 现在的时间
         sleep_time = start_time - now_time  # 时间差
-        self.instance_father.showinfo('活动未开始，将睡眠秒', str(sleep_time.seconds + 1.08))
+        self.instance.showinfo('活动未开始，将睡眠秒', str(sleep_time.seconds + 1.08))
         time.sleep(sleep_time.seconds + 1.08)  # 单位为秒 ,延迟 80毫秒 阻塞  . 加1秒
 
         res = requests.post(url, headers=self.headers, data=urlencode(str2))
