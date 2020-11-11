@@ -33,7 +33,7 @@ class Nav : AppCompatActivity() {
 
 //        Change theme to "Theme.AppCompat.Light.NoActionBar"
 ////        Remove codes below
-
+Toast.makeText(this,"请在五分钟内完成操作，因为没有许可证，每次五分钟，否则程序会关闭！！！",Toast.LENGTH_LONG).show()
 //        val appBarConfiguration = AppBarConfiguration(setOf(
 //            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
 //        setupActionBarWithNavController(navController, appBarConfiguration) //我们没有这个东西

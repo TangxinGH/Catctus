@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime,timedelta
 from urllib.parse import urlencode
 import requests
 import time
@@ -138,7 +138,9 @@ class Post:
                 return res.json()
             except:
                 return False
-
+        if start_time > ( datetime.now()+ timedelta(minutes=5)):
+            self.instance.showwarning("时间太早了","五分钟内完成")
+            return False
         # start_time = datetime(2020, 11, 5, 19, 49)  # 用 指定日期时间创建datetime
         now_time = datetime.now()  # 现在的时间
         sleep_time = start_time - now_time  # 时间差
