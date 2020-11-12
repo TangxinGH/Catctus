@@ -1,11 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'com.chaquo.python'
-    id 'org.jetbrains.kotlin.jvm'
-    id 'org.jetbrains.kotlin.plugin.serialization' 
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
@@ -19,31 +16,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        python {
-            // If Chaquopy fails to find Python on your build machine, enable the following
-            // line and edit it to point to Python 3.5 or later.
-//             buildPython "C:/Python36/python.exe"
-//            buildPython "C:\\ProgramData\\Anaconda3\\envs\\common\\python.exe"
-            pip {
-                // A pip requirement specifier, with or without a version number:
-//                install "requests"
-                install "requests==2.24.0"
-
-                install "jsonpath==0.82"
-                install "pydes==2.0.1"
-                install "pycryptodome"
-                // An sdist or wheel filename, relative to the project directory:
-//                install "jsonpath-1.2.3-py2.py3-none-any.whl"
-//
-//                // "-r"` followed by a requirements filename, relative to the
-//                // project directory:
-//                install "-r", "requirements.txt"
-            }
-        }
-
-        ndk {
-            abiFilters "armeabi-v7a", "x86" , "arm64-v8a"
-        }
     }
 
     buildTypes {
@@ -62,7 +34,8 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1" //协程
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'

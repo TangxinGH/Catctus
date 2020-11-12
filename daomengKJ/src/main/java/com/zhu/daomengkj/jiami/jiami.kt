@@ -1,3 +1,5 @@
+package com.zhu.daomengkj.jiami
+
 import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.DESKeySpec

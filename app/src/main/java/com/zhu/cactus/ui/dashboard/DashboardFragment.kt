@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.zhu.cactus.R
 import com.zhu.daomengkj.App
-import com.zhu.daomengkj.Py_invoke_Java
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
@@ -34,10 +33,10 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
 //      当点击切换到这时
             textView.text = it
-            val daomeng = App()
-            daomeng._init_()//初始化
+            val daomeng = App(com.zhu.cactus.App.context,dashboardViewModel.text)
+
             if (daomeng.is_login()) {
-                textView.text = daomeng.login()
+              daomeng.login()
                 println("dashboardviewmodel 被执行了")
 //          activities=dashboardViewModel.text
             }
@@ -47,18 +46,17 @@ class DashboardFragment : Fragment() {
 
         root.join_to_act.setOnClickListener {
             if (edit_join_id2.text != null && edit_join_id2.text.isNotBlank()) {
-                Py_invoke_Java.id2 = edit_join_id2.text.toString()
-                App().join(numberPicker.value)//报名活动
+                val daomeng = App(com.zhu.cactus.App.context,dashboardViewModel.text).join(edit_join_id2.text.toString(),numberPicker.value)//报名活动
             } else Toast.makeText(
-                App.dao_meng_context,
+                context,
                 "id输入为空了或者 “”:`${edit_join_id2}`",
                 Toast.LENGTH_SHORT
             ).show()
         }
         root.only_me_join.setOnClickListener {
-            val daomeng = App()
+            val daomeng = App(com.zhu.cactus.App.context,dashboardViewModel.text)
             if (daomeng.is_login()){
-                textView.text= daomeng.can_join()
+                  daomeng.can_join()
             }
         }
 

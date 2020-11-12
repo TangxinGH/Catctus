@@ -1,19 +1,30 @@
 package com.zhu.daomengkj
 
+import androidx.lifecycle.MutableLiveData
+import com.zhu.daomengkj.Interceptor.AddHeadersInterceptor
+import com.zhu.daomengkj.Interceptor.LoggingInterceptor
+import com.zhu.daomengkj.bean.LoginJSON
+import com.zhu.daomengkj.jiami.DES_ECB_Encrypt
+import kotlinx.serialization.json.Json
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.IOException
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 
 var path = ""
 
-class Main1 constructor() : Post() {
+class Main1(val activities: MutableLiveData<String>) : Post() {
 
 
     //    """类的帮助信息"""  // 类文档字符串
     var acc = ""
     var pwd = ""
     var path = ""
-    var instance:Py_invoke_Java
+    private var instance:Py_invoke_Java
 
     init {
         // 构造函数 如果子类定义了自己的初始化函数 ， 而在子类中没有显示调用父类的初始化函数 ， 则父类的属性不会被初始化
@@ -30,8 +41,6 @@ class Main1 constructor() : Post() {
     fun read() {
         try {
             val value= File(this.path + '/' + "a.ini").readLines()
-
-
             this.token = value[0]
             this.name =value[1]
             this.uid =value[2]
@@ -54,23 +63,17 @@ class Main1 constructor() : Post() {
                 return false
             }
         }                else{
-                if( get_token(this.acc, this.pwd, this.path))
-                    return true
-                    else{
-                    this.instance.showwarning("出错了", "请检查账号密码")
-                    return false
+                    this.instance.showwarning("过期了","或者别处登录了，正在获取")
+                   get_token_pho(acc,pwd,this)
+
                 }
-                }
+        return false
             }
 
     fun get_id( ) {
-        this.get_ids(this.token, this.uid) // 仅我可以报名的活动
+        this.get_ids(this.token, this.uid,activities)
         this.instance.showinfo("欢迎您", this.name)
-//        names = []
-//        for name, id, statusText in zip(this.names, this.ids, this.statusTexts){
-//            names.append(name + '   {}   {}'.format(id, statusText))
-//            return names
-//        }
+
     }
 
     fun can_join( ) {
@@ -95,7 +98,7 @@ class Main1 constructor() : Post() {
     }
 
     fun chiken( ): String {
-        val id = this.instance.get_id1()
+        val id =" this.instance.get_id1()"
        val res = this.get_info(id, this.token, this.uid)
         if( res!=null )
             return res
@@ -106,7 +109,7 @@ class Main1 constructor() : Post() {
         }
 
     fun get_start_time( ) {
-       val to_join_act_id = this.instance.get_id2()  // 活动id
+       val to_join_act_id = "sd"  // 活动id
 
        var res =
             this.get_info(to_join_act_id, this.token, this.uid)
@@ -126,7 +129,7 @@ class Main1 constructor() : Post() {
         }
 
     fun enter( ) {
-       val id = this.instance.get_id2()
+       val id = "this.instance.get_id2()"
         println("报名的id为"+ id)
        val start_time =
             this.get_start_time()  // post 类的 属性 start_time 赋值 ，保存这个值
@@ -201,9 +204,59 @@ class Main1 constructor() : Post() {
 
 
 open class Post {
-    fun test_token(path: String): Boolean { return false}
-    fun get_token(acc: String, pwd: String, path: String): Boolean {return false}
-    fun get_ids(token: String, uid: String) {}
+    fun test_token(path: String): Boolean {
+return false
+
+        }
+
+    fun get_ids(token: String, uid: String, activities: MutableLiveData<String>) {
+
+      val  url = "https://appdmkj.5idream.net/v2/activity/activities"
+        val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
+
+        val okHttpClient = httpClientBuilder.connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .addInterceptor(AddHeadersInterceptor())//            .addheader()则会有多个数据
+            .addInterceptor(LoggingInterceptor())//增加拦截器
+            .build() //2.创建Request对象，设置一个url地址（百度地址）,设置请求方式。
+val str=
+    "level=&sort=&version=4.3.6&token=$token&joinStartTime=&catalogId2=&uid=$uid&catalogId=&collegeFlag=&joinEndTime=&startTime=&joinFlag=&endTime=&page=1&keyword=&specialFlag=&status="
+             val request=   Request.Builder().url(url)
+                    .post( str.toRequestBody("application/x-www-form-urlencoded".toMediaType()))
+                    .build()
+
+            okHttpClient.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    //请求失败执行的方法
+                    Py_invoke_Java.showwarning("登录失败", "网络错误")
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    //请求成功执行的方法
+                    val body = response.body?.string()
+                    body?.let {
+                        val res = Json.decodeFromString(actsJSON.serializer(), body)
+                        if (res.code == "100") {
+                           val acts= StringBuilder("活动：\n")
+                              for (index in res.data.list)
+                              {
+                                 acts.append(
+                                  index.activityId).append(
+                                  index.catalog2name).append(
+                                  index.statusText).append(
+                                  index.name).append("\n")
+                              }
+                    activities.postValue(acts.toString())//展示结果
+                                Py_invoke_Java.showinfo("查询成功", "")
+
+
+                        }
+                        else Py_invoke_Java.showwarning("出错了", "请检查账号密码")
+                    }
+                }
+            })
+
+    }
     fun get_can_join(token: String, uid: String):Boolean {return false}
     fun get_info(toJoinActId: String, token: String, uid: String):String {return "sdf"}
     fun join(id: String, token: String, uid: String, startTime: Unit): Boolean {
@@ -222,72 +275,5 @@ open class Post {
     lateinit var token: String
 }
 
-var main = Main1()
 
 
-fun login(): Unit? {
-    if( main.login()) {
-        println("登录成功了")
-        main.read()
-        return main.get_id()
-    }
-        else{
-        return null
-    }
-
-}
-
-fun chiken() {
-    if( main.login() ) {
-        main.read()
-        main.chiken()
-    }
-        else{
-        println("登录失败")
-    }
-
-}
-
-fun join() {
-    if( main.login()) {
-        main.read()  // 读取最新的 token
-        main.enter()
-    }
-        else{
-        println("登录失败")
-    }
-    }
-
-
-fun can_join() {
-    if( main.login()) {
-        main.read()
-        return main.can_join()
-    }
-        else{
-        println("登录失败")
-
-    }
-}
-
-fun joined() {
-    if( main.login()) {
-        main.read()
-        main.get_joined()
-    }
-        else{
-        println("登录失败")
-    }
-    }
-
-
-fun concle() {
-    if( main.login()) {
-        main.read()
-        main.concle()
-    }
-        else{
-        println("登录失败")
-
-    }
-    }

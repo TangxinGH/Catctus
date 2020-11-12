@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.gyf.cactus.callback.CactusCallback
 import com.gyf.cactus.ext.cactus
@@ -21,7 +23,7 @@ import com.zhu.cactus.download.images.initImage
 import com.zhu.cactus.services.Location
 import com.zhu.cactus.services.component_impl
 import com.zhu.cactus.services.network
-import com.zhu.daomengkj.App.Companion.dao_meng_context
+import com.zhu.daomengkj.Py_invoke_Java
 import java.io.File
 
 class App : Application(), CactusCallback {
@@ -37,10 +39,11 @@ class App : Application(), CactusCallback {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-        dao_meng_context= context
+        Py_invoke_Java.context= applicationContext
         applicationInit()
 /*
 如果你项目里使用了Thread.UncaughtExceptionHandler或者第三方异常捕获库，比如友盟，bugly等，
@@ -74,6 +77,7 @@ Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比�
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     private fun applicationInit() {
         /*bugly init */
         val strategy = UserStrategy(applicationContext)

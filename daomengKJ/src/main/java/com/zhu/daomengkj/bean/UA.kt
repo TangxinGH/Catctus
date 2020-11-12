@@ -1,4 +1,4 @@
-package com.zhu.daomengkj
+package com.zhu.daomengkj.bean
 
 /**
  * @author jsonff.com
@@ -122,4 +122,16 @@ class UA private constructor(b: Builder) {
         uuid = b.uuid
         version = b.version
     }
+}
+
+val standardUA = {
+    UA.Builder.instance
+        .createTime((100 * System.currentTimeMillis()).toInt())
+        .modifyTime((100 * System.currentTimeMillis()).toInt())
+        .startTime((100 * System.currentTimeMillis()).toInt())
+        .build()
+//        "'channelName': 'dmkj_Android', 'countryCode': 'US', 'createTime': "+(100 * System.currentTimeMillis()).toInt()+
+//                ",'device': 'xiaomi Redmi Note 7 Pro', 'hardware': 'qcom', 'modifyTime': "+(100 * System.currentTimeMillis().toInt())+
+//                ",'operator': '%E4%B8%AD%E5%9B%BD%E7%A7%BB%E5%8A%A8', 'screenResolution': '1080-2131','startTime': "+(100 * System.currentTimeMillis().toInt()))+19606523+
+//                ", 'sysVersion': 'Android 29 10', 'system': 'android','uuid': '7C:03:AB:21:F1:DD', 'version': '4.3.6'"
 }

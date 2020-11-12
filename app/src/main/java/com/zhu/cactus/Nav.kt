@@ -1,23 +1,11 @@
 package com.zhu.cactus
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.zhu.daomengkj.App
-import com.zhu.daomengkj.Py_invoke_Java
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_nav.*
-import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.nav_drawer.*
 
 
 class Nav : AppCompatActivity() {
@@ -33,7 +21,6 @@ class Nav : AppCompatActivity() {
 
 //        Change theme to "Theme.AppCompat.Light.NoActionBar"
 ////        Remove codes below
-Toast.makeText(this,"请在五分钟内完成操作，因为没有许可证，每次五分钟，否则程序会关闭！！！",Toast.LENGTH_LONG).show()
 //        val appBarConfiguration = AppBarConfiguration(setOf(
 //            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
 //        setupActionBarWithNavController(navController, appBarConfiguration) //我们没有这个东西
