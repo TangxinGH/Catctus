@@ -1,6 +1,5 @@
 package com.zhu.daomengkj
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
@@ -60,9 +59,9 @@ class App { // 不能有多个application 实例
         py_dm.callAttr("chiken")
     }
 
-    fun join() {
+    fun join(value: Int) {
 //        报名活动
-        py_dm.callAttr("join")
+        py_dm.callAttr("join").call(value)
     }
 
     fun concle() {

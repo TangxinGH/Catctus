@@ -47,9 +47,20 @@
         android:layout_height="wrap_content"
         android:text="仅我"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/numberPicker"
         app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <NumberPicker
+        android:id="@+id/numberPicker"
+        android:layout_width="56dp"
+        android:layout_height="146dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/only_me_join"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/only_me_join"
+        app:layout_constraintStart_toEndOf="@id/only_me_join"
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

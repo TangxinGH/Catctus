@@ -1,6 +1,5 @@
 package com.zhu.cactus.ui.dashboard
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
@@ -11,10 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.zhu.cactus.R
 import com.zhu.daomengkj.App
-import com.zhu.daomengkj.App.Companion.activities
 import com.zhu.daomengkj.Py_invoke_Java
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
@@ -51,7 +48,7 @@ class DashboardFragment : Fragment() {
         root.join_to_act.setOnClickListener {
             if (edit_join_id2.text != null && edit_join_id2.text.isNotBlank()) {
                 Py_invoke_Java.id2 = edit_join_id2.text.toString()
-                App().join()//报名活动
+                App().join(numberPicker.value)//报名活动
             } else Toast.makeText(
                 App.dao_meng_context,
                 "id输入为空了或者 “”:`${edit_join_id2}`",
@@ -64,6 +61,11 @@ class DashboardFragment : Fragment() {
                 textView.text= daomeng.can_join()
             }
         }
+
+        root.numberPicker.maxValue=300
+        root.numberPicker.minValue=10
+        root.numberPicker.value = 80
+
 
         return root
     }

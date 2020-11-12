@@ -86,13 +86,13 @@ class Main(Post):
             self.instance.showwarning('出错了', '查询报名时间，请检查活动id')
             return False
 
-    def enter(self):
+    def enter(self,delay):
         id = self.instance.get_id2()
         print("报名的id为",id)
         start_time = self.get_start_time()  # post 类的 属性 start_time 赋值 ，保存这个值
         print("start_time为", start_time)
 
-        res = self.join(id, self.token, self.uid,start_time)
+        res = self.join(id, self.token, self.uid,start_time,delay)
         if res:
             if res['code'] == '100':
                 self.instance.showinfo('报名详情', '报名成功')
@@ -149,10 +149,10 @@ def chiken():
         pass
 
 
-def join():
+def join(delay):
     if main.login():
         main.read()  # 读取最新的 token
-        main.enter()
+        main.enter(delay)
     else:
         pass
 

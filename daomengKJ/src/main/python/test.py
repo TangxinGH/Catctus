@@ -105,7 +105,7 @@ class Post:
         else:
             pass
 
-    def join(self, id, token, uid,act_start_time):
+    def join(self, id, token, uid,act_start_time,delay):
         print("打印instance",self.instance)
         self.instance.showinfo("测试","子类的属性调用")
         self.instance.showinfo("报名instance","进入流程")
@@ -144,8 +144,8 @@ class Post:
         # start_time = datetime(2020, 11, 5, 19, 49)  # 用 指定日期时间创建datetime
         now_time = datetime.now()  # 现在的时间
         sleep_time = start_time - now_time  # 时间差
-        self.instance.showinfo('活动未开始，将睡眠秒', str(sleep_time.seconds + 1.08))
-        time.sleep(sleep_time.seconds + 1.08)  # 单位为秒 ,延迟 80毫秒 阻塞  . 加1秒
+        self.instance.showinfo('活动未开始，将睡眠秒', str(sleep_time.seconds + 1+delay/1000))
+        time.sleep(sleep_time.seconds + 1+delay/1000)  # 单位为秒 ,延迟 80毫秒 阻塞  . 加1秒
 
         res = requests.post(url, headers=self.headers, data=urlencode(str2))
         try:
