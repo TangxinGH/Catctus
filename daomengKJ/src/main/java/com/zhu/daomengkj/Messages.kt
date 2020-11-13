@@ -1,7 +1,7 @@
 package com.zhu.daomengkj
 
-import android.app.Application
 import android.content.Context
+import android.os.Looper
 import android.widget.Toast
 
 object Py_invoke_Java {
@@ -26,21 +26,16 @@ object Py_invoke_Java {
 
     /*=------------------message-------*/
 
-    fun result_messagebox(title: String, message: String) {
-        /*从python中返回一些消息提示！！*/
-        Toast.makeText(context, "${title}，${message}", Toast.LENGTH_SHORT).show()
-    }
-
-
-    fun showwarning(title: String, message: String) {
-        Toast.makeText(context, "${title}，${message}", Toast.LENGTH_SHORT).show()
-
-    }
-
-
     fun showinfo(title: String, message: String) {
         println("showinfo${title}和${message}")
-        Toast.makeText(context, "${title}，${message}", Toast.LENGTH_SHORT).show()
+        //Android是不能直接在子线程中弹出Toast的，
+        try {
+        Looper.prepare()
+            Toast.makeText(context, "${title}，${message}", Toast.LENGTH_SHORT).show()
+        Looper.loop()
+        }catch (e:Exception){
+            println("弹出消息异常$e")
+        }
 
     }
 

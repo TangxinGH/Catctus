@@ -7,7 +7,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_nav.*
 
-
 class Nav : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +24,10 @@ class Nav : AppCompatActivity() {
 //            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
 //        setupActionBarWithNavController(navController, appBarConfiguration) //我们没有这个东西
         navView.setupWithNavController(navController)
+
+
+
+
 
 
     }

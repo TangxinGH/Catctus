@@ -33,9 +33,9 @@
 
 # Change here com.yourcompany.yourpackage
 -keep,includedescriptorclasses class com.yourcompany.yourpackage.**$$serializer { *; } # <-- change package name to your app's
--keepclassmembers class com.yourcompany.yourpackage.** { # <-- change package name to your app's
+-keepclassmembers class com.zhu.daomengkj.** { # <-- change package name to your app's
     *** Companion;
 }
--keepclasseswithmembers class com.yourcompany.yourpackage.** { # <-- change package name to your app's
+-keepclasseswithmembers class com.zhu.daomengkj.** { # <-- change package name to your app's
     kotlinx.serialization.KSerializer serializer(...);
 }

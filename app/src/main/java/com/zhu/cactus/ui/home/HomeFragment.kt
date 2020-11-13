@@ -1,7 +1,5 @@
 package com.zhu.cactus.ui.home
 
-import android.annotation.SuppressLint
-import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.zhu.cactus.App
 import com.zhu.cactus.R
@@ -27,10 +25,10 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        homeViewModel.text.observe(viewLifecycleOwner, {
             textView.text = it
         })
 /*使用root 获得 不然null */
@@ -45,6 +43,8 @@ class HomeFragment : androidx.fragment.app.Fragment() {
                         editor.putString("password", daomeng_pass.text.toString())
                         editor.apply()
                         Toast.makeText(App.context, "保存成功！用户名${edit_account.text}和密码${daomeng_pass.text}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(App.context,"登录中！  保存中",Toast.LENGTH_SHORT).show()
+                        com.zhu.daomengkj.App(App.context,homeViewModel.text).login()//登录保存token
                     } else Toast.makeText(
                         App.context,
                         "输入为blank:`${daomeng_login}+${daomeng_pass}`",
@@ -55,6 +55,14 @@ class HomeFragment : androidx.fragment.app.Fragment() {
 
 
         }
+
+        val sharedPreference =
+            App.context.getSharedPreferences("daomengKJ", Context.MODE_PRIVATE)
+        sharedPreference?.let {
+            root.edit_account.setText(it.getString("username",""))
+            root.daomeng_pass.setText(it.getString("password",""))
+        }
+
 
         return root
     }
