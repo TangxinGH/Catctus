@@ -30,9 +30,10 @@ object Py_invoke_Java {
         println("showinfo${title}和${message}")
         //Android是不能直接在子线程中弹出Toast的，
         try {
-        Looper.prepare()
-            Toast.makeText(context, "${title}，${message}", Toast.LENGTH_SHORT).show()
-        Looper.loop()
+            App.toast.postValue("${title}，${message}")
+//        Looper.prepare()
+//            Toast.makeText(context, "${title}，${message}", Toast.LENGTH_SHORT).show()
+//        Looper.loop()
         }catch (e:Exception){
             println("弹出消息异常$e")
         }

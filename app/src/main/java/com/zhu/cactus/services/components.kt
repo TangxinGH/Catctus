@@ -21,7 +21,6 @@ class network : component_impl {
         val connMgr =
             App.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connMgr.registerNetworkCallback(request, networkCallback)
-
     }
 
 }

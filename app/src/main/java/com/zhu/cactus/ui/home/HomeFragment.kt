@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.App
 import com.zhu.cactus.R
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -62,6 +63,9 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             root.edit_account.setText(it.getString("username",""))
             root.daomeng_pass.setText(it.getString("password",""))
         }
+
+
+        if (App.typeface!=null) TypefaceHelper.typeface(root)//应用字体
 
 
         return root

@@ -14,9 +14,11 @@ class App(dmc: Context, actLive: MutableLiveData<String>) { // 不能有多个ap
 
     var dao_meng_context: Context = dmc //在app的app on create里
     var activities: MutableLiveData<String> = actLive
-
     var main = Main(activities)
+companion object{
+    val toast=MutableLiveData<String> ()
 
+}
 
     fun is_login(): Boolean {
         val sharedPreference =

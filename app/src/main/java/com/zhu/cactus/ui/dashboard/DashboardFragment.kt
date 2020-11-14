@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.R
 import com.zhu.daomengkj.App
 import kotlinx.android.synthetic.main.activity_nav.*
@@ -67,6 +68,8 @@ class DashboardFragment : Fragment() {
         root.numberPicker.maxValue=300
         root.numberPicker.minValue=10
         root.numberPicker.value = 80
+
+        if (com.zhu.cactus.App.typeface!=null) TypefaceHelper.typeface(root)//应用字体
 
 
         return root

@@ -13,6 +13,9 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -73,6 +76,9 @@ class Main(val activities: MutableLiveData<String>) : Post() {
 
     }
 
+    fun notifi(result:MutableLiveData<String>,info:info){
+        this.get_can_join(this.token,this.uid,result,info)
+    }
     fun can_join() {
 //        names = ['可报名活动']
         this.get_can_join(this.token, this.uid, this.activities)
@@ -115,7 +121,7 @@ class Main(val activities: MutableLiveData<String>) : Post() {
 
         /*先查时间*/
         val url = "https://appdmkj.5idream.net/v2/activity/detail"
-        val str = "uid=$this.uid&activityId=$actId&version=4.3.6&token=$this.token"
+        val str = "uid=${this.uid}&activityId=$actId&version=4.3.6&token=${this.token}"
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
 
@@ -138,9 +144,17 @@ class Main(val activities: MutableLiveData<String>) : Post() {
                 val res = response.body?.string()
 
                 if (res != null) {
+
+                    try {
+                        JSONObject(res)["code"]
+                    }catch (e:Exception){
+                        showinfo("data错误","转换错误")
+                        return
+                    }
+
                     if (JSONObject(res)["code"] == "100") {
                         val regex = Regex("joindate\":\"(.+?)\"")
-                        val start_time = regex.find(str)?.groupValues?.get(1)?.split("-")?.get(0)
+                        val start_time = regex.find(res)?.groupValues?.get(1)?.split("-")?.get(0)
 //                      JSONObject(JSONObject(res)["data"].toString())["joindate"]
 
                         join(
@@ -152,7 +166,7 @@ class Main(val activities: MutableLiveData<String>) : Post() {
                             ).time,
                             delay
                         )
-                    }
+                    }else showinfo("返回的code不是100","转换错误")
 
                 }else                     showinfo("detail"," 返回空")
 
@@ -269,13 +283,17 @@ open class Post {
                         for (index in res.data.list) {
                             acts.append(
                                 index.activityId
-                            ).append(
+                            ).append(" ")
+
+                                .append(
                                 index.catalog2name
-                            ).append(
+                            ).append(" ")
+                                .append(
                                 index.statusText
-                            ).append(
+                            ).append(" ") .append(index.activitytime).append("\n")
+                                .append(
                                 index.name
-                            ).append("\n")
+                            ).append("\n\n")
                         }
                         activities.postValue(acts.toString())//展示结果
                         showinfo("查询成功", "")
@@ -290,7 +308,7 @@ open class Post {
         })
     }
 
-    fun get_can_join(token: String, uid: String, activities: MutableLiveData<String>) {
+    fun get_can_join(token: String, uid: String, activities: MutableLiveData<String> ,vararg args: info) {//可变参数
         val url = "https://appdmkj.5idream.net/v2/activity/activities"
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
@@ -323,16 +341,23 @@ open class Post {
                         for (index in res.data.list) {
                             acts.append(
                                 index.activityId
-                            ).append(
-                                index.catalog2name
-                            ).append(
-                                index.statusText
-                            ).append(
-                                index.name
-                            ).append("\n")
+                            ).append(" ")
+
+                                .append(
+                                    index.catalog2name
+                                ).append(" ")
+                                .append(
+                                    index.statusText
+                                ).append(" ") .append(index.activitytime).append("\n")
+                                .append(
+                                    index.name
+                                ).append("\n\n")
                         }
                         activities.postValue(acts.toString())//展示结果
 //                            Py_invoke_Java.showinfo("查询成功", "")
+                        for (arg in args){
+                            arg.name=it
+                        }
 
 
                     } else showinfo("出错了", "请检查")
@@ -349,7 +374,7 @@ open class Post {
     fun join(id: String, token: String, uid: String, startTime: Long, delay: Int) {
 
      val     url = "https://appdmkj.5idream.net/v2/signup/submit"
-        val str ="uid=$uid&activityId=$id&data=\"[]\"&remark=&version=4.3.6&token=$token"
+        val str ="uid=$uid&activityId=$id&data=[]&remark=&version=4.3.6&token=$token"
 
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
@@ -362,25 +387,36 @@ open class Post {
             .post(str.toRequestBody("application/x-www-form-urlencoded".toMediaType()))
             .build()
 
-        if (System.currentTimeMillis()/1000>=startTime/1000){
+        if ((System.currentTimeMillis()/1000)>=(startTime/1000)){
             showinfo("当前活动正在报名中","进入报名")
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
+                    println(e)
                     showinfo("失败请求", "网问题")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     val result = response.body?.string()
                     if (result != null) {
+                    println("无定时报名情况：$result")
+                        try {
+//                            "code:\"(.+?)\"".toRegex().find(result).groupValues[1]!=null
+                            JSONObject(result)
 
-                        showinfo("报名情况", result)
+                        }catch (e:java.lang.Exception){
+                            println("转换异常")
+                        }
+                        if (JSONObject(result)["code"]=="100")
+                        showinfo("报名", "成功")
+                        else showinfo("报名失败",JSONObject(result)["msg"].toString())
                     } else showinfo("报名失败", "原因未知")
                 }
             })
         }
         else{
+//            Period.between(LocalDate.now(), LocalDate.parse("2020.11.10 16:30", DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")))
             showinfo("开始时间",Date(startTime).toString())
-            showinfo("将sleep:",(startTime-System.currentTimeMillis()).toString())
+            showinfo("将sleep${startTime-System.currentTimeMillis()/1000}s 或者分钟:",(startTime-System.currentTimeMillis()/1000/60).toString())
             Timer().schedule(object :TimerTask(){
                 override fun run() {
                     okHttpClient.newCall(request).enqueue(object : Callback {
@@ -390,13 +426,14 @@ open class Post {
                         override fun onResponse(call: Call, response: Response) {
                             val result = response.body?.string()
                             if (result != null) {
+                                println("定时报名情况")
                                 showinfo("报名情况", result)
                             } else showinfo("报名失败", "原因未知")
 
                         }
                     })
                 }
-            },System.currentTimeMillis()-startTime+delay)//加上自定义的时间
+            },(startTime-System.currentTimeMillis())+delay)//加上自定义的时间
 
         }
 
