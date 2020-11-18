@@ -40,33 +40,51 @@ Theme.MaterialComponents.Light.DarkActionBar-->
 <!--        https://www.material.io/develop/android/docs/getting-started-->
 <!--        https://stackoverflow.com/questions/51877777/android-material-chip-component-crashing-app-unable-to-inflate-xml-->
         <com.google.android.material.chip.Chip
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             app:rippleColor="#FF6284"
+            app:chipStrokeColor="@color/colorAccent"
+            android:text="实践实习"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_height="wrap_content" />
 
         <com.google.android.material.chip.Chip
-            android:layout_width="100dp"
+            android:layout_width="150dp"
+            app:rippleColor="#FF6284"
+            android:textAlignment="center"
+            android:text="创新创业"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.chip.Chip
-            android:layout_width="100dp"
+            android:layout_width="150dp"
+            app:rippleColor="#FF6284"
+            android:text="思想成长"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.chip.Chip
-            android:layout_width="100dp"
+            android:layout_width="150dp"
+            app:rippleColor="#FF6284"
+            android:text="志愿公益"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.chip.Chip
-            android:layout_width="100dp"
+            android:layout_width="150dp"
+            app:rippleColor="#FF6284"
+            android:text="技能特长"
+            android:textAlignment="center"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.chip.Chip
-            android:layout_width="100dp"
+            android:layout_width="150dp"
+            app:rippleColor="#FF6284"
+            android:textAlignment="center"
+            android:text="工作履历"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_height="wrap_content"/>
     </com.google.android.material.chip.ChipGroup>

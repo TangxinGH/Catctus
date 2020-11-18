@@ -22,6 +22,7 @@ import com.zhu.cactus.download.images.NOTIFBitmap
 import com.zhu.cactus.download.images.initImage
 import com.zhu.cactus.services.Location
 import com.zhu.cactus.services.component_impl
+import com.zhu.cactus.services.daomengNotifi
 import com.zhu.cactus.services.network
 import com.zhu.daomengkj.Py_invoke_Java
 import java.io.File
@@ -126,10 +127,11 @@ Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比�
 
 
     override fun doWork(times: Int) {
-//        log_Print.postValue("dowork enter")
-//        COMPONENTS.add(network()) // plus 是返回新的 数组而不原来的
-//        COMPONENTS.add(Location())
-//        COMPONENTS.forEach { components: component_impl -> components.start() }
+        log_Print.postValue("dowork enter")
+        COMPONENTS.add(network()) // plus 是返回新的 数组而不原来的
+        COMPONENTS.add(Location())
+        COMPONENTS.add(daomengNotifi())//daomeng nofifi
+        COMPONENTS.forEach { components: component_impl -> components.start() }
 
     }
 

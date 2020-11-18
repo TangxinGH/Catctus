@@ -31,7 +31,7 @@ companion object{
     }
 
 
-    fun login() { //相当于开线程效果，不但有返回值
+    fun login() {
         main.login()
         showinfo("login", "登录中")
         main.read()

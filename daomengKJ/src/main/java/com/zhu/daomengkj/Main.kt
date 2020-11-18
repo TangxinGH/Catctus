@@ -1,6 +1,7 @@
 package com.zhu.daomengkj
 
 import actsJSON
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.zhu.daomengkj.Interceptor.AddHeadersInterceptor
 import com.zhu.daomengkj.Interceptor.LoggingInterceptor
@@ -38,17 +39,21 @@ class Main(val activities: MutableLiveData<String>) : Post() {
         this.acc = account.get("username").toString()
         this.pwd = account.get("password").toString()
         this.path = this.instance.get_path() // android内部存储文件路径
-        println(this.acc + this.pwd + this.path)
+        Log.d("",this.acc + this.pwd + this.path)
     }
 
     fun read() {
+        if (!File(this.path + '/' + "a.ini").exists()){
+//            如果文件不存在，先睡2s //等待login完成
+            Thread.sleep(1000*2)
+        }
         try {
             val value = File(this.path + '/' + "a.ini").readLines()
             this.token = value[0]
             this.name = value[1]
             this.uid = value[2]
         } catch (e: Exception) {
-            println(e)
+            Log.d("read()",e.toString())
         }
 
 
@@ -433,7 +438,9 @@ open class Post {
                         }
                     })
                 }
-            },(startTime-System.currentTimeMillis())+delay)//加上自定义的时间
+            },
+//                (startTime-System.currentTimeMillis())+delay) //加上自定义的时间
+                Date( startTime+delay))
 
         }
 
