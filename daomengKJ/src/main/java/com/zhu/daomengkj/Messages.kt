@@ -1,8 +1,7 @@
 package com.zhu.daomengkj
 
+import android.app.AlertDialog
 import android.content.Context
-import android.os.Looper
-import android.widget.Toast
 
 object Py_invoke_Java {
   lateinit var context: Context
@@ -34,8 +33,20 @@ object Py_invoke_Java {
 //        Looper.prepare()
 //            Toast.makeText(context, "${title}，${message}", Toast.LENGTH_SHORT).show()
 //        Looper.loop()
-        }catch (e:Exception){
+        }catch (e: Exception){
             println("弹出消息异常$e")
+        }
+
+    }
+
+    fun showDialog(title: String,context: String){
+        val hashMap=HashMap<Int,String>()
+        hashMap[0] = title
+        hashMap[1] = context
+        try {
+            App.Dialog.postValue( hashMap)
+        }catch (e: Exception){
+            println("弹出框异常$e")
         }
 
     }

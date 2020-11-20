@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.zhu.daomengkj.Interceptor.AddHeadersInterceptor
 import com.zhu.daomengkj.Interceptor.LoggingInterceptor
+import com.zhu.daomengkj.Py_invoke_Java.showDialog
 import com.zhu.daomengkj.Py_invoke_Java.showinfo
 import kotlinx.serialization.json.Json
 import okhttp3.*
@@ -14,9 +15,6 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.Period
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -81,8 +79,8 @@ class Main(val activities: MutableLiveData<String>) : Post() {
 
     }
 
-    fun notifi(result:MutableLiveData<String>,info:info){
-        this.get_can_join(this.token,this.uid,result,info)
+    fun notifi(result: MutableLiveData<String>,  callback: (actsJSON, int: Int) -> Unit){
+        this.get_can_join(this.token,this.uid,result, callback)
     }
     fun can_join() {
 //        names = ['可报名活动']
@@ -96,15 +94,10 @@ class Main(val activities: MutableLiveData<String>) : Post() {
 
     }
 
-    fun chiken(): String {
-        val id = " this.instance.get_id1()"
-        val res = this.get_info(id, this.token, this.uid)
-        if (res != null)
-            return res
-        else {
-//            this.instance.showinfo("出错了", "查询失败，请检查活动id")
-        }
-        return "预存款有东西"
+    fun chiken(act_id: String) {
+         this.get_info(act_id, this.token, this.uid)
+
+
     }
 
     fun get_start_time(actId: String) {
@@ -270,7 +263,7 @@ open class Post {
         okHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 //请求失败执行的方法
-                Py_invoke_Java.showinfo("登录失败", "网络错误")
+                showinfo("登录失败", "网络错误")
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -313,7 +306,7 @@ open class Post {
         })
     }
 
-    fun get_can_join(token: String, uid: String, activities: MutableLiveData<String> ,vararg args: info) {//可变参数
+    fun get_can_join(token: String, uid: String, activities: MutableLiveData<String>, vararg args: (actsJSON, int: Int) -> Unit) {//可变参数
         val url = "https://appdmkj.5idream.net/v2/activity/activities"
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
@@ -359,9 +352,9 @@ open class Post {
                                 ).append("\n\n")
                         }
                         activities.postValue(acts.toString())//展示结果
-//                            Py_invoke_Java.showinfo("查询成功", "")
+                            showinfo("查询成功", "!")
                         for (arg in args){
-                            arg.name=it
+                            arg.invoke( res,1) //回调
                         }
 
 
@@ -372,8 +365,49 @@ open class Post {
 
     }
 
-    fun get_info(toJoinActId: String, token: String, uid: String): String {
-        return "sdf"
+    fun get_info(toJoinActId: String, token: String, uid: String) {
+        /*先查时间*/
+        val url = "https://appdmkj.5idream.net/v2/activity/detail"
+        val str = "uid=${this.uid}&activityId=$toJoinActId&version=4.3.6&token=${this.token}"
+        val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
+
+
+        val okHttpClient = httpClientBuilder.connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .addInterceptor(AddHeadersInterceptor())//            .addheader()则会有多个数据
+            .addInterceptor(LoggingInterceptor())//增加拦截器
+            .build()
+        val request = Request.Builder().url(url)
+            //            .method("POST", sss.toRequestBody("application/x-www-form-urlencoded".toMediaType()))
+            .post(str.toRequestBody("application/x-www-form-urlencoded".toMediaType()))
+            .build()
+        okHttpClient.newCall(request).enqueue(object : Callback {
+
+            override fun onFailure(call: Call, e: IOException) {
+                showinfo("网络出错了", "查询失败，请检查活动id")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val res = response.body?.string()
+
+                if (res != null) {
+
+                    try {
+                        JSONObject(res)["code"]
+                    } catch (e: Exception) {
+                        showinfo("data错误", "内容转换错误")
+                        return
+                    }
+
+                    if (JSONObject(res)["code"] == "100") {
+                        showDialog("内容", Json.decodeFromString(act_info.serializer(),res).toString())
+
+                    }
+                }
+            }
+        })
+
+
     }
 
     fun join(id: String, token: String, uid: String, startTime: Long, delay: Int) {

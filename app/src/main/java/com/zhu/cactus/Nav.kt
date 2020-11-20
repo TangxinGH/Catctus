@@ -1,5 +1,6 @@
 package com.zhu.cactus
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,7 @@ class Nav : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
-        if (App.typeface!=null) TypefaceHelper.typeface(this)//应用字体
+        if (App.typeface != null) TypefaceHelper.typeface(this)//应用字体
         val navView: BottomNavigationView = nav_view
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -31,11 +32,19 @@ class Nav : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-com.zhu.daomengkj.App.toast.observe(this, Observer {
+        com.zhu.daomengkj.App.toast.observe(this, Observer {
 
-    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-})
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        })
 
+        com.zhu.daomengkj.App.Dialog.observe(this,{
+              AlertDialog.Builder(this)
+                .setTitle(it[0]) //标题
+                .setMessage(it[1]) //内容
+                .setIcon(R.mipmap.ic_launcher) //图标
+                .create()
+                .show()
+        })
 
 
     }

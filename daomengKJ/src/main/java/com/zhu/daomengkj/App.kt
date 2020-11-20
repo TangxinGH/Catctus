@@ -4,10 +4,6 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.zhu.daomengkj.Py_invoke_Java.showinfo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class App(dmc: Context, actLive: MutableLiveData<String>) { // 不能有多个application 实例
@@ -17,6 +13,7 @@ class App(dmc: Context, actLive: MutableLiveData<String>) { // 不能有多个ap
     var main = Main(activities)
 companion object{
     val toast=MutableLiveData<String> ()
+    val Dialog= MutableLiveData<HashMap<Int,String>>()
 
 }
 
@@ -41,9 +38,9 @@ companion object{
         main.get_id()
     }
 
-    fun chiken() {
+    fun chiken(act_id: String) {
         main.read()
-        main.chiken()
+        main.chiken(act_id)
 
         println("登录失败")
 

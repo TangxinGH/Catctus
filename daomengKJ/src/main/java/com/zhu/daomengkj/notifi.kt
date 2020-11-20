@@ -1,5 +1,6 @@
 package com.zhu.daomengkj
 
+import actsJSON
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import kotlin.properties.Delegates
@@ -29,11 +30,11 @@ class info(all: MutableSet<String>, callback: (String, int: Int) -> Unit) {
 
 
 }
-//fun callback(callback:(String,int:Int) ->Unit){
-//    callback.invoke("",1)
-//}
+/*fun callback(callback:(String,int:Int) ->Unit){
+    callback.invoke("",1)
+}*/
 
-fun notifiTask(context: Context, callback: (String, int: Int) -> Unit) {
+fun notifiTask(context: Context, callback: (String, name: String) -> Unit) {
     val result = MutableLiveData<String>()
 
     val sharedPreference =
@@ -42,12 +43,32 @@ fun notifiTask(context: Context, callback: (String, int: Int) -> Unit) {
             Context.MODE_PRIVATE
         )
 
-
+val all=sharedPreference.all.keys
    val main= Main(result)
      main.   login()
       main.  read()
-    main.    notifi(result, info(sharedPreference.all.keys, callback))
+    main.    notifi(result) { s: actsJSON, i: Int ->
+        if (all.size < 1) return@notifi  //没有订阅元素
 
+        s.data.list.forEach {
+         if (   it.catalog2name in all)  callback.invoke("${it.statusText} ${it.catalog2name}\n ${it.activitytime}", it.name)
+        }
+
+       /* val builder = StringBuilder()
+        all.forEach {
+            builder.append(it).append("|")
+        }
+        val str = builder.dropLast(1).toString()
+
+        Regex(str).findAll(s.toString()).iterator().forEachRemaining {
+            if (it.groupValues[0] in all) {
+                callback.invoke("有活动", 1)
+            } else {
+                callback.invoke("test 使用", 1)
+            }
+        }*/
+
+    }
 
 
 }

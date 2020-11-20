@@ -7,14 +7,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkRequest
 import android.os.Build
 import android.provider.Settings
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.app.NotificationCompat
 import com.zhu.cactus.App
 import com.zhu.cactus.R
 import com.zhu.cactus.download.images.NOTIFBitmap
-import com.zhu.cactus.method.NetworkCallbackImpl
 import com.zhu.cactus.location.uploadAddress
+import com.zhu.cactus.method.NetworkCallbackImpl
 import com.zhu.cactus.utils.NotificationUtils
 import com.zhu.cactus.utils.isApkInDebug
 import com.zhu.daomengkj.notifiTask
@@ -78,24 +77,33 @@ class daomengNotifi : component_impl {
                         return
                     }
 
-                    notifiTask(App.context, callback = { value, int ->
+                    notifiTask(App.context, callback = { value, name ->
 
 //                    showNotification(App.context,"8956","到梦有活动",value,int+8756)
                         val notificationUtils = NotificationUtils(App.context)
                             .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+
+                        val bigTextStyle: Notification.BigTextStyle =
+                            Notification.BigTextStyle()
+                        bigTextStyle.setBigContentTitle("到梦空间活动")
+                            .setSummaryText(name)
+                            .bigText(value)
+
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             //设置优先级
                             notificationUtils.setPriority(NotificationManager.IMPORTANCE_MAX)
                         } else notificationUtils.setPriority(Notification.PRIORITY_MAX)
                         notificationUtils.setStyle( //见官网  https://developer.android.com/training/notify-user/expanded
                             Notification.MediaStyle()
+//                        bigTextStyle
                         )
 //        BitmapFactory.decodeResource(App.context.resources, R.raw.girl)
                             .setLargeIcon(NOTIFBitmap.bitmap)
 
+
                         notificationUtils.sendNotification(
-                            int + 8756,
-                            "到梦有活动",
+                            Random().nextInt(10) + 8756,
+                            name,
                             value,
                             R.mipmap.ic_launcher
                         )
@@ -104,7 +112,8 @@ class daomengNotifi : component_impl {
                 }
 
             },
-            1000 * 60*10, 1000*60*60*2   ////在1秒后执行此任务,每次间隔2秒执行一次,如果传递一个Data参数,就可以在某个固定的时间执行这个任务
+            1000 * 60 * 10,
+            1000 * 60 * 60 * 2   ////在1秒后执行此任务,每次间隔2秒执行一次,如果传递一个Data参数,就可以在某个固定的时间执行这个任务
         )//两小时
         println("任务启动CXCXC ")
     }

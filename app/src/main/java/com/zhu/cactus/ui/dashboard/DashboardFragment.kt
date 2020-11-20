@@ -3,7 +3,6 @@ package com.zhu.cactus.ui.dashboard
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -11,11 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.R
 import com.zhu.daomengkj.App
-import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
@@ -63,6 +60,13 @@ class DashboardFragment : Fragment() {
             if (daomeng.is_login()){
                   daomeng.can_join()
             }
+        }
+        root.act_info.setOnClickListener{
+            val actInfo = App(com.zhu.cactus.App.context,dashboardViewModel.text)
+            if (actInfo.is_login()&&edit_join_id2.text.isNotBlank()){
+                actInfo.chiken(edit_join_id2.text.toString())
+               Toast.makeText(com.zhu.cactus.App.context,"wait ",Toast.LENGTH_SHORT).show()
+            }else    Toast.makeText(com.zhu.cactus.App.context,"未登录 或者 id 为空 ",Toast.LENGTH_SHORT).show()
         }
 
         root.numberPicker.maxValue=900
