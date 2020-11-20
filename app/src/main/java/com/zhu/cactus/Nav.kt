@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.lxj.xpopup.XPopup
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.daomengkj.App.Companion.toast
 import kotlinx.android.synthetic.main.activity_nav.*
@@ -58,12 +57,6 @@ class Nav : AppCompatActivity() {
                 .show()
 
 
-//            // 这种弹窗从 1.0.0版本开始实现了优雅的手势交互和智能嵌套滚动
-//            XPopup.Builder(this)
-//                .asBottomList(
-//                    it[0], it[1]?.split('\n')?.toTypedArray()
-//                ) { position, text -> println("click $text") }
-//                .show()
         })
 
 
