@@ -432,7 +432,9 @@ open class Post {
                             val result = response.body?.string()
                             if (result != null) {
                                 println("定时报名情况")
-                                showinfo("报名情况", result)
+                                if (JSONObject(result)["code"]=="100")
+                                    showinfo("报名", "成功")
+                                else showinfo("报名失败",JSONObject(result)["msg"].toString())
                             } else showinfo("报名失败", "原因未知")
 
                         }

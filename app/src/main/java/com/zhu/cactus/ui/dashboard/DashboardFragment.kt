@@ -65,9 +65,9 @@ class DashboardFragment : Fragment() {
             }
         }
 
-        root.numberPicker.maxValue=300
-        root.numberPicker.minValue=10
-        root.numberPicker.value = 80
+        root.numberPicker.maxValue=900
+        root.numberPicker.minValue=80
+        root.numberPicker.value = 300 //人的反应为0.2秒
 
         if (com.zhu.cactus.App.typeface!=null) TypefaceHelper.typeface(root)//应用字体
 
