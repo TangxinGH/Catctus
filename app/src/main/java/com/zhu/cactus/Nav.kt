@@ -8,9 +8,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.lxj.xpopup.XPopup
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.zhu.daomengkj.Py_invoke_Java
+import com.zhu.daomengkj.App.Companion.toast
 import kotlinx.android.synthetic.main.activity_nav.*
+import java.security.AccessController.getContext
 
 class Nav : AppCompatActivity() {
 
@@ -37,13 +39,31 @@ class Nav : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
 
-        com.zhu.daomengkj.App.Dialog.observe(this,{
-              AlertDialog.Builder(this)
+        com.zhu.daomengkj.App.Dialog.observe(this, {
+            AlertDialog.Builder(this)
+                /* .apply {
+                      setPositiveButton(R.string.ok,
+                          DialogInterface.OnClickListener { dialog, id ->
+                              // User clicked OK button
+                          })
+                      setNegativeButton(R.string.cancel,
+                          DialogInterface.OnClickListener { dialog, id ->
+                              // User cancelled the dialog
+                          })
+                  }*/
                 .setTitle(it[0]) //标题
                 .setMessage(it[1]) //内容
                 .setIcon(R.mipmap.ic_launcher) //图标
                 .create()
                 .show()
+
+
+//            // 这种弹窗从 1.0.0版本开始实现了优雅的手势交互和智能嵌套滚动
+//            XPopup.Builder(this)
+//                .asBottomList(
+//                    it[0], it[1]?.split('\n')?.toTypedArray()
+//                ) { position, text -> println("click $text") }
+//                .show()
         })
 
 

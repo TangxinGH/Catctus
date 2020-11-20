@@ -193,50 +193,13 @@ class Main(val activities: MutableLiveData<String>) : Post() {
     }
 
     fun get_joined() {
-//        val res = this.get_activity(this.token, this.uid)
-//        names = []
-//        ids = []
-//        heights = ['已报名活动']
-//        if (res) {
-//            for (li in res['data']['list']) {
-//                if (li['statusText'] == '报名中') {
-//                    names.append(li['name'])
-//                    ids.append(li['aid'])
-//                }
-//            }
-//
-//            if (names) {
-//                for (name, id in zip(names, ids)){
-//                    heights.append(name + '   {}'.format(id))
-//                    return names
-//                }
-//            } else {
-//                this.instance.showinfo(
-//                    '出错了',
-//                    '没有已报名活动'
-//                )
-//            }
-//        }
+
     }
 
 
-    fun concle() {
-//        id = this.instance.get_id3()
-//        res = this.get_info(id, this.token, this.uid)
-//        if( res) {
-//            signUpId = str(res['data']['signUpId'])
-//            if( this.get_cancle(
-//                signUpId,
-//                this.token,
-//                this.uid
-//            )["code"] == "100"
-//            ) {
-//                this.instance.showinfo("成功", "取消报名成功")
-//            }
-//            else{
-//                this.instance.showinfo("出错了", "失败，请检查活动id")
-//            }
-//            }
+    fun concle(actId: String) {
+
+
     }
 }
 

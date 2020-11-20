@@ -69,9 +69,16 @@ class DashboardFragment : Fragment() {
             }else    Toast.makeText(com.zhu.cactus.App.context,"未登录 或者 id 为空 ",Toast.LENGTH_SHORT).show()
         }
 
+        root.cancel_action.setOnClickListener {
+            val act_cancel= App(com.zhu.cactus.App.context,dashboardViewModel.text)
+            if (act_cancel.is_login()&&edit_join_id2.text.isNotBlank()){
+                act_cancel.concle(edit_join_id2.text.toString())
+            }
+        }
+
         root.numberPicker.maxValue=900
-        root.numberPicker.minValue=80
-        root.numberPicker.value = 300 //人的反应为0.2秒
+        root.numberPicker.minValue=70
+        root.numberPicker.value = 200 //人的反应为0.2秒
 
         if (com.zhu.cactus.App.typeface!=null) TypefaceHelper.typeface(root)//应用字体
 

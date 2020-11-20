@@ -57,3 +57,6 @@
 -keepclasseswithmembers class com.zhu.daomengkj.** { # <-- change package name to your app's
     kotlinx.serialization.KSerializer serializer(...);
 }
+
+-dontwarn com.lxj.xpopup.widget.**
+-keep class com.lxj.xpopup.widget.**{*;}

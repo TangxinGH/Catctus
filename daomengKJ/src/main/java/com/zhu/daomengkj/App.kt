@@ -65,9 +65,9 @@ companion object{
     }
 
 
-    fun concle() {
+    fun concle(actId: String) {
         main.read()
-        main.concle()
+        main.concle(actId)
     }
 
 }

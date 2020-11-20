@@ -41,7 +41,7 @@ import kotlinx.serialization.Serializable
 	val joinTip : String,
 	val joinWay : Int,
 	val joinWayDesc : String,
-	val score : Int,
+	val score : Float,
 	val scoreFlag : Boolean,
 	val pubSnapshotFlag : Boolean,
 	val joinmaxnum : Int,
@@ -49,16 +49,17 @@ import kotlinx.serialization.Serializable
 	val levelText : String,
 	val joinrange : Int,
 	val joinrangeText : String,
+	val joindaterange : Int,
 	val labelname : String,
 	val joindate : String,
 	val startdate : String,
-	val specialList : List<SpecialList>,
 	val isLeave : Boolean,
 	val countdownText : String,
 	val countdown : Int,
 	val buttonType : Int,
 	val manageFlag : Boolean,
 	val ableJoinFlag : Int,
+	val unableJoinReason : String,
 	val collectFlag : Boolean,
 	val signinFlag : Boolean,
 	val recordFlag : Boolean,
@@ -93,42 +94,25 @@ import kotlinx.serialization.Serializable
 	val schoolActivity : Boolean
 ) {
 	override fun toString(): String {
-		return "DataInfo(activityId=$activityId, \n" +
+		return "\nDataInfo(activityId=$activityId, \n" +
 				"activityName='$activityName',\n" +
 				"statusText='$statusText',\n" +
 				" address='$address',\n" +
-				"addressLongitude=$addressLongitude, addressLatitude=$addressLatitude, tribeVo=$tribeVo, \n " +
+				 "tribeVo=$tribeVo, \n " +
 				"content='$content', \n" +
 				"joinTip='$joinTip', \n " +
 				"joinWayDesc='$joinWayDesc', \n " +
 				"score=$score, \n " +
 				"joinmaxnum=$joinmaxnum,   \n " +
-				" levelText='$levelText', joinrange=$joinrange, joinrangeText='$joinrangeText', labelname='$labelname',\n " +
-				" joindate='$joindate', startdate='$startdate', specialList=$specialList,   countdownText='$countdownText', countdown=$countdown"
+				" levelText='$levelText',  joinrangeText='$joinrangeText', labelname='$labelname',\n " +
+				" joindate='$joindate', startdate='$startdate',countdownText='$countdownText'"
 	}
 }
 
-@Serializable
- data class SpecialList (
 
-	val achievementid : Int,
-	val activityachievementid : Int,
-	val name : String,
-	val unitcount : Double,
-	val maxprovidecount : Int,
-	val providecount : Int,
-	val accountTypeId : Int,
-	val accountTypeName : String
-
-) {
-	override fun toString(): String {
-		return "\n SpecialList(name='$name', unitcount=$unitcount, maxprovidecount=$maxprovidecount, providecount=$providecount, accountTypeId=$accountTypeId, accountTypeName='$accountTypeName')"
-	}
-}
 
 @Serializable
  data class TribeVo (
-
 	val tribeId : Int,
 	val imageUrl : String,
 	val name : String,
