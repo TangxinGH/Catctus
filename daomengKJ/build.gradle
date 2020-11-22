@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+
+    implementation 'com.azhon:appupdateX:3.0.2' // app 更新
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1" //协程
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
     implementation "com.squareup.okhttp3:okhttp:4.9.0"

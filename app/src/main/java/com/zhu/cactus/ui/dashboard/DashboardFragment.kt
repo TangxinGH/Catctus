@@ -2,22 +2,15 @@ package com.zhu.cactus.ui.dashboard
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.cjj.PerseiLayout
-import com.nightonke.boommenu.BoomButtons.OnBMClickListener
-import com.nightonke.boommenu.BoomButtons.TextInsideCircleButton
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.zhu.cactus.BuildConfig.DEBUG
 import com.zhu.cactus.R
 import com.zhu.daomengkj.App
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -85,15 +78,6 @@ class DashboardFragment : Fragment() {
             if (act_cancel.is_login() && edit_join_id2.text.isNotBlank()) {
                 act_cancel.concle(edit_join_id2.text.toString())
             }
-        }
-
-        for (i in 0 until root.bmb.piecePlaceEnum.pieceNumber()) {  //[0,enum)
-            root.bmb.addBuilder(
-                TextInsideCircleButton.Builder()
-                    .normalImageRes(R.drawable.ic_close)
-                    .normalText("Butter Doesn't fly!")
-                    .listener { index -> Log.d("bmb", "Clicked $index") }
-            )
         }
 
 

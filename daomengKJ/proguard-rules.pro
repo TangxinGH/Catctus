@@ -39,3 +39,7 @@
 -keepclasseswithmembers class com.zhu.daomengkj.** { # <-- change package name to your app's
     kotlinx.serialization.KSerializer serializer(...);
 }
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Service
+# app 更新
