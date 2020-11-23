@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_cancle"
+        android:icon="@drawable/cancle"
+        android:title="取消" />
+    <item
+        android:id="@+id/menu_only_me"
+        android:icon="@drawable/only_me"
+        android:title="仅我"/>
+    <item
+        android:id="@+id/menu_details"
+        android:icon="@drawable/detail"
+        android:title="详情"/>
+    <item
+        android:id="@+id/menu_submit"
+        android:icon="@drawable/submit"
+        android:title="报名"/>
+
+
+
+</menu>

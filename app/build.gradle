@@ -95,4 +95,5 @@ dependencies {
     implementation 'com.crystal:crystalrangeseekbar:1.0.0'
     implementation project(":daomengKJ")// daomengKJ 作为库，settings.gradle有字 https://blog.csdn.net/jennyliliyang/article/details/79160297
     implementation 'com.ramotion.circlemenu:circle-menu:0.3.2'
+    implementation 'com.chenantao:FabMenu:1.0.1'
 }
