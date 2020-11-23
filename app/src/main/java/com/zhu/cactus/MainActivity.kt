@@ -13,7 +13,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
@@ -22,12 +21,14 @@ import com.zhu.cactus.ONE.gethitokoto
 import com.zhu.cactus.POJO.JsonHitokoto
 import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.download.font.FontProgressBar
-import com.zhu.cactus.download.font.iniFont
 import com.zhu.cactus.filter.FiltersLayout
 import com.zhu.cactus.filter.FiltersPagerAdapter
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
+import com.zhu.daomengkj.App.Companion.app_update
+import com.zhu.daomengkj.update.downloadNew
+import com.zhu.daomengkj.update.isNew
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
 
@@ -57,7 +58,8 @@ class MainActivity : AppCompatActivity() {
 //        supportActionBar?.hide()
         initData()
         permission()
-            }
+        isNew(this)//版本更新
+    }
 
     /**
      * Callback for motionLayoutCheckbox
@@ -81,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                 putString("font", switchMaterial.isChecked.toString())
                 commit()
             }
-            startActivity(Intent(this,Nav::class.java))
+            startActivity(Intent(this, Nav::class.java))
         }// 服务？
         GpsID.setOnClickListener {
             //储存当前用户
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         mainListAdapter = MainListAdapter(this)
         val data= ArrayList<MutableLiveData<JsonHitokoto>>()
         for (x in 0..19)  // 输出 0 到 10（含10）
-            data.add( MutableLiveData(JsonHitokoto()))
+            data.add(MutableLiveData(JsonHitokoto()))
         MainListAdapter.data=data
        gethitokoto(20 - 1)
 
@@ -114,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         /*fab 数据加载*/
         val OneData= ArrayList<MutableLiveData<Newslist>>()
         for (x in 0 until FiltersLayout.numTabs)  // 横滑条  until 是不取 到numTabs的
-            OneData.add( MutableLiveData(Newslist()))
+            OneData.add(MutableLiveData(Newslist()))
         FiltersPagerAdapter.OneData=OneData
         FiltersPagerAdapter.life=this
         getONEFor(FiltersLayout.numTabs - 1)
@@ -139,11 +141,17 @@ class MainActivity : AppCompatActivity() {
 //            https://juejin.im/entry/6844903497033318408
 //            loop  用findviewid 有loop 问题
         })
-        FontProgressBar.observe(this,androidx.lifecycle.Observer <Int> {
-           progressBar.setProgress(it,true)
-            progress_text.text=it.toString()+"%"
-        } )
+        FontProgressBar.observe(this, androidx.lifecycle.Observer<Int> {
+            progressBar.setProgress(it, true)
+            progress_text.text = it.toString() + "%"
+        })
 
+        app_update.observe(this,{
+            downloadNew(
+                this,
+                it
+            )// 主线程ui
+        })
 
     }
 

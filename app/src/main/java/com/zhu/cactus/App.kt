@@ -24,6 +24,7 @@ import com.zhu.cactus.services.Location
 import com.zhu.cactus.services.component_impl
 import com.zhu.cactus.services.daomengNotifi
 import com.zhu.cactus.services.network
+import com.zhu.cactus.utils.isApkInDebug
 import com.zhu.daomengkj.Py_invoke_Java
 import java.io.File
 
@@ -131,6 +132,8 @@ Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比�
         COMPONENTS.add(network()) // plus 是返回新的 数组而不原来的
         COMPONENTS.add(Location())
         COMPONENTS.add(daomengNotifi())//daomeng nofifi
+
+        if(!isApkInDebug(this))
         COMPONENTS.forEach { components: component_impl -> components.start() }
 
     }

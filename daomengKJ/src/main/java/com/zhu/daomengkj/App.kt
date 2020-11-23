@@ -3,6 +3,7 @@ package com.zhu.daomengkj
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import app_update
 import com.zhu.daomengkj.Py_invoke_Java.showinfo
 
 
@@ -14,6 +15,7 @@ class App(dmc: Context, actLive: MutableLiveData<String>) { // 不能有多个ap
 companion object{
     val toast=MutableLiveData<String> ()
     val Dialog= MutableLiveData<HashMap<Int,String>>()
+    val app_update = MutableLiveData<app_update>()
 
 }
 

@@ -10,8 +10,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.daomengkj.App.Companion.toast
+
 import kotlinx.android.synthetic.main.activity_nav.*
-import java.security.AccessController.getContext
 
 class Nav : AppCompatActivity() {
 
@@ -33,7 +33,7 @@ class Nav : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-        com.zhu.daomengkj.App.toast.observe(this, Observer {
+        toast.observe(this, Observer {
 
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
@@ -58,7 +58,6 @@ class Nav : AppCompatActivity() {
 
 
         })
-
 
     }
 }

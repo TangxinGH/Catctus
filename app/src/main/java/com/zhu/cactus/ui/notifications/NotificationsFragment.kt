@@ -1,6 +1,7 @@
 package com.zhu.cactus.ui.notifications
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,13 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+
 import com.google.android.material.chip.Chip
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.tencent.bugly.proguard.x
+
 import com.zhu.cactus.App
 import com.zhu.cactus.R
-import kotlinx.android.synthetic.main.fragment_home.*
+
 import kotlinx.android.synthetic.main.fragment_notifications.view.*
 
 class NotificationsFragment : Fragment() {
@@ -49,7 +50,9 @@ class NotificationsFragment : Fragment() {
                 )
           if (sharedPreference.getBoolean(it.text.toString() ,false)){
               it.isChecked=true// 设置选中状态
-              it.chipBackgroundColor=  getResources().getColorStateList(R.color.filter_pill_color)
+              it.chipBackgroundColor=  resources.getColorStateList(R.color.filter_pill_color,
+                  context?.theme
+              )
           }
             it.setOnCheckedChangeListener { chipView, isChecked ->
                 if (isChecked && chipView.text != "") {
@@ -57,13 +60,17 @@ class NotificationsFragment : Fragment() {
                     val editor = sharedPreference.edit()
                     editor.putBoolean(chipView.text.toString(), true)
                     editor.apply()
-                    it.chipBackgroundColor=  getResources().getColorStateList(R.color.filter_pill_color)
+                    it.chipBackgroundColor=  resources.getColorStateList(R.color.filter_pill_color,
+                        context?.theme
+                    )
                     Toast.makeText(root.context,"增加${chipView.text}成功！",Toast.LENGTH_SHORT).show()
                 } else {
 
                     val editor = sharedPreference.edit()
                     editor.remove(chipView.text.toString()).apply()//删除一个
-                    it.chipBackgroundColor= getResources().getColorStateList(R.color.tab_selected_color)
+                    it.chipBackgroundColor= resources.getColorStateList(R.color.tab_selected_color,
+                        context?.theme
+                    )
                     Toast.makeText(root.context,"删除${chipView.text}成功！",Toast.LENGTH_SHORT).show()
                 }
             }

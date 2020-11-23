@@ -1,9 +1,14 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
+
+
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.1"
@@ -11,8 +16,8 @@ android {
         applicationId "com.zhu.cactus"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 8
-        versionName "6.6.6"
+        versionCode 9
+        versionName "6.6.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,12 +34,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-//    android.applicationVariants.all {
-//        variant ->
-//            variant.outputs.all {
-//                output -> outputFileName = "Catctus-release-v${variant.versionName}-${releaseTime()}.apk"
-//            } // 名称
-//    }
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                output -> outputFileName = "Catctus-release-v${variant.versionName}-${releaseTime()}.apk"
+            } // 名称
+            def jsonFile = file('release/output-metadata.json')
+            def parsedJson = new JsonSlurper().parseText(jsonFile.text)
+            def apk_file=file("release/Catctus-release-v${variant.versionName}-${releaseTime()}.apk")
+            parsedJson.apkSize=apk_file.exists() ? apk_file.length()/1024 : 5.4
+            parsedJson.apkInfo=" 世界你好"
+
+            jsonFile.write(JsonOutput.toJson(parsedJson)) //序例化
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
