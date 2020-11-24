@@ -362,8 +362,8 @@ open class Post {
                         return
                     }
 
-                    if (JSONObject(res)["code"] == "100") {
-                        showDialog("内容", Json.decodeFromString(act_info.serializer(),res).toString())
+                    if (JSONObject(res)["code"] == "100") { //specialList
+                        showDialog("内容", Json{ignoreUnknownKeys=true }.decodeFromString(act_info.serializer(),res).toString())
 
                     }
                 }
