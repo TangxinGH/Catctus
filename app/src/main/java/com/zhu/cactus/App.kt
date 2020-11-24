@@ -8,6 +8,8 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Build
+import android.os.Environment
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.gyf.cactus.callback.CactusCallback
@@ -15,6 +17,7 @@ import com.gyf.cactus.ext.cactus
 import com.norbsoft.typefacehelper.TypefaceCollection
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.tencent.bugly.Bugly
+import com.tencent.bugly.beta.Beta
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import com.zhu.cactus.download.font.fileFilterEmpty
@@ -84,10 +87,13 @@ Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比�
     private fun applicationInit() {
         /*bugly init */
         val strategy = UserStrategy(applicationContext)
-        strategy.isUploadProcess = getProcessName() == null || getProcessName().equals(packageName)//时增加一个上报进程的策略配置
+        strategy.isUploadProcess = getProcessName() == null || getProcessName() == packageName//时增加一个上报进程的策略配置
 // 初始化Bugly
 //        CrashReport.initCrashReport(applicationContext, "284486e9ec", false,strategy)//第三个参数为SDK调试模式开关
-        Bugly.init(applicationContext, "284486e9ec", false)
+
+      if(isApkInDebug(this))  Bugly.init(applicationContext, "284486e9ec", false) else Bugly.init(applicationContext, "284486e9ec", true)
+
+
 // init sno pass
         val sp = getSharedPreferences(getString(R.string.preference_user_key), Context.MODE_PRIVATE)
         sno = sp.getString("sno", "141213").toString()

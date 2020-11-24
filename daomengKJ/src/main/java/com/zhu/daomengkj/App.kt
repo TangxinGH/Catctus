@@ -17,7 +17,7 @@ companion object{
     val toast=MutableLiveData<String> ()
     val Dialog= MutableLiveData<HashMap<Int,String>>()
     val app_update = MutableLiveData<app_update>()
-    val sleep_seekBar= MutableLiveData<Int>()
+    val sleep_seekBar= MutableLiveData<Int>().apply { value= 200}
 }
 
     fun is_login(): Boolean {

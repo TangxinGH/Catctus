@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import com.chenantao.fabMenu.FabMenu
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.ramotion.circlemenu.CircleMenuView
 import com.zhu.daomengkj.App
+import com.zhu.nav.BtnBottomDialog
 import com.zhu.nav.Gobal
 import com.zhu.nav.R
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -119,10 +119,17 @@ class DashboardFragment : Fragment() {
                 when (title) {
                     "报名" -> {
                         if (edit_join_id2.text != null && edit_join_id2.text.isNotBlank()) {
-                            App(Gobal.context, dashboardViewModel.text).join(
+                            if (App.sleep_seekBar.value != null) App(
+                                Gobal.context,
+                                dashboardViewModel.text
+                            ).join(
                                 edit_join_id2.text.toString(),
-                                sleep_SeekBar.progress
+                                App.sleep_seekBar.value!!
                             )//报名活动
+                            else App(Gobal.context, dashboardViewModel.text).join(
+                                edit_join_id2.text.toString(),
+                                200
+                            )
                         } else Toast.makeText(
                             context,
                             "id输入为空了或者 “”:`${edit_join_id2}`",
@@ -160,29 +167,22 @@ class DashboardFragment : Fragment() {
         })
 
 
-        root.sleep_SeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                textMin5.text = progress.toString()//设置值
-            }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-        })
-
-//        root.numberPicker.maxValue = 900
-//        root.numberPicker.minValue = 70
-//        root.numberPicker.value = 200 //人的反应为0.2秒
         App.sleep_seekBar.observe(viewLifecycleOwner, {
             textMin5.text = it.toString()//设置值
         }) //还可以这样啊
-        if (Gobal.typeface ) TypefaceHelper.typeface(root)//应用字体
 
+        if (Gobal.typeface) TypefaceHelper.typeface(root)//应用字体
+
+       root.textMin5.setOnClickListener {
+            if (activity != null) {
+                BtnBottomDialog().show(requireActivity().supportFragmentManager, "tag")
+            } else {
+                Log.d("bottomsheet", "没有activity")
+            }
+
+        }
 
         return root
     }

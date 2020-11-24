@@ -43,3 +43,4 @@
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Service
 # app 更新
+

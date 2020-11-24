@@ -33,9 +33,6 @@
             >
         </activity>
 
-        <meta-data
-            android:name="BUGLY_APP_VERSION"
-            android:value="3.7.500" />
 
 
         <activity android:name=".MainActivity" >

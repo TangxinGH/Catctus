@@ -15,7 +15,7 @@
         android:hint="id号"
         android:inputType="number"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/sleep_SeekBar"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="@id/barrier"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintTop_toBottomOf="parent" />-->
 
-    <SeekBar
+   <!-- <SeekBar
         android:id="@+id/sleep_SeekBar"
         style="@android:style/Widget.Material.SeekBar"
         android:layout_width="match_parent"
@@ -97,13 +97,17 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_join_id2" />
-
+-->
     <!--默认值-->
     <TextView
         android:id="@+id/textMin5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/text_circle"
+        android:gravity="center"
         android:text="200"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_join_id2"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier"
@@ -115,7 +119,7 @@
         android:layout_height="10dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/text_dashboard"
-        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintGuide_percent="0.10"
         app:layout_constraintTop_toBottomOf="@id/edit_join_id2" />
 
     <TextView

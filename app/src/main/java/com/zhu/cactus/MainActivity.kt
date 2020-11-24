@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -16,6 +17,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.permissionx.guolindev.PermissionX
+import com.tencent.bugly.beta.Beta
+import com.tencent.bugly.beta.UpgradeInfo
+import com.tencent.bugly.beta.ui.UILifecycleListener
 import com.zhu.cactus.ONE.getONEFor
 import com.zhu.cactus.ONE.gethitokoto
 import com.zhu.cactus.POJO.JsonHitokoto
@@ -26,6 +30,7 @@ import com.zhu.cactus.filter.FiltersPagerAdapter
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
+import com.zhu.daomengkj.update.isNew
 import com.zhu.nav.Gobal
 import com.zhu.nav.Nav
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,8 +61,9 @@ class MainActivity : AppCompatActivity() {
         if (App.typeface!=null)TypefaceHelper.typeface(this)//应用字体
 //        supportActionBar?.hide()
         initData()
-        permission()
+        Manifest.permission()
     }
+
 
     /**
      * Callback for motionLayoutCheckbox

@@ -39,8 +39,8 @@ class Nav : AppCompatActivity() {
 
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
-        BtnBottomDialog().show(supportFragmentManager, "tag")
-        com.zhu.daomengkj.App.Dialog.observe(this, {
+
+        App.Dialog.observe(this, {
             AlertDialog.Builder(this)
                 /* .apply {
                       setPositiveButton(R.string.ok,
@@ -60,6 +60,7 @@ class Nav : AppCompatActivity() {
 
 
         })
+
 
 
     }
