@@ -1,3 +1,4 @@
+include ':Nav'
 include ':daomengKJ'
 include ':app'
 rootProject.name = "Cactus"

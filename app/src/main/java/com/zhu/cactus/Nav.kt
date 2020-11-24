@@ -12,7 +12,6 @@ import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.daomengkj.App.Companion.toast
 
 import kotlinx.android.synthetic.main.activity_nav.*
-
 class Nav : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +57,7 @@ class Nav : AppCompatActivity() {
 
 
         })
+        TODO("重构moudle nav ")
 
     }
 }
