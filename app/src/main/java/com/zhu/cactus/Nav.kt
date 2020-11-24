@@ -10,8 +10,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.daomengkj.App.Companion.toast
-
+import com.zhu.nav.BtnBottomDialog
 import kotlinx.android.synthetic.main.activity_nav.*
+
+
 class Nav : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +38,7 @@ class Nav : AppCompatActivity() {
 
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
-
+        BtnBottomDialog().show(supportFragmentManager, "tag")
         com.zhu.daomengkj.App.Dialog.observe(this, {
             AlertDialog.Builder(this)
                 /* .apply {
@@ -57,7 +59,7 @@ class Nav : AppCompatActivity() {
 
 
         })
-//        TODO("重构moudle nav ")
+
 
     }
 }

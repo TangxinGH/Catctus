@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.App
 import com.zhu.cactus.R

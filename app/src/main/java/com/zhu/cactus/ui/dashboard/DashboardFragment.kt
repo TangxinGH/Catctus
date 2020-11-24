@@ -160,25 +160,27 @@ class DashboardFragment : Fragment() {
         })
 
 
-       root. sleep_SeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-           override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                textMin5.text= progress.toString()//设置值
-           }
+        root.sleep_SeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                textMin5.text = progress.toString()//设置值
+            }
 
-           override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
-           }
+            }
 
-           override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
 
-           }
+            }
 
-       })
+        })
 
 //        root.numberPicker.maxValue = 900
 //        root.numberPicker.minValue = 70
 //        root.numberPicker.value = 200 //人的反应为0.2秒
-
+        App.sleep_seekBar.observe(viewLifecycleOwner, {
+            textMin5.text = it.toString()//设置值
+        }) //还可以这样啊
         if (com.zhu.cactus.App.typeface != null) TypefaceHelper.typeface(root)//应用字体
 
 

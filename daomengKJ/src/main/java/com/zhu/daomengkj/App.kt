@@ -13,10 +13,11 @@ class App(dmc: Context, actLive: MutableLiveData<String>) { // 不能有多个ap
     var activities: MutableLiveData<String> = actLive
     var main = Main(activities)
 companion object{
+
     val toast=MutableLiveData<String> ()
     val Dialog= MutableLiveData<HashMap<Int,String>>()
     val app_update = MutableLiveData<app_update>()
-
+    val sleep_seekBar= MutableLiveData<Int>()
 }
 
     fun is_login(): Boolean {
