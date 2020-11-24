@@ -26,9 +26,7 @@ import com.zhu.cactus.filter.FiltersPagerAdapter
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
-import com.zhu.daomengkj.App.Companion.app_update
-import com.zhu.daomengkj.update.downloadNew
-import com.zhu.daomengkj.update.isNew
+import com.zhu.nav.Nav
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
 
@@ -82,7 +80,10 @@ class MainActivity : AppCompatActivity() {
                 putString("font", switchMaterial.isChecked.toString())
                 commit()
             }
+
+
             startActivity(Intent(this, Nav::class.java))
+
         }// 服务？
         GpsID.setOnClickListener {
             //储存当前用户

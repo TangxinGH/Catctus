@@ -1,4 +1,4 @@
-package com.zhu.cactus.ui.notifications
+package com.zhu.nav.ui.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

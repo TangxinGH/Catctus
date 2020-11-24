@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Nav"
+            android:name="com.zhu.nav.Nav"
             android:label="@string/title_activity_nav"
             >
         </activity>
