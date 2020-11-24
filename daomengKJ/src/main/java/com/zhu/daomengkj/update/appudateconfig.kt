@@ -52,8 +52,7 @@ fun downloadNew(context: Context, appJson: app_update){
 
     val manager: DownloadManager = DownloadManager.getInstance(context)
     manager.setApkName(appJson.elements[0].outputFile)
-        .setApkUrl("https://gh.api.99988866.xyz/https://raw.githubusercontent.com/TangXinGithub/Catctus/daomeng/app/release/${appJson.elements[0].outputFile}") //最新的
-//        .setApkUrl("https://gh.api.99988866.xyz/https://github.com/TangXinGithub/Catctus/releases/download/1.0/app-release.apk") tag 版下载
+        .setApkUrl("https://raw.githubusercontent.com/TangXinGithub/Catctus/daomeng/app/release/${appJson.elements[0].outputFile}") //最新的 有缓存，只能改铝箔
 //            https://api.github.com/repos/TangXinGithub/Catctus/releases/latest  返回json  assets  tag_name
         .setSmallIcon(R.mipmap.ic_launcher)
         .setConfiguration(configuration)//配置
@@ -66,9 +65,8 @@ fun downloadNew(context: Context, appJson: app_update){
 
 fun isNew(context: Context){
 
-//    https://doc.fastgit.org/zh-cn/node.html#%E8%8A%82%E7%82%B9%E5%88%97%E8%A1%A8  镜像？
 //    output-metadata.json
-    val url ="https://gh.api.99988866.xyz/https://raw.githubusercontent.com/TangXinGithub/Catctus/daomeng/app/release/output-metadata.json"
+    val url ="https://raw.githubusercontent.com/TangXinGithub/Catctus/daomeng/app/release/output-metadata.json"
     val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
     val okHttpClient = httpClientBuilder.connectTimeout(20, TimeUnit.SECONDS)
@@ -78,7 +76,7 @@ fun isNew(context: Context){
     okHttpClient.newCall(request).enqueue(object : Callback {
 
         override fun onFailure(call: Call, e: IOException) {
-            Log.d("网络失败", e.toString())
+            Log.d("网络失败github 网络直接访问？", e.toString())
 
         }
 
@@ -97,7 +95,7 @@ fun isNew(context: Context){
                 Log.d(logtag, content.toString())
                 try {
                     val json = Json.decodeFromString(app_update.serializer(), content.toString())
-                    if (json.elements[0].versionCode != packageCode(context)) App.app_update.postValue(json) else {
+                    if (json.elements[0].versionCode > packageCode(context)) App.app_update.postValue(json) else {
                         Log.d(logtag, "已是最新")
                     }
                 } catch (e: Exception) {

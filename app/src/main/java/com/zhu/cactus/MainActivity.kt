@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 //        supportActionBar?.hide()
         initData()
         permission()
-        isNew(this)//版本更新
     }
 
     /**
@@ -146,12 +145,7 @@ class MainActivity : AppCompatActivity() {
             progress_text.text = it.toString() + "%"
         })
 
-        app_update.observe(this,{
-            downloadNew(
-                this,
-                it
-            )// 主线程ui
-        })
+
 
     }
 

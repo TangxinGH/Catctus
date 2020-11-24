@@ -23,6 +23,8 @@
 #请避免混淆Bugly，在Progua
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+-keep class android.support.**{*;}
+
 
 #ｏｋｈｔｔｐ的文件  只有不使用R8编译 器时才会有问题 去官网
 -keep class com.zhu.cactus.POJO.** { *; }
