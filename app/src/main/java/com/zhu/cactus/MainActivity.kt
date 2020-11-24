@@ -26,6 +26,7 @@ import com.zhu.cactus.filter.FiltersPagerAdapter
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
+import com.zhu.nav.Gobal
 import com.zhu.nav.Nav
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
@@ -81,8 +82,14 @@ class MainActivity : AppCompatActivity() {
                 commit()
             }
 
-
-            startActivity(Intent(this, Nav::class.java))
+            /*传递数据*/
+            val bundle = Bundle()
+            bundle.putInt("key2",18)
+            val intent = Intent(this, Nav::class.java)
+            intent.putExtras(bundle)
+            if (App.typeface!=null)Gobal.typeface=true //标为字体可用
+            Gobal.context=App.context //context
+            startActivity(intent)
 
         }// 服务？
         GpsID.setOnClickListener {

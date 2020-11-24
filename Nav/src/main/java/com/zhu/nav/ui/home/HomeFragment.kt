@@ -9,8 +9,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.zhu.cactus.App
-import com.zhu.cactus.R
+import com.zhu.daomengkj.App
+import com.zhu.nav.Gobal
+import com.zhu.nav.R
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
@@ -37,16 +38,16 @@ class HomeFragment : androidx.fragment.app.Fragment() {
                 daomeng_pass?.let {
                     if (edit_account.text.isNotBlank() && daomeng_pass.text.isNotBlank()) {
                         val sharedPreference =
-                            App.context.getSharedPreferences("daomengKJ", Context.MODE_PRIVATE)
+                          Gobal.context.getSharedPreferences("daomengKJ", Context.MODE_PRIVATE)
                         val editor = sharedPreference.edit()
                         editor.putString("username", edit_account.text.toString())
                         editor.putString("password", daomeng_pass.text.toString())
                         editor.apply()
-                        Toast.makeText(App.context, "保存成功！用户名${edit_account.text}和密码${daomeng_pass.text}", Toast.LENGTH_SHORT).show()
-                        Toast.makeText(App.context,"登录中！  保存中",Toast.LENGTH_SHORT).show()
-                        com.zhu.daomengkj.App(App.context,homeViewModel.text).login()//登录保存token
+                        Toast.makeText(Gobal.context, "保存成功！用户名${edit_account.text}和密码${daomeng_pass.text}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(Gobal.context,"登录中！  保存中",Toast.LENGTH_SHORT).show()
+                        com.zhu.daomengkj.App(Gobal.context,homeViewModel.text).login()//登录保存token
                     } else Toast.makeText(
-                        App.context,
+                      Gobal.context,
                         "输入为blank:`${daomeng_login}+${daomeng_pass}`",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -57,14 +58,14 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         }
 
         val sharedPreference =
-            App.context.getSharedPreferences("daomengKJ", Context.MODE_PRIVATE)
+          Gobal.context.getSharedPreferences("daomengKJ", Context.MODE_PRIVATE)
         sharedPreference?.let {
             root.edit_account.setText(it.getString("username",""))
             root.daomeng_pass.setText(it.getString("password",""))
         }
 
 
-        if (App.typeface!=null) TypefaceHelper.typeface(root)//应用字体
+        if (Gobal.typeface) TypefaceHelper.typeface(root)//应用字体
 
 
         return root

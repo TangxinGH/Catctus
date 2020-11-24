@@ -20,9 +20,9 @@ class Nav : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
-        if (App.typeface != null) TypefaceHelper.typeface(this)//应用字体
+        if (Gobal.typeface  ) TypefaceHelper.typeface(this)//应用字体
         val navView: BottomNavigationView = nav_view
-
+        val intent = intent //提取数据
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

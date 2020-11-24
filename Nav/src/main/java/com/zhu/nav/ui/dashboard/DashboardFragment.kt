@@ -15,8 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.chenantao.fabMenu.FabMenu
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.ramotion.circlemenu.CircleMenuView
-import com.zhu.cactus.R
 import com.zhu.daomengkj.App
+import com.zhu.nav.Gobal
+import com.zhu.nav.R
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
@@ -43,7 +44,7 @@ class DashboardFragment : Fragment() {
         })
 
 /*被点击的时候，oncreate了,所以不需要 监听 */
-        val daomeng = App(com.zhu.cactus.App.context, dashboardViewModel.text)
+        val daomeng = App(Gobal.context, dashboardViewModel.text)
         if (daomeng.is_login()) {
             daomeng.getids()//得到数据
             println("getItem 被执行了")
@@ -118,7 +119,7 @@ class DashboardFragment : Fragment() {
                 when (title) {
                     "报名" -> {
                         if (edit_join_id2.text != null && edit_join_id2.text.isNotBlank()) {
-                            App(com.zhu.cactus.App.context, dashboardViewModel.text).join(
+                            App(Gobal.context, dashboardViewModel.text).join(
                                 edit_join_id2.text.toString(),
                                 sleep_SeekBar.progress
                             )//报名活动
@@ -129,26 +130,26 @@ class DashboardFragment : Fragment() {
                         ).show()
                     }
                     "详情" -> {
-                        val actInfo = App(com.zhu.cactus.App.context, dashboardViewModel.text)
+                        val actInfo = App(Gobal.context, dashboardViewModel.text)
                         if (actInfo.is_login() && edit_join_id2.text.isNotBlank()) {
                             actInfo.chiken(edit_join_id2.text.toString())
-                            Toast.makeText(com.zhu.cactus.App.context, "wait ", Toast.LENGTH_SHORT)
+                            Toast.makeText(Gobal.context, "wait ", Toast.LENGTH_SHORT)
                                 .show()
                         } else Toast.makeText(
-                            com.zhu.cactus.App.context,
+                            Gobal.context,
                             "未登录 或者 id 为空 ",
                             Toast.LENGTH_SHORT
                         )
                             .show()
                     }
                     "仅我" -> {
-                        val daomeng = App(com.zhu.cactus.App.context, dashboardViewModel.text)
+                        val daomeng = App(Gobal.context, dashboardViewModel.text)
                         if (daomeng.is_login()) {
                             daomeng.can_join()
                         }
                     }
                     "取消" -> {
-                        val act_cancel = App(com.zhu.cactus.App.context, dashboardViewModel.text)
+                        val act_cancel = App(Gobal.context, dashboardViewModel.text)
                         if (act_cancel.is_login() && edit_join_id2.text.isNotBlank()) {
                             act_cancel.concle(edit_join_id2.text.toString())
                         }
@@ -180,7 +181,7 @@ class DashboardFragment : Fragment() {
         App.sleep_seekBar.observe(viewLifecycleOwner, {
             textMin5.text = it.toString()//设置值
         }) //还可以这样啊
-        if (com.zhu.cactus.App.typeface != null) TypefaceHelper.typeface(root)//应用字体
+        if (Gobal.typeface ) TypefaceHelper.typeface(root)//应用字体
 
 
         return root

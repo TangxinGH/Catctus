@@ -7,16 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
 import com.google.android.material.chip.Chip
 import com.norbsoft.typefacehelper.TypefaceHelper
-
-import com.zhu.cactus.App
-import com.zhu.cactus.R
-
+import com.zhu.nav.Gobal
+import com.zhu.nav.R
 import kotlinx.android.synthetic.main.fragment_notifications.view.*
 
 class NotificationsFragment : Fragment() {
@@ -41,7 +39,7 @@ class NotificationsFragment : Fragment() {
             it as Chip
 
             val sharedPreference =
-                App.context.getSharedPreferences(
+               Gobal.context.getSharedPreferences(
                     "daomengKJNotifications",
                     Context.MODE_PRIVATE
                 )
@@ -73,7 +71,7 @@ class NotificationsFragment : Fragment() {
             }
         }
 
-        if (App.typeface != null) TypefaceHelper.typeface(root)//应用字体
+        if ( Gobal.typeface) TypefaceHelper.typeface(root)//应用字体
         return root
     }
 }
