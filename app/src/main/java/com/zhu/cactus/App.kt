@@ -88,8 +88,6 @@ Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比�
         /*bugly init */
         val strategy = UserStrategy(applicationContext)
         strategy.isUploadProcess = getProcessName() == null || getProcessName() == packageName//时增加一个上报进程的策略配置
-// 初始化Bugly
-//        CrashReport.initCrashReport(applicationContext, "284486e9ec", false,strategy)//第三个参数为SDK调试模式开关
 
       if(isApkInDebug(this))  Bugly.init(applicationContext, "284486e9ec", false) else Bugly.init(applicationContext, "284486e9ec", true)
 
