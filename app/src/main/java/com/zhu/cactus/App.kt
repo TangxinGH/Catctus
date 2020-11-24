@@ -8,18 +8,12 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Build
-import android.os.Environment
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.gyf.cactus.callback.CactusCallback
 import com.gyf.cactus.ext.cactus
 import com.norbsoft.typefacehelper.TypefaceCollection
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.tencent.bugly.Bugly
-import com.tencent.bugly.beta.Beta
-import com.tencent.bugly.crashreport.CrashReport
-import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import com.zhu.cactus.download.font.fileFilterEmpty
 import com.zhu.cactus.download.font.iniFont
 import com.zhu.cactus.download.images.NOTIFBitmap
@@ -85,11 +79,9 @@ Cactus请在Thread.UncaughtExceptionHandler或者第三方异常捕获库，比�
 
     @RequiresApi(Build.VERSION_CODES.P)
     private fun applicationInit() {
-        /*bugly init */
-        val strategy = UserStrategy(applicationContext)
-        strategy.isUploadProcess = getProcessName() == null || getProcessName() == packageName//时增加一个上报进程的策略配置
 
-      if(isApkInDebug(this))  Bugly.init(applicationContext, "284486e9ec", false) else Bugly.init(applicationContext, "284486e9ec", true)
+
+//      if(isApkInDebug(this))  Bugly.init(applicationContext, "284486e9ec", false) else Bugly.init(applicationContext, "284486e9ec", true)
 
 
 // init sno pass
