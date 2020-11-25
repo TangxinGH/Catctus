@@ -125,22 +125,16 @@
         app:layout_constraintGuide_percent="0.10"
         app:layout_constraintTop_toBottomOf="@id/edit_join_id2" />
 
-    <LinearLayout
-        android:id="@+id/root_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
-
-
-    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintBottom_toTopOf="@id/text_dashboard"/>
 
-    <!-- backSideColor 多余的话，调一下cameraHeight-->
+<!--    &lt;!&ndash; backSideColor 多余的话，调一下cameraHeight&ndash;&gt;
     <com.ramotion.foldingcell.FoldingCell
         android:id="@+id/folding_cell"
         android:layout_width="match_parent"
@@ -179,7 +173,7 @@
                 android:layout_height="100dp"
                 android:background="@android:color/holo_blue_dark" />
         </FrameLayout>
-    </com.ramotion.foldingcell.FoldingCell>
+    </com.ramotion.foldingcell.FoldingCell>-->
 
     <TextView
         android:id="@+id/text_dashboard"
@@ -195,7 +189,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/folding_cell" />
+        app:layout_constraintTop_toBottomOf="@id/recyclerview" />
 
     <com.ramotion.circlemenu.CircleMenuView
         android:id="@+id/circle_menu"
