@@ -40,13 +40,13 @@ android {
             variant.outputs.all {
                 output -> outputFileName = "Catctus-release-v${variant.versionName}-${releaseTime()}.apk"
             } // 名称
-            def jsonFile = file('release/output-metadata.json')
-            def parsedJson = new JsonSlurper().parseText(jsonFile.text)
-            def apk_file=file("release/Catctus-release-v${variant.versionName}-${releaseTime()}.apk")
-            parsedJson.apkSize=apk_file.exists() ? apk_file.length()/1024 : 5.4
-            parsedJson.apkInfo=" 世界你好"
 
-            jsonFile.write(JsonOutput.toJson(parsedJson)) //序例化
+//            def jsonFile = file('release/output-metadata.json')
+//            def parsedJson = new JsonSlurper().parseText(jsonFile.text)
+//            def apk_file=file("release/Catctus-release-v${variant.versionName}-${releaseTime()}.apk")
+//            parsedJson.apkSize=apk_file.exists() ? apk_file.length()/1024 : 5.4
+//            parsedJson.apkInfo=" 世界你好"
+//            jsonFile.write(JsonOutput.toJson(parsedJson)) //序例化
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
