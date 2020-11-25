@@ -1,5 +1,6 @@
 package com.zhu.nav.ui.dashboard
 
+import android.content.ClipData
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chenantao.fabMenu.FabMenu
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.ramotion.circlemenu.CircleMenuView
@@ -18,6 +20,7 @@ import com.zhu.daomengkj.App
 import com.zhu.nav.BtnBottomDialog
 import com.zhu.nav.Gobal
 import com.zhu.nav.R
+import com.zhu.nav.RecyclerView.DemoAdapter
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
@@ -184,6 +187,22 @@ class DashboardFragment : Fragment() {
 
         }
 
+        root.folding_cell.setOnClickListener { folding_cell.toggle(false) }
+        val mutableListOf = mutableListOf(
+            "Ajax",
+            "Maxsu",
+            "Praka",
+            "Maxsu"
+        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
+        val demoAdapter = DemoAdapter(mutableListOf)
+        root.recyclerview.adapter=demoAdapter
+        root.recyclerview.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false) //布局管理器：以垂直或者水平列表方式展示Item
+
+//         Item 内子View的点击事件：
+//        注意，请不要在convert方法里注册控件id
+
+// 先注册需要点击的子控件id（注意，请不要写在convert方法里）
+        demoAdapter.addChildClickViewIds(R.id.folding_cell2)
         return root
     }
 
