@@ -63,6 +63,9 @@ fun downloadNew(context: Context, appJson: app_update){
         .download()
 }
 
+/**
+ * https://doc.fastgit.org/zh-cn/node.html
+ * */
 fun isNew(context: Context){
 
 //    output-metadata.json
