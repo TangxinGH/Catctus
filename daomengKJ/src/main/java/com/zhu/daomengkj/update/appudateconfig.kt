@@ -52,7 +52,7 @@ fun downloadNew(context: Context, appJson: app_update){
 
     val manager: DownloadManager = DownloadManager.getInstance(context)
     manager.setApkName(appJson.elements[0].outputFile)
-        .setApkUrl("https://raw.githubusercontent.com/TangXinGithub/Catctus/daomeng/app/release/${appJson.elements[0].outputFile}") //最新的 有缓存，只能改铝箔
+        .setApkUrl("https://raw.fastgit.org/TangXinGithub/Catctus/daomeng/app/release/${appJson.elements[0].outputFile}") //最新的 有缓存，只能改铝箔
 //            https://api.github.com/repos/TangXinGithub/Catctus/releases/latest  返回json  assets  tag_name
         .setSmallIcon(R.mipmap.ic_launcher)
         .setConfiguration(configuration)//配置
@@ -66,7 +66,8 @@ fun downloadNew(context: Context, appJson: app_update){
 fun isNew(context: Context){
 
 //    output-metadata.json
-    val url ="https://raw.githubusercontent.com/TangXinGithub/Catctus/daomeng/app/release/output-metadata.json"
+//    raw.fastgit.org 无缓存
+    val url ="https://raw.fastgit.org/TangXinGithub/Catctus/daomeng/app/release/output-metadata.json"
     val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
     val okHttpClient = httpClientBuilder.connectTimeout(20, TimeUnit.SECONDS)
