@@ -8,7 +8,7 @@
         folding-cell:additionalFlipsCount="2"
         folding-cell:animationDuration="3000"
         folding-cell:backSideColor="@android:color/holo_orange_light"
-        folding-cell:cameraHeight="60"
+        folding-cell:cameraHeight="30"
                >
 
         <FrameLayout

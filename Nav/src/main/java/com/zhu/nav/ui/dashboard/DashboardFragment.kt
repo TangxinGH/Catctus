@@ -22,6 +22,7 @@ import com.zhu.nav.BtnBottomDialog
 import com.zhu.nav.Gobal
 import com.zhu.nav.R
 import com.zhu.nav.RecyclerView.DemoAdapter
+import com.zhu.nav.RecyclerView.myAdapter
 import kotlinx.android.synthetic.main.foldingcell.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
@@ -196,8 +197,15 @@ class DashboardFragment : Fragment() {
             "Praka",
             "Maxsu"
         )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
-        val demoAdapter = DemoAdapter(mutableListOf)
-        root.recyclerview.adapter=demoAdapter
+
+    val myAdapter=myAdapter(   arrayOf( "Ajax",
+        "Maxsu",
+        "Praka",
+        "Maxsu"))
+        root.recyclerview.adapter=myAdapter
+
+//        val demoAdapter = DemoAdapter(mutableListOf)
+//        root.recyclerview.adapter=demoAdapter
         root.recyclerview.layoutManager=LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
@@ -208,14 +216,14 @@ class DashboardFragment : Fragment() {
 //        注意，请不要在convert方法里注册控件id
 
 // 先注册需要点击的子控件id（注意，请不要写在convert方法里）
-        demoAdapter.addChildClickViewIds(R.id.folding_cell)
-        demoAdapter.setOnItemChildClickListener { adapter, view, position ->
-            if (view.id == R.id.folding_cell) {
-//                Tips.show("onItemChildClick $position")
-                val fc = view as FoldingCell
-                fc.toggle(false)
-            }
-        }
+//        demoAdapter.addChildClickViewIds(R.id.folding_cell)
+//        demoAdapter.setOnItemChildClickListener { adapter, view, position ->
+//            if (view.id == R.id.folding_cell) {
+////                Tips.show("onItemChildClick $position")
+//                val fc = view as FoldingCell
+//                fc.toggle(false)
+//            }
+//        }
         return root
     }
 
