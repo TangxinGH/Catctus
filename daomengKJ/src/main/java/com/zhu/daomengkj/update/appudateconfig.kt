@@ -65,6 +65,7 @@ fun downloadNew(context: Context, appJson: app_update){
 
 /**
  * https://doc.fastgit.org/zh-cn/node.html
+ * 有一定的缓存时间 大概是多久不知道
  * */
 fun isNew(context: Context){
 
