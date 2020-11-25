@@ -17,6 +17,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
+import java.util.logging.Logger
 
 
 val logtag=    "output-metadata.json"
@@ -52,7 +53,8 @@ fun downloadNew(context: Context, appJson: app_update){
 
     val manager: DownloadManager = DownloadManager.getInstance(context)
     manager.setApkName(appJson.elements[0].outputFile)
-        .setApkUrl("https://raw.fastgit.org/TangXinGithub/Catctus/daomeng/app/release/${appJson.elements[0].outputFile}") //最新的 有缓存，只能改铝箔
+//        .setApkUrl("https://raw.fastgit.org/TangXinGithub/Catctus/daomeng/app/release/${appJson.elements[0].outputFile}") //最新的 有缓存，只能改铝箔
+        .setApkUrl("https://hub.fastgit.org/TangXinGithub/Catctus/releases/latest/download/${appJson.elements[0].outputFile}")//release
 //            https://api.github.com/repos/TangXinGithub/Catctus/releases/latest  返回json  assets  tag_name
         .setSmallIcon(R.mipmap.ic_launcher)
         .setConfiguration(configuration)//配置
@@ -65,19 +67,21 @@ fun downloadNew(context: Context, appJson: app_update){
 
 /**
  * https://doc.fastgit.org/zh-cn/node.html
- * 有一定的缓存时间 大概是多久不知道
+ * 有一定的缓存时间 fastgit缓存 1小时，github 5分钟
  * */
 fun isNew(context: Context){
 
 //    output-metadata.json
 //    raw.fastgit.org 无缓存
-    val url ="https://raw.fastgit.org/TangXinGithub/Catctus/daomeng/app/release/output-metadata.json"
+//    val url ="https://raw.fastgit.org/TangXinGithub/Catctus/daomeng/app/release/output-metadata.json"
+    val url ="https://hub.fastgit.org/TangXinGithub/Catctus/releases/latest/download/output-metadata.json"
     val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
     val okHttpClient = httpClientBuilder.connectTimeout(20, TimeUnit.SECONDS)
         .readTimeout(20, TimeUnit.SECONDS)
-        .build() //2.创建Request对象，设置一个url地址（百度地址）,设置请求方式。
-    val request = Request.Builder().url(url).get().build()
+        .build()
+
+    val request = Request.Builder().url(url).get().cacheControl(CacheControl.FORCE_NETWORK) .build() //CacheControl.FORCE_NETWORK 强力走网络 不 走缓存
     okHttpClient.newCall(request).enqueue(object : Callback {
 
         override fun onFailure(call: Call, e: IOException) {
@@ -100,7 +104,9 @@ fun isNew(context: Context){
                 Log.d(logtag, content.toString())
                 try {
                     val json = Json.decodeFromString(app_update.serializer(), content.toString())
-                    if (json.elements[0].versionCode > packageCode(context)) App.app_update.postValue(json) else {
+                    if (json.elements[0].versionCode > packageCode(context)) App.app_update.postValue(
+                        json
+                    ) else {
                         Log.d(logtag, "已是最新")
                     }
                 } catch (e: Exception) {
@@ -111,6 +117,57 @@ fun isNew(context: Context){
     })
 
 }
+/**
+ * github release latest*/
+/*fun isNew(context: Context,int: Int){
+
+    val url ="https://api.github.com/repos/TangXinGithub/Catctus/releases/latest"
+    val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
+
+    val okHttpClient = httpClientBuilder.connectTimeout(20, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
+        .build()
+
+    val request = Request.Builder().url(url).get().cacheControl(CacheControl.FORCE_NETWORK) .build() //CacheControl.FORCE_NETWORK 强力走网络 不 走缓存
+    okHttpClient.newCall(request).enqueue(object : Callback {
+
+        override fun onFailure(call: Call, e: IOException) {
+            Log.d("网络失败github 网络直接访问？", e.toString())
+        isNew(context) //原先方法尝试
+        }
+
+        override fun onResponse(call: Call, response: Response) {
+            response.use {
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                val `in`: InputStream = response.body!!.byteStream()
+                val reader = BufferedReader(InputStreamReader(`in`))
+                val content = StringBuilder()
+                var line = reader.readLine()
+                while (line != null) {
+                    content.append(line)
+                    line = reader.readLine()
+                }
+                Log.d(logtag, content.toString())
+                try {
+                    val json = Json.decodeFromString(releases_latest.serializer(), content.toString())
+                    val filter = json.assets.filter { it.name == "output-metadata.json" }
+                    if  (filter.isNotEmpty())  {
+//                            https://github.com/TangXinGithub/Catctus/releases/latest/download/output-metadata.json
+//                            https://hub.fastgit.org/TangXinGithub/Catctus/releases/latest/download/output-metadata.json
+
+                    }
+                     else {
+
+                    }
+                } catch (e: Exception) {
+                    Log.d(logtag, e.toString())
+                }
+            }
+        }
+    })
+
+}*/
 
 /**
  * 获取应用的版本号versionCode：
@@ -143,3 +200,6 @@ fun packageName(context: Context): String? {
     }
     return name
 }
+
+
+

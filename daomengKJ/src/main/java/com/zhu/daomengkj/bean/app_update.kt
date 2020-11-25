@@ -19,8 +19,8 @@ data class app_update(
     val applicationId: String,
     val variantName: String,
     val elements: List<Elements>,
-    val apkSize: Float,
-    val apkInfo: String
+    val apkSize: Float=5.4f,
+    val apkInfo: String="世界，你好！"
 )
 
 @Serializable
