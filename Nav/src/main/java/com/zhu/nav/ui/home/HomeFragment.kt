@@ -1,5 +1,6 @@
 package com.zhu.nav.ui.home
 
+import actsJSON
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.daomengkj.App
@@ -45,7 +47,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
                         editor.apply()
                         Toast.makeText(Gobal.context, "保存成功！用户名${edit_account.text}和密码${daomeng_pass.text}", Toast.LENGTH_SHORT).show()
                         Toast.makeText(Gobal.context,"登录中！  保存中",Toast.LENGTH_SHORT).show()
-                        com.zhu.daomengkj.App(Gobal.context,homeViewModel.text).login()//登录保存token
+                        com.zhu.daomengkj.App(Gobal.context, MutableLiveData<actsJSON>()).login()//登录保存token
                     } else Toast.makeText(
                       Gobal.context,
                         "输入为blank:`${daomeng_login}+${daomeng_pass}`",

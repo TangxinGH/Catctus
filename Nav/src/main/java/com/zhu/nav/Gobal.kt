@@ -5,7 +5,7 @@ import com.norbsoft.typefacehelper.TypefaceHelper
 
 object Gobal {
 
-    var typeface: Boolean = false
-  lateinit var  context: Context
+    var     typeface: Boolean = false
+    lateinit var context: Context
 
 }

@@ -1,5 +1,6 @@
 package com.zhu.daomengkj
 
+import actsJSON
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
@@ -7,10 +8,10 @@ import app_update
 import com.zhu.daomengkj.Py_invoke_Java.showinfo
 
 
-class App(dmc: Context, actLive: MutableLiveData<String>) { // 不能有多个application 实例
+class App(dmc: Context, actLive: MutableLiveData<actsJSON>) { // 不能有多个application 实例
 
     var dao_meng_context: Context = dmc //在app的app on create里
-    var activities: MutableLiveData<String> = actLive
+    var activities: MutableLiveData<actsJSON> = actLive
     var main = Main(activities)
 companion object{
 

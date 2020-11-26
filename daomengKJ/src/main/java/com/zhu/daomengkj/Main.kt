@@ -19,7 +19,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class Main(val activities: MutableLiveData<String>) : Post() {
+class Main(val activities: MutableLiveData<actsJSON>) : Post() {
 
 
     //    """类的帮助信息"""  // 类文档字符串
@@ -79,7 +79,7 @@ class Main(val activities: MutableLiveData<String>) : Post() {
 
     }
 
-    fun notifi(result: MutableLiveData<String>,  callback: (actsJSON, int: Int) -> Unit){
+    fun notifi(result: MutableLiveData<actsJSON>,  callback: (actsJSON, int: Int) -> Unit){
         this.get_can_join(this.token,this.uid,result, callback)
     }
     fun can_join() {
@@ -206,7 +206,7 @@ class Main(val activities: MutableLiveData<String>) : Post() {
 
 open class Post {
 
-    fun get_ids(token: String, uid: String, activities: MutableLiveData<String>) {
+    fun get_ids(token: String, uid: String, activities: MutableLiveData< actsJSON>) {
 
         val url = "https://appdmkj.5idream.net/v2/activity/activities"
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
@@ -240,7 +240,7 @@ open class Post {
                 }
                 if (res != null) {
                     if (res.code == "100") {
-                        val acts = StringBuilder("所有活动：\n")
+                    /*    val acts = StringBuilder("所有活动：\n")
                         for (index in res.data.list) {
                             acts.append(
                                 index.activityId
@@ -255,8 +255,8 @@ open class Post {
                                 .append(
                                 index.name
                             ).append("\n\n")
-                        }
-                        activities.postValue(acts.toString())//展示结果
+                        }*/
+                        activities.postValue(res)//展示结果
                         showinfo("查询成功", "")
                     } else {
                         showinfo("出错了", "请检查账号密码")
@@ -269,7 +269,7 @@ open class Post {
         })
     }
 
-    fun get_can_join(token: String, uid: String, activities: MutableLiveData<String>, vararg args: (actsJSON, int: Int) -> Unit) {//可变参数
+    fun get_can_join(token: String, uid: String, activities: MutableLiveData<actsJSON>, vararg args: (actsJSON, int: Int) -> Unit) {//可变参数
         val url = "https://appdmkj.5idream.net/v2/activity/activities"
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
@@ -314,7 +314,7 @@ open class Post {
                                     index.name
                                 ).append("\n\n")
                         }
-                        activities.postValue(acts.toString())//展示结果
+                        activities.postValue(res)//展示结果
                             showinfo("查询成功", "!")
                         for (arg in args){
                             arg.invoke( res,1) //回调

@@ -1,5 +1,7 @@
 package com.zhu.nav.ui.dashboard
 
+import activities
+import actsJSON
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
@@ -9,10 +11,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.baianat.floadingcellanimationsample.utils.GridSpacingItemDecoration
 import com.chenantao.fabMenu.FabMenu
 import com.norbsoft.typefacehelper.TypefaceHelper
@@ -23,9 +25,6 @@ import com.zhu.nav.Gobal
 import com.zhu.nav.R
 import com.zhu.nav.RecyclerView.DemoAdapter
 import com.zhu.nav.utils.ViewUtils
-import kotlinx.android.synthetic.main.cell.view.*
-import kotlinx.android.synthetic.main.expanding_item.view.*
-import kotlinx.android.synthetic.main.expanding_sub_item.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
@@ -51,8 +50,65 @@ class DashboardFragment : Fragment() {
 
         })
 
+
+
+//        val mutableListOf = mutableListOf(
+//            List<activities>(1, init = { activities(123456, 123456, "", "", 1, "", "", "") })
+//
+//        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
+
+
+        val demoAdapter = DemoAdapter(  MutableList(1, init = { activities(123456, 123456, "imagerurl", "name wdsfdsfsfd", 1, "statusText", "activitytime", "catalog2name") }))
+        root.recyclerview.adapter=demoAdapter
+        root.recyclerview.layoutManager= GridLayoutManager(context,1)//网络布局，而 LinearLayout只能一行
+//        root.recyclerview.layoutManager= LinearLayoutManager(
+//            context,
+//            LinearLayoutManager.VERTICAL,
+//            false
+//        ) //布局管理器：以垂直或者水平列表方式展示Item
+
+        root.recyclerview.addItemDecoration(
+            GridSpacingItemDecoration(1,   ViewUtils.dpToPx(12f),true, 0)
+        )//间距问题
+
+//         Item 内子View的点击事件：
+//        注意，请不要在convert方法里注册控件id
+
+// 先注册需要点击的子控件id（注意，请不要写在convert方法里）
+//        demoAdapter.addChildClickViewIds(R.id.folding_cell)
+//        demoAdapter.setOnItemChildClickListener { adapter, view, position ->
+//            if (view.id == R.id.folding_cell) {
+////                Tips.show("onItemChildClick $position")
+//                val fc = view as FoldingCell
+//                fc.toggle(false)
+//            }
+//        }
+
+
+        val acts_info = MutableLiveData<actsJSON>()
+        acts_info.observe(viewLifecycleOwner,{
+
+      /*      val acts = StringBuilder("所有活动：\n")
+            for (index in it.data.list) {
+                acts.append(
+                    index.activityId
+                ).append(" ")
+
+                    .append(
+                        index.catalog2name
+                    ).append(" ")
+                    .append(
+                        index.statusText
+                    ).append(" ") .append(index.activitytime).append("\n")
+                    .append(
+                        index.name
+                    ).append("\n\n")
+            }*/
+
+            demoAdapter.setNewInstance(it.data.list.toMutableList())//设置新数据
+        })
 /*被点击的时候，oncreate了,所以不需要 监听 */
-        val daomeng = App(Gobal.context, dashboardViewModel.text)
+        val daomeng = App(Gobal.context,acts_info )
         if (daomeng.is_login()) {
             daomeng.getids()//得到数据
             println("getItem 被执行了")
@@ -129,12 +185,12 @@ class DashboardFragment : Fragment() {
                         if (edit_join_id2.text != null && edit_join_id2.text.isNotBlank()) {
                             if (App.sleep_seekBar.value != null) App(
                                 Gobal.context,
-                                dashboardViewModel.text
+                                acts_info
                             ).join(
                                 edit_join_id2.text.toString(),
                                 App.sleep_seekBar.value!!
                             )//报名活动
-                            else App(Gobal.context, dashboardViewModel.text).join(
+                            else App(Gobal.context,acts_info).join(
                                 edit_join_id2.text.toString(),
                                 200
                             )
@@ -145,7 +201,7 @@ class DashboardFragment : Fragment() {
                         ).show()
                     }
                     "详情" -> {
-                        val actInfo = App(Gobal.context, dashboardViewModel.text)
+                        val actInfo = App(Gobal.context, acts_info)
                         if (actInfo.is_login() && edit_join_id2.text.isNotBlank()) {
                             actInfo.chiken(edit_join_id2.text.toString())
                             Toast.makeText(Gobal.context, "wait ", Toast.LENGTH_SHORT)
@@ -158,13 +214,13 @@ class DashboardFragment : Fragment() {
                             .show()
                     }
                     "仅我" -> {
-                        val daomeng = App(Gobal.context, dashboardViewModel.text)
+                        val daomeng = App(Gobal.context, acts_info)
                         if (daomeng.is_login()) {
                             daomeng.can_join()
                         }
                     }
                     "取消" -> {
-                        val act_cancel = App(Gobal.context, dashboardViewModel.text)
+                        val act_cancel = App(Gobal.context, acts_info)
                         if (act_cancel.is_login() && edit_join_id2.text.isNotBlank()) {
                             act_cancel.concle(edit_join_id2.text.toString())
                         }
@@ -192,40 +248,6 @@ class DashboardFragment : Fragment() {
 
         }
 
-
-
-        val mutableListOf = mutableListOf(
-            "Ajax",
-            "Maxsu",
-            "Praka",
-            "Maxsu"
-        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
-
-        val demoAdapter = DemoAdapter(mutableListOf)
-        root.recyclerview.adapter=demoAdapter
-        root.recyclerview.layoutManager= GridLayoutManager(context,1)//网络布局，而 LinearLayout只能一行
-//        root.recyclerview.layoutManager= LinearLayoutManager(
-//            context,
-//            LinearLayoutManager.VERTICAL,
-//            false
-//        ) //布局管理器：以垂直或者水平列表方式展示Item
-
-        root.recyclerview.addItemDecoration(
-            GridSpacingItemDecoration(1,   ViewUtils.dpToPx(12f),true, 0)
-        )//间距问题
-
-//         Item 内子View的点击事件：
-//        注意，请不要在convert方法里注册控件id
-
-// 先注册需要点击的子控件id（注意，请不要写在convert方法里）
-//        demoAdapter.addChildClickViewIds(R.id.folding_cell)
-//        demoAdapter.setOnItemChildClickListener { adapter, view, position ->
-//            if (view.id == R.id.folding_cell) {
-////                Tips.show("onItemChildClick $position")
-//                val fc = view as FoldingCell
-//                fc.toggle(false)
-//            }
-//        }
 
 
 
