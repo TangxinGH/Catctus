@@ -1,12 +1,10 @@
 package com.zhu.nav.RecyclerView
 
 import activities
-import android.view.View
-import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.zhu.nav.Gobal.typeface
+import com.zhu.daomengkj.Gobal.typeface
 import com.zhu.nav.R
 import kotlinx.android.synthetic.main.cell.view.*
 import kotlinx.android.synthetic.main.expanding_item.view.*
@@ -49,5 +47,15 @@ class DemoAdapter
         expandingItem.getSubItemView(2).sub_title.text= item.aid.toString()
         expandingItem.getSubItemView(3).sub_title.text=item.imageUrl
 //        helper.setText(R.id.tweetName, "This is an Item, pos: " + (helper.getAdapterPosition() - getHeaderLayoutCount()));
+
+        /* private void configureSubItem(final ExpandingItem item, final View view, String subTitle) {
+        ((TextView) view.findViewById(R.id.sub_title)).setText(subTitle);
+        view.findViewById(R.id.remove_sub_item).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item.removeSubItem(view);
+            }
+        });
+    }*/
     }
 }

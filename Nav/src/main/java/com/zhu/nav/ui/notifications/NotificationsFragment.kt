@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.zhu.nav.Gobal
+import com.zhu.daomengkj.Gobal
 import com.zhu.nav.R
 import kotlinx.android.synthetic.main.fragment_notifications.view.*
 

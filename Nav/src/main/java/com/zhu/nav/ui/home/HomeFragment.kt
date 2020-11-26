@@ -11,8 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.norbsoft.typefacehelper.TypefaceHelper
-import com.zhu.daomengkj.App
-import com.zhu.nav.Gobal
+import com.zhu.daomengkj.Gobal
 import com.zhu.nav.R
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*

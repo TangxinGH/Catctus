@@ -28,7 +28,7 @@ import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
 import com.zhu.daomengkj.update.downloadNew
 import com.zhu.daomengkj.update.isNew
-import com.zhu.nav.Gobal
+import com.zhu.daomengkj.Gobal
 import com.zhu.nav.Nav
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             bundle.putInt("key2",18)
             val intent = Intent(this, Nav::class.java)
             intent.putExtras(bundle)
-            if (App.typeface!=null)Gobal.typeface=true //标为字体可用
+            if (App.typeface!=null) Gobal.typeface=true //标为字体可用
             Gobal.context=App.context //context
             startActivity(intent)
 

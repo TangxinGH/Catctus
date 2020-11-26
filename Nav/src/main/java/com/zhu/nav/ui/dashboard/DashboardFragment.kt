@@ -21,7 +21,7 @@ import com.norbsoft.typefacehelper.TypefaceHelper
 import com.ramotion.circlemenu.CircleMenuView
 import com.zhu.daomengkj.App
 import com.zhu.nav.BtnBottomDialog
-import com.zhu.nav.Gobal
+import com.zhu.daomengkj.Gobal
 import com.zhu.nav.R
 import com.zhu.nav.RecyclerView.DemoAdapter
 import com.zhu.nav.utils.ViewUtils
@@ -52,13 +52,9 @@ class DashboardFragment : Fragment() {
 
 
 
-//        val mutableListOf = mutableListOf(
-//            List<activities>(1, init = { activities(123456, 123456, "", "", 1, "", "", "") })
-//
 //        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
-
-
-        val demoAdapter = DemoAdapter(  MutableList(1, init = { activities(123456, 123456, "imagerurl", "name wdsfdsfsfd", 1, "statusText", "activitytime", "catalog2name") }))
+/*test 则 1 release 则size 0 */
+        val demoAdapter = DemoAdapter(  MutableList(0, init = { activities(123456, 123456, "imagerurl", "name wdsfdsfsfd", 1, "statusText", "activitytime", "catalog2name") }))
         root.recyclerview.adapter=demoAdapter
         root.recyclerview.layoutManager= GridLayoutManager(context,1)//网络布局，而 LinearLayout只能一行
 //        root.recyclerview.layoutManager= LinearLayoutManager(

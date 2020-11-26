@@ -40,6 +40,7 @@ android {
 dependencies {
 
     implementation 'com.azhon:appupdateX:3.0.2' // app 更新
+    implementation 'com.norbsoft.typefacehelper:library:0.9.0'//    字体库
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1" //协程
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"

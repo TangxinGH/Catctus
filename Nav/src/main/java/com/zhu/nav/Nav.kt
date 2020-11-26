@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.daomengkj.App
 import com.zhu.daomengkj.App.Companion.toast
-import com.zhu.nav.BtnBottomDialog
+import com.zhu.daomengkj.Gobal
 import kotlinx.android.synthetic.main.activity_nav.*
 
 
