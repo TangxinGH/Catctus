@@ -11,19 +11,21 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.baianat.floadingcellanimationsample.utils.GridSpacingItemDecoration
 import com.chenantao.fabMenu.FabMenu
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.ramotion.circlemenu.CircleMenuView
-import com.ramotion.foldingcell.FoldingCell
 import com.zhu.daomengkj.App
 import com.zhu.nav.BtnBottomDialog
 import com.zhu.nav.Gobal
 import com.zhu.nav.R
 import com.zhu.nav.RecyclerView.DemoAdapter
-import com.zhu.nav.RecyclerView.myAdapter
-import kotlinx.android.synthetic.main.foldingcell.*
+import com.zhu.nav.utils.ViewUtils
+import kotlinx.android.synthetic.main.cell.view.*
+import kotlinx.android.synthetic.main.expanding_item.view.*
+import kotlinx.android.synthetic.main.expanding_sub_item.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 
@@ -190,7 +192,8 @@ class DashboardFragment : Fragment() {
 
         }
 
-//        root.folding_cell.setOnClickListener { folding_cell.toggle(false) }
+
+
         val mutableListOf = mutableListOf(
             "Ajax",
             "Maxsu",
@@ -198,19 +201,18 @@ class DashboardFragment : Fragment() {
             "Maxsu"
         )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
 
-    val myAdapter=myAdapter(   arrayOf( "Ajax",
-        "Maxsu",
-        "Praka",
-        "Maxsu"))
-        root.recyclerview.adapter=myAdapter
+        val demoAdapter = DemoAdapter(mutableListOf)
+        root.recyclerview.adapter=demoAdapter
+        root.recyclerview.layoutManager= GridLayoutManager(context,1)//网络布局，而 LinearLayout只能一行
+//        root.recyclerview.layoutManager= LinearLayoutManager(
+//            context,
+//            LinearLayoutManager.VERTICAL,
+//            false
+//        ) //布局管理器：以垂直或者水平列表方式展示Item
 
-//        val demoAdapter = DemoAdapter(mutableListOf)
-//        root.recyclerview.adapter=demoAdapter
-        root.recyclerview.layoutManager=LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL,
-            false
-        ) //布局管理器：以垂直或者水平列表方式展示Item
+        root.recyclerview.addItemDecoration(
+            GridSpacingItemDecoration(1,   ViewUtils.dpToPx(12f),true, 0)
+        )//间距问题
 
 //         Item 内子View的点击事件：
 //        注意，请不要在convert方法里注册控件id
@@ -224,6 +226,9 @@ class DashboardFragment : Fragment() {
 //                fc.toggle(false)
 //            }
 //        }
+
+
+
         return root
     }
 
