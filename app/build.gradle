@@ -16,7 +16,7 @@ android {
         applicationId "com.zhu.cactus"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 2
+        versionCode 3
         versionName "6.6.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
