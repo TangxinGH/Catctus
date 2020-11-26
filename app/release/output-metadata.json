@@ -10,9 +10,9 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 3,
-      "versionName": "6.6.8",
-      "outputFile": "Catctus-release-v6.6.8-20201126.apk"
+      "versionCode": 4,
+      "versionName": "6.6.9",
+      "outputFile": "Catctus-release-v6.6.9-20201126.apk"
     }
   ]
 }
