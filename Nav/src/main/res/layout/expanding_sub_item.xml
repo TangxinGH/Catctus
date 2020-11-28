@@ -15,12 +15,14 @@
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/imagurl"
         />
+<!-- 长按复制    android:textIsSelectable="true"-->
     <TextView
         android:id="@+id/sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="8dp"
+        android:textIsSelectable="true"
         android:layout_below="@id/act_name"
         android:layout_toLeftOf="@+id/imagurl"
         android:paddingLeft="0dp"
@@ -31,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
+        android:textIsSelectable="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/imagurl"
         android:layout_below="@id/sub_title"

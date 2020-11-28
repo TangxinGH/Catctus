@@ -21,6 +21,7 @@ import com.norbsoft.typefacehelper.TypefaceHelper
 import com.ramotion.circlemenu.CircleMenuView
 import com.zhu.daomengkj.App
 import com.zhu.daomengkj.Global
+import com.zhu.daomengkj.Global.acts_info
 import com.zhu.daomengkj.Global.isApkInDebug
 import com.zhu.nav.BtnBottomDialog
 import com.zhu.nav.R
@@ -28,7 +29,6 @@ import kotlinx.android.synthetic.main.expanding_item.view.*
 import kotlinx.android.synthetic.main.expanding_sub_item.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.serialization.json.Json
 
 
@@ -269,12 +269,12 @@ class DashboardFragment : Fragment() {
         return root
     }
 
-    fun createCateView(itemCata: String, subItemList: List<activities>) {
+    fun createCateView(itemCate: String, subItemList: List<activities>) {
         val item: ExpandingItem =
             expanding_list_main.createNewItem(R.layout.expanding_layout)        //Let's create an item with R.layout.expanding_layout
         if (Global.typeface) TypefaceHelper.typeface(item)//字体
 
-        item.title.text = itemCata
+        item.title.text = itemCate
         item.setIndicatorColorRes(indicatorsColor.random())//随机
         item.setIndicatorIconRes(R.drawable.ic_activity)
 
@@ -288,9 +288,23 @@ class DashboardFragment : Fragment() {
             subItemView.sub_title.text = "Id：${activity.activityId}"
             subItemView.activity_info_statusText.text = "状态：${activity.statusText}"
             subItemView.activity_info_Id.text = activity.aid.toString()
+            subItemView.activity_info_Id.setOnClickListener {
+                    Toast.makeText(Global.context, "长按id号复制id! ", Toast.LENGTH_SHORT).show()
+            }
             subItemView.activity_info_activityTime.text = "活动时间：\n${activity.activitytime}"
             Glide.with(subItemView).load(activity.imageUrl).into(subItemView.imagurl)
+
+            subItemView.imagurl.setOnLongClickListener {
+                val actInfo = App(Global.context, acts_info)//这个acts_info 没有也没关系吧？？
+                if (actInfo.is_login() && edit_join_id2.text.isNotBlank()) {
+                    actInfo.chiken(edit_join_id2.text.toString())
+                    Toast.makeText(Global.context, "wait ", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                true
+            }
         }
+
     }
 
 }
