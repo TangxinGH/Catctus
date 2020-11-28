@@ -17,8 +17,8 @@ android {
         applicationId "com.zhu.cactus"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 4
-        versionName "6.6.9"
+        versionCode 6
+        versionName "6.7.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -102,7 +102,7 @@ dependencies {
 //    }
 //}
 
-task modifyReleaseInfo( ) {
+task modifyReleaseInfo() {
 
 }
 project.tasks.whenTaskAdded { Task task ->
@@ -115,17 +115,18 @@ project.tasks.whenTaskAdded { Task task ->
             if (jsonFile.exists()) {
                 def parsedJson = new JsonSlurper().parseText(jsonFile.text)
                 def apk_file = file("release/${parsedJson.elements[0].outputFile}")//得到文件名
-                parsedJson.apkSize = apk_file.exists() ? apk_file.length() / 1024 : 5.4
+                parsedJson.apkSize = apk_file.exists() ? apk_file.length() / 1024 / 1024 : 5.4
 
                 //    https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Exec.html
                 def hashStdOut = new ByteArrayOutputStream()
                 exec {
                     commandLine "cmd", "/c", "git show  --pretty=format:\"%s%n\" "
-                    standardOutput = hashStdOut //store the output instead of printing to the console:
+                    standardOutput = hashStdOut
+                    //store the output instead of printing to the console:
                 }
-                def exeResult=  hashStdOut.toString("UTF-8").readLines() //解决乱码问题，
+                def exeResult = hashStdOut.toString("UTF-8").readLines() //解决乱码问题，
 
-                parsedJson.apkInfo = "世界你好\n${exeResult.size()>0 ? exeResult[0]:""}"
+                parsedJson.apkInfo = "世界你好\n${exeResult.size() > 0 ? exeResult[0] : ""}"
                 jsonFile.write(JsonOutput.toJson(parsedJson)) //序例化
             }
         }

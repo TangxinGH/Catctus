@@ -56,12 +56,10 @@
         app:layout_constraintGuide_percent="0.10"
         app:layout_constraintTop_toBottomOf="@id/edit_join_id2" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="wrap_content"
+    <com.diegodobelo.expandingview.ExpandingList
+        android:id="@+id/expanding_list_main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
         app:layout_constraintBottom_toTopOf="@id/text_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerview" />
+        app:layout_constraintTop_toBottomOf="@id/expanding_list_main" />
 
 
     <com.chenantao.fabMenu.FabMenu

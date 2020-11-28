@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:layout_marginTop="8dp"
-    android:paddingStart="5dp"
+    android:padding="5dp"
     android:background="@drawable/item_bound">
     <TextView
         android:layout_width="wrap_content"
@@ -15,8 +14,6 @@
         android:layout_marginTop="5dp"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/imagurl"
-
-
         />
     <TextView
         android:id="@+id/sub_title"
@@ -70,5 +67,5 @@
         android:layout_marginRight="2dp"
         android:contentDescription="imageurl"
         android:gravity="center_vertical|right"
-        android:maxHeight="100dp" />
+         />
 </RelativeLayout>

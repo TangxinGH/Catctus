@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.daomengkj.App
 import com.zhu.daomengkj.App.Companion.toast
-import com.zhu.daomengkj.Gobal
+import com.zhu.daomengkj.Global
 import kotlinx.android.synthetic.main.activity_nav.*
 
 
@@ -20,7 +20,7 @@ class Nav : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
-        if (Gobal.typeface  ) TypefaceHelper.typeface(this)//应用字体
+        if (Global.typeface  ) TypefaceHelper.typeface(this)//应用字体
         val navView: BottomNavigationView = nav_view
         val intent = intent //提取数据
         val navController = findNavController(R.id.nav_host_fragment)
