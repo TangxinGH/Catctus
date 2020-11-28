@@ -1,5 +1,6 @@
 package com.zhu.nav.ui.dashboard
 
+import activities
 import actsJSON
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.chenantao.fabMenu.FabMenu
 import com.diegodobelo.expandingview.ExpandingItem
 import com.norbsoft.typefacehelper.TypefaceHelper
+import com.ramotion.circlemenu.CircleMenuView
 import com.zhu.daomengkj.App
 import com.zhu.daomengkj.Global
 import com.zhu.daomengkj.Global.isApkInDebug
@@ -26,13 +28,14 @@ import kotlinx.android.synthetic.main.expanding_item.view.*
 import kotlinx.android.synthetic.main.expanding_sub_item.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.serialization.json.Json
 
 
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
-
+    var category: actsJSON? = null
     val indicatorsColor = listOf(
         R.color.pink,
         R.color.blue,
@@ -68,29 +71,11 @@ class DashboardFragment : Fragment() {
         acts_info.observe(viewLifecycleOwner, { itJson ->
             /**先移除 原先的 */
             expanding_list_main.removeAllViews()
+            /**保存一下 圆形菜单用*/
+            category=itJson
             /**分组*/
             itJson.data.list.groupBy { it.catalog2name }.forEach { itemCata, subItemList ->
-                val item: ExpandingItem =
-                    expanding_list_main.createNewItem(R.layout.expanding_layout)        //Let's create an item with R.layout.expanding_layout
-                if (Global.typeface) TypefaceHelper.typeface(item)//字体
-
-                item.title.text = itemCata
-                item.setIndicatorColorRes(indicatorsColor.random())//随机
-                item.setIndicatorIconRes(R.drawable.ic_activity)
-
-
-//This will create n items
-                item.createSubItems(subItemList.size)
-                subItemList.forEachIndexed { index, activity ->
-                    val subItemView = item.getSubItemView(index)
-                    if (Global.typeface) TypefaceHelper.typeface(subItemView)
-                    subItemView.act_name.text = activity.name
-                    subItemView.sub_title.text = "Id：${activity.activityId}"
-                    subItemView.activity_info_statusText.text = "状态：${activity.statusText}"
-                    subItemView.activity_info_Id.text = activity.aid.toString()
-                    subItemView.activity_info_activityTime.text = "活动时间：\n${activity.activitytime}"
-                    Glide.with(subItemView).load(activity.imageUrl).into(subItemView.imagurl)
-                }
+                createCateView(itemCata, subItemList)
 
             }
 
@@ -103,6 +88,63 @@ class DashboardFragment : Fragment() {
             acts_info.postValue(Json.decodeFromString(actsJSON.serializer(), testStr))
 
 
+        }
+
+        val menu = root.circle_menu
+        menu.eventListener = object : CircleMenuView.EventListener() {
+            /*    override fun onMenuOpenAnimationStart(view: CircleMenuView) {
+                    Log.d("D", "onMenuOpenAnimationStart")
+                }
+
+                override fun onMenuOpenAnimationEnd(view: CircleMenuView) {
+                    Log.d("D", "onMenuOpenAnimationEnd")
+                }
+
+                override fun onMenuCloseAnimationStart(view: CircleMenuView) {
+                    Log.d("D", "onMenuCloseAnimationStart")
+                }
+
+                override fun onMenuCloseAnimationEnd(view: CircleMenuView) {
+                    Log.d("D", "onMenuCloseAnimationEnd")
+                }*/
+
+            override fun onButtonClickAnimationStart(view: CircleMenuView, index: Int) {
+                Log.d("D", "onButtonClickAnimationStart| index: $index")
+                category?.let { itJson ->
+                    when(index){
+                        0 -> { expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.statusText }.forEach { (itemCate, subItemList) ->
+                                createCateView(itemCate, subItemList)
+                            }
+                        }
+                        1 -> { expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.activitytime.split("至")[0] }.forEach { (itemCate, subItemList) ->
+                            createCateView(itemCate, subItemList)
+                        }}
+                        2 -> { expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.activitytime.split("至")[1] }.forEach { (itemCate, subItemList) ->
+                                createCateView(itemCate, subItemList)
+                            }}
+                        3 -> { expanding_list_main.removeAllViews()
+                             itJson.data.list.groupBy { it.name.substring(0,2) }.forEach { (itemCate, subItemList) ->
+                                createCateView(itemCate, subItemList)
+                            }}
+                        4 -> { expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.name.substring(0,4) }.forEach { (itemCate, subItemList) ->
+                                createCateView(itemCate, subItemList)
+                            }}
+                        else ->{ expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.statusText }.forEach { (itemCate, subItemList) ->
+                                createCateView(itemCate, subItemList)
+                            }
+                        Log.d("没有击中","默认的")}
+                    }
+                }
+            }
+
+            override fun onButtonClickAnimationEnd(view: CircleMenuView, index: Int) {
+                Log.d("D", "onButtonClickAnimationEnd| index: $index")
+            }
         }
 
 
@@ -225,6 +267,30 @@ class DashboardFragment : Fragment() {
 
 
         return root
+    }
+
+    fun createCateView(itemCata: String, subItemList: List<activities>) {
+        val item: ExpandingItem =
+            expanding_list_main.createNewItem(R.layout.expanding_layout)        //Let's create an item with R.layout.expanding_layout
+        if (Global.typeface) TypefaceHelper.typeface(item)//字体
+
+        item.title.text = itemCata
+        item.setIndicatorColorRes(indicatorsColor.random())//随机
+        item.setIndicatorIconRes(R.drawable.ic_activity)
+
+
+        //This will create n items
+        item.createSubItems(subItemList.size)
+        subItemList.forEachIndexed { index, activity ->
+            val subItemView = item.getSubItemView(index)
+            if (Global.typeface) TypefaceHelper.typeface(subItemView)
+            subItemView.act_name.text = activity.name
+            subItemView.sub_title.text = "Id：${activity.activityId}"
+            subItemView.activity_info_statusText.text = "状态：${activity.statusText}"
+            subItemView.activity_info_Id.text = activity.aid.toString()
+            subItemView.activity_info_activityTime.text = "活动时间：\n${activity.activitytime}"
+            Glide.with(subItemView).load(activity.imageUrl).into(subItemView.imagurl)
+        }
     }
 
 }

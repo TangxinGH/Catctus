@@ -67,32 +67,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             root.daomeng_pass.setText(it.getString("password",""))
         }
 
-        val menu = root.circle_menu
-        menu.eventListener = object : CircleMenuView.EventListener() {
-            /*    override fun onMenuOpenAnimationStart(view: CircleMenuView) {
-                    Log.d("D", "onMenuOpenAnimationStart")
-                }
 
-                override fun onMenuOpenAnimationEnd(view: CircleMenuView) {
-                    Log.d("D", "onMenuOpenAnimationEnd")
-                }
-
-                override fun onMenuCloseAnimationStart(view: CircleMenuView) {
-                    Log.d("D", "onMenuCloseAnimationStart")
-                }
-
-                override fun onMenuCloseAnimationEnd(view: CircleMenuView) {
-                    Log.d("D", "onMenuCloseAnimationEnd")
-                }*/
-
-            override fun onButtonClickAnimationStart(view: CircleMenuView, index: Int) {
-                Log.d("D", "onButtonClickAnimationStart| index: $index")
-            }
-
-            override fun onButtonClickAnimationEnd(view: CircleMenuView, index: Int) {
-                Log.d("D", "onButtonClickAnimationEnd| index: $index")
-            }
-        }
 
 
 
