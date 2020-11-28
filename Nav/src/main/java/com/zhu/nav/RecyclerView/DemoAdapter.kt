@@ -1,6 +1,7 @@
 package com.zhu.nav.RecyclerView
 
 import activities
+import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.norbsoft.typefacehelper.TypefaceHelper
@@ -40,12 +41,16 @@ class DemoAdapter
         expandingItem.setIndicatorIconRes(R.drawable.ic_activity )//随机
 
 //This will create 5 items
-        expandingItem.createSubItems(4)
+        expandingItem.createSubItems(1)
 
-        expandingItem.getSubItemView(0).sub_title.text="Id${item.activityId}"
-        expandingItem.getSubItemView(1).sub_title.text="状态：${item.statusText}"
-        expandingItem.getSubItemView(2).sub_title.text= item.aid.toString()
-        expandingItem.getSubItemView(3).sub_title.text=item.imageUrl
+        val subItemView = expandingItem.getSubItemView(0)
+        if (typeface) TypefaceHelper.typeface(subItemView)
+        subItemView.sub_title.text="Id：${item.activityId}"
+        subItemView.activity_info_statusText.text="状态：${item.statusText}"
+        subItemView.activity_info_Id.text= item.aid.toString()
+        subItemView.activity_info_activityTime.text="活动时间：${item.activitytime}"
+        Glide.with(subItemView).load(item.imageUrl).into(subItemView.imagurl)
+
 //        helper.setText(R.id.tweetName, "This is an Item, pos: " + (helper.getAdapterPosition() - getHeaderLayoutCount()));
 
         /* private void configureSubItem(final ExpandingItem item, final View view, String subTitle) {

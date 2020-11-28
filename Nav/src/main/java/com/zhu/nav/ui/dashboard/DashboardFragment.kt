@@ -54,7 +54,7 @@ class DashboardFragment : Fragment() {
 
 //        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
 /*test 则 1 release 则size 0 */
-        val demoAdapter = DemoAdapter(  MutableList(0, init = { activities(123456, 123456, "imagerurl", "name wdsfdsfsfd", 1, "statusText", "activitytime", "catalog2name") }))
+        val demoAdapter = DemoAdapter(  MutableList(1, init = { activities(123456, 123456, "https://image.5idream.net/1231604646538085?x-oss-process=image/resize,w_375,h_0/quality,Q_100/format,jpg", "name wdsfdsfsfd", 1, "statusText", "activitytime", "catalog2name") }))
         root.recyclerview.adapter=demoAdapter
         root.recyclerview.layoutManager= GridLayoutManager(context,1)//网络布局，而 LinearLayout只能一行
 //        root.recyclerview.layoutManager= LinearLayoutManager(

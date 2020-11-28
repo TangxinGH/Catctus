@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="center_vertical|left"
-        android:textSize="22sp"/>
+        android:textSize="18sp"/>
     <TextView
         android:id="@+id/act_name"
         android:layout_width="wrap_content"
