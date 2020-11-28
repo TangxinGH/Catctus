@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="130dp"
+    android:layout_marginTop="8dp"
+    android:paddingStart="5dp"
+    android:background="@drawable/item_bound">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/act_name"
+        android:textSize="12sp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/imagurl"
 
+
+        />
     <TextView
         android:id="@+id/sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="8dp"
+        android:layout_below="@id/act_name"
         android:layout_toLeftOf="@+id/imagurl"
         android:paddingLeft="0dp"
         android:textSize="12sp" />
@@ -16,7 +32,7 @@
     <TextView
         android:id="@+id/activity_info_Id"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/imagurl"
@@ -26,7 +42,7 @@
     <TextView
         android:id="@+id/activity_info_statusText"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/imagurl"
@@ -36,7 +52,7 @@
     <TextView
         android:id="@+id/activity_info_activityTime"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/imagurl"
@@ -45,8 +61,8 @@
 
     <ImageView
         android:id="@+id/imagurl"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"

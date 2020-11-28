@@ -16,7 +16,7 @@ class DemoAdapter
 /**
  * 构造方法，此示例中，在实例化Adapter时就传入了一个List。
  * 如果后期设置数据，不需要传入初始List，直接调用 super(layoutResId); 即可
- */(list: MutableList<activities>) :BaseQuickAdapter< activities, BaseViewHolder>(R.layout.cell, list) {
+ */(list: MutableList< Pair<String,List<activities>>>) :BaseQuickAdapter< Pair<String,List<activities>>, BaseViewHolder>(R.layout.cell, list) {
     /**
      * 在此方法中设置item数据
      */
@@ -32,24 +32,27 @@ class DemoAdapter
 
 
 
-    override fun convert(helper: BaseViewHolder, item:  activities) {
+    override fun convert(helper: BaseViewHolder, item:  Pair<String,List<activities>>) {
         val expandingItem =helper.itemView.expanding_list_main.createNewItem(R.layout.expanding_layout)
-        expandingItem.title.text=item.catalog2name
-        expandingItem.act_name.text=item.name
+        expandingItem.title.text=item.first//第一个变量解构
         if (typeface) TypefaceHelper.typeface(helper.itemView)//字体
         expandingItem.setIndicatorColorRes( indicatorsColor.random())
         expandingItem.setIndicatorIconRes(R.drawable.ic_activity )//随机
 
-//This will create 5 items
-        expandingItem.createSubItems(1)
 
-        val subItemView = expandingItem.getSubItemView(0)
-        if (typeface) TypefaceHelper.typeface(subItemView)
-        subItemView.sub_title.text="Id：${item.activityId}"
-        subItemView.activity_info_statusText.text="状态：${item.statusText}"
-        subItemView.activity_info_Id.text= item.aid.toString()
-        subItemView.activity_info_activityTime.text="活动时间：${item.activitytime}"
-        Glide.with(subItemView).load(item.imageUrl).into(subItemView.imagurl)
+//This will create n items
+        expandingItem.createSubItems(item.second.size)
+        item.second.forEachIndexed { index, activity ->
+            val subItemView = expandingItem.getSubItemView(index)
+            if (typeface) TypefaceHelper.typeface(subItemView)
+            subItemView.act_name.text=activity.name
+            subItemView.sub_title.text="Id：${activity.activityId}"
+            subItemView.activity_info_statusText.text="状态：${activity.statusText}"
+            subItemView.activity_info_Id.text= activity.aid.toString()
+            subItemView.activity_info_activityTime.text="活动时间：\n${activity.activitytime}"
+            Glide.with(subItemView).load(activity.imageUrl).into(subItemView.imagurl)
+        }
+
 
 //        helper.setText(R.id.tweetName, "This is an Item, pos: " + (helper.getAdapterPosition() - getHeaderLayoutCount()));
 

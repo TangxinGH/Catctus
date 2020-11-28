@@ -2,6 +2,8 @@ package com.zhu.nav.ui.dashboard
 
 import activities
 import actsJSON
+import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
@@ -51,12 +53,59 @@ class DashboardFragment : Fragment() {
         })
 
 
-
-//        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
+        //        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
 /*test 则 1 release 则size 0 */
-        val demoAdapter = DemoAdapter(  MutableList(1, init = { activities(123456, 123456, "https://image.5idream.net/1231604646538085?x-oss-process=image/resize,w_375,h_0/quality,Q_100/format,jpg", "name wdsfdsfsfd", 1, "statusText", "activitytime", "catalog2name") }))
-        root.recyclerview.adapter=demoAdapter
-        root.recyclerview.layoutManager= GridLayoutManager(context,1)//网络布局，而 LinearLayout只能一行
+        fun isApkInDebug(context: Context): Boolean {
+            return try {
+                val info = context.applicationInfo
+                info.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+            } catch (e: Exception) {
+                false
+            }
+        }
+
+        val toList = arrayListOf(
+            activities(
+                123456,
+                123456,
+                "https://image.5idream.net/1231604646538085?x-oss-process=image/resize,w_375,h_0/quality,Q_100/format,jpg",
+                "第一 镇魂 在 夺灰 工鼓励国鞋子加工 啊载大福利 鞋子大小气鬼机加工灰尘荥鞋跟阿凡达革某家炒东跑西颠 春树暮云夺田浮点",
+                1,
+                "statusText",
+                "activitytime",
+                "catalog2name"
+            ), activities(
+                545421,
+                5555,
+                "https://image.5idream.net/1231604646538085?x-oss-process=image/resize,w_375,h_0/quality,Q_100/format,jpg",
+                "第二 镇魂 在 夺灰 工鼓励国鞋子加工 啊载ghjg hvg大福利 鞋子大小气鬼机加工灰尘荥鞋跟阿凡达革某家炒东跑西颠 春树暮云夺田浮点",
+                1,
+                "statusText",
+                "activitytime",
+                "catalog2name"
+            )
+        ).toList()
+        val demoAdapter = if (context?.let { isApkInDebug(it) } == true) {
+            DemoAdapter(
+                MutableList(
+                    2,
+                    init = {if (it==0)Pair("创新创业", toList)
+                         else Pair("思想成长", arrayListOf(activities(123456,123456,"https://image.5idream.net/1231604646538085?x-oss-process=image/resize,w_375,h_0/quality,Q_100/format,jpg",
+                                    "name 镇魂 在 夺灰 工鼓励国鞋子加工 啊载大福利 鞋子大小气鬼机加工灰尘荥鞋跟阿凡达革某家炒东跑西颠 春树暮云夺田浮点",
+                                    1,
+                                    "statusText",
+                                    "activitytime",
+                                    "catalog2name"
+                                )
+                            )
+                        )
+                    })
+            )
+        } else DemoAdapter( emptyList<Pair<String,List<activities>>>().toMutableList())//空集合
+
+
+        root.recyclerview.adapter = demoAdapter
+        root.recyclerview.layoutManager = GridLayoutManager(context, 1)//网络布局，而 LinearLayout只能一行
 //        root.recyclerview.layoutManager= LinearLayoutManager(
 //            context,
 //            LinearLayoutManager.VERTICAL,
@@ -64,7 +113,7 @@ class DashboardFragment : Fragment() {
 //        ) //布局管理器：以垂直或者水平列表方式展示Item
 
         root.recyclerview.addItemDecoration(
-            GridSpacingItemDecoration(1,   ViewUtils.dpToPx(12f),true, 0)
+            GridSpacingItemDecoration(1, ViewUtils.dpToPx(12f), true, 0)
         )//间距问题
 
 //         Item 内子View的点击事件：
@@ -82,29 +131,29 @@ class DashboardFragment : Fragment() {
 
 
         val acts_info = MutableLiveData<actsJSON>()
-        acts_info.observe(viewLifecycleOwner,{
+        acts_info.observe(viewLifecycleOwner, { itJson ->
 
-      /*      val acts = StringBuilder("所有活动：\n")
-            for (index in it.data.list) {
-                acts.append(
-                    index.activityId
-                ).append(" ")
+            /*      val acts = StringBuilder("所有活动：\n")
+                  for (index in it.data.list) {
+                      acts.append(
+                          index.activityId
+                      ).append(" ")
 
-                    .append(
-                        index.catalog2name
-                    ).append(" ")
-                    .append(
-                        index.statusText
-                    ).append(" ") .append(index.activitytime).append("\n")
-                    .append(
-                        index.name
-                    ).append("\n\n")
-            }*/
-
-            demoAdapter.setNewInstance(it.data.list.toMutableList())//设置新数据
+                          .append(
+                              index.catalog2name
+                          ).append(" ")
+                          .append(
+                              index.statusText
+                          ).append(" ") .append(index.activitytime).append("\n")
+                          .append(
+                              index.name
+                          ).append("\n\n")
+                  }*/
+            val pairList = itJson.data.list.groupBy { it.catalog2name }.toList() //分组
+            demoAdapter.setNewInstance(pairList.toMutableList())//设置新数据
         })
 /*被点击的时候，oncreate了,所以不需要 监听 */
-        val daomeng = App(Gobal.context,acts_info )
+        val daomeng = App(Gobal.context, acts_info)
         if (daomeng.is_login()) {
             daomeng.getids()//得到数据
             println("getItem 被执行了")
@@ -145,32 +194,6 @@ class DashboardFragment : Fragment() {
               }
           }
   */
-        val menu = root.circle_menu
-        menu.eventListener = object : CircleMenuView.EventListener() {
-            /*    override fun onMenuOpenAnimationStart(view: CircleMenuView) {
-                    Log.d("D", "onMenuOpenAnimationStart")
-                }
-
-                override fun onMenuOpenAnimationEnd(view: CircleMenuView) {
-                    Log.d("D", "onMenuOpenAnimationEnd")
-                }
-
-                override fun onMenuCloseAnimationStart(view: CircleMenuView) {
-                    Log.d("D", "onMenuCloseAnimationStart")
-                }
-
-                override fun onMenuCloseAnimationEnd(view: CircleMenuView) {
-                    Log.d("D", "onMenuCloseAnimationEnd")
-                }*/
-
-            override fun onButtonClickAnimationStart(view: CircleMenuView, index: Int) {
-                Log.d("D", "onButtonClickAnimationStart| index: $index")
-            }
-
-            override fun onButtonClickAnimationEnd(view: CircleMenuView, index: Int) {
-                Log.d("D", "onButtonClickAnimationEnd| index: $index")
-            }
-        }
 
 
         root.fabMenu.setOnMenuItemClickListener(object : FabMenu.OnMenuClickListener() {
@@ -186,7 +209,7 @@ class DashboardFragment : Fragment() {
                                 edit_join_id2.text.toString(),
                                 App.sleep_seekBar.value!!
                             )//报名活动
-                            else App(Gobal.context,acts_info).join(
+                            else App(Gobal.context, acts_info).join(
                                 edit_join_id2.text.toString(),
                                 200
                             )
@@ -235,7 +258,7 @@ class DashboardFragment : Fragment() {
 
         if (Gobal.typeface) TypefaceHelper.typeface(root)//应用字体
 
-       root.textMin5.setOnClickListener {
+        root.textMin5.setOnClickListener {
             if (activity != null) {
                 BtnBottomDialog().show(requireActivity().supportFragmentManager, "tag")
             } else {

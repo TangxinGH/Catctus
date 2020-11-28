@@ -29,7 +29,7 @@
         app:chipSpacingVertical="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:theme="@style/Theme.MaterialComponents.DayNight.Bridge"
+        android:theme="@style/Theme.MaterialComponents.Light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 <!--        Theme.MaterialComponents

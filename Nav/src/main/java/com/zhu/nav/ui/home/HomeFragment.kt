@@ -3,6 +3,7 @@ package com.zhu.nav.ui.home
 import actsJSON
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.norbsoft.typefacehelper.TypefaceHelper
+import com.ramotion.circlemenu.CircleMenuView
 import com.zhu.daomengkj.Gobal
 import com.zhu.nav.R
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -64,6 +66,34 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             root.edit_account.setText(it.getString("username",""))
             root.daomeng_pass.setText(it.getString("password",""))
         }
+
+        val menu = root.circle_menu
+        menu.eventListener = object : CircleMenuView.EventListener() {
+            /*    override fun onMenuOpenAnimationStart(view: CircleMenuView) {
+                    Log.d("D", "onMenuOpenAnimationStart")
+                }
+
+                override fun onMenuOpenAnimationEnd(view: CircleMenuView) {
+                    Log.d("D", "onMenuOpenAnimationEnd")
+                }
+
+                override fun onMenuCloseAnimationStart(view: CircleMenuView) {
+                    Log.d("D", "onMenuCloseAnimationStart")
+                }
+
+                override fun onMenuCloseAnimationEnd(view: CircleMenuView) {
+                    Log.d("D", "onMenuCloseAnimationEnd")
+                }*/
+
+            override fun onButtonClickAnimationStart(view: CircleMenuView, index: Int) {
+                Log.d("D", "onButtonClickAnimationStart| index: $index")
+            }
+
+            override fun onButtonClickAnimationEnd(view: CircleMenuView, index: Int) {
+                Log.d("D", "onButtonClickAnimationEnd| index: $index")
+            }
+        }
+
 
 
         if (Gobal.typeface) TypefaceHelper.typeface(root)//应用字体

@@ -17,7 +17,7 @@ class BtnBottomDialog : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         if (activity == null) return super.onCreateDialog(savedInstanceState)
         val dialog =
-            BottomSheetDialog(requireActivity(), R.style.Theme_MaterialComponents_BottomSheetDialog)
+            BottomSheetDialog(requireActivity(), R.style.SheetDialog)//设置样式这里
         dialog.setContentView(R.layout.bottom_dialog)
 
 
