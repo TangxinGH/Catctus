@@ -66,6 +66,8 @@ class DashboardFragment : Fragment() {
 
         val acts_info = MutableLiveData<actsJSON>()
         acts_info.observe(viewLifecycleOwner, { itJson ->
+            /**先移除 原先的 */
+            expanding_list_main.removeAllViews()
             /**分组*/
             itJson.data.list.groupBy { it.catalog2name }.forEach { itemCata, subItemList ->
                 val item: ExpandingItem =
