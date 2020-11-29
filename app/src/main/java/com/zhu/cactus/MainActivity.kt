@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         if (App.typeface!=null)TypefaceHelper.typeface(this)//应用字体
 //        supportActionBar?.hide()
         initData()
-        permission()
+//        permission()
         isNew(this)//版本更新
     }
 
