@@ -26,11 +26,14 @@ import com.zhu.daomengkj.Global.acts_info
 import com.zhu.daomengkj.Global.isApkInDebug
 import com.zhu.nav.BtnBottomDialog
 import com.zhu.nav.R
+import com.zhu.nav.ui.swiperefresh.CircleRefreshLayout
 import kotlinx.android.synthetic.main.expanding_item.view.*
 import kotlinx.android.synthetic.main.expanding_sub_item.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import kotlinx.serialization.json.Json
+import kotlin.concurrent.timer
+import kotlin.concurrent.timerTask
 
 
 class DashboardFragment : Fragment() {
@@ -58,7 +61,7 @@ class DashboardFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
         textView.movementMethod = ScrollingMovementMethod.getInstance()
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        dashboardViewModel.text.observe(viewLifecycleOwner, {
 //      当提交切换到这时
             textView.text = it
 
@@ -73,7 +76,7 @@ class DashboardFragment : Fragment() {
             /**先移除 原先的 */
             expanding_list_main.removeAllViews()
             /**保存一下 圆形菜单用*/
-            category=itJson
+            category = itJson
             /**分组*/
             itJson.data.list.groupBy { it.catalog2name }.forEach { itemCata, subItemList ->
                 createCateView(itemCata, subItemList)
@@ -81,8 +84,9 @@ class DashboardFragment : Fragment() {
             }
 
             /*停止刷新*/
-            root.refreshLayout.isRefreshing=false
-
+            refreshLayout.getmHeader()?.let {
+                refreshLayout.finishRefreshing()// 第一次 没有刷新所以是空的
+            }
         })
 
         /*test*/
@@ -115,33 +119,50 @@ class DashboardFragment : Fragment() {
             override fun onButtonClickAnimationStart(view: CircleMenuView, index: Int) {
                 Log.d("D", "onButtonClickAnimationStart| index: $index")
                 category?.let { itJson ->
-                    when(index){
-                        0 -> { expanding_list_main.removeAllViews()
-                            itJson.data.list.groupBy { it.statusText }.forEach { (itemCate, subItemList) ->
-                                createCateView(itemCate, subItemList)
-                            }
+                    when (index) {
+                        0 -> {
+                            expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.statusText }
+                                .forEach { (itemCate, subItemList) ->
+                                    createCateView(itemCate, subItemList)
+                                }
                         }
-                        1 -> { expanding_list_main.removeAllViews()
-                            itJson.data.list.groupBy { it.activitytime.split("至")[0] }.forEach { (itemCate, subItemList) ->
-                            createCateView(itemCate, subItemList)
-                        }}
-                        2 -> { expanding_list_main.removeAllViews()
-                            itJson.data.list.groupBy { it.activitytime.split("至")[1] }.forEach { (itemCate, subItemList) ->
-                                createCateView(itemCate, subItemList)
-                            }}
-                        3 -> { expanding_list_main.removeAllViews()
-                             itJson.data.list.groupBy { it.name.substring(0,2) }.forEach { (itemCate, subItemList) ->
-                                createCateView(itemCate, subItemList)
-                            }}
-                        4 -> { expanding_list_main.removeAllViews()
-                            itJson.data.list.groupBy { it.name.substring(0,4) }.forEach { (itemCate, subItemList) ->
-                                createCateView(itemCate, subItemList)
-                            }}
-                        else ->{ expanding_list_main.removeAllViews()
-                            itJson.data.list.groupBy { it.statusText }.forEach { (itemCate, subItemList) ->
-                                createCateView(itemCate, subItemList)
-                            }
-                        Log.d("没有击中","默认的")}
+                        1 -> {
+                            expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.activitytime.split("至")[0] }
+                                .forEach { (itemCate, subItemList) ->
+                                    createCateView(itemCate, subItemList)
+                                }
+                        }
+                        2 -> {
+                            expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.activitytime.split("至")[1] }
+                                .forEach { (itemCate, subItemList) ->
+                                    createCateView(itemCate, subItemList)
+                                }
+                        }
+                        3 -> {
+                            expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.name.substring(0, 2) }
+                                .forEach { (itemCate, subItemList) ->
+                                    createCateView(itemCate, subItemList)
+                                }
+                        }
+                        4 -> {
+                            expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.name.substring(0, 4) }
+                                .forEach { (itemCate, subItemList) ->
+                                    createCateView(itemCate, subItemList)
+                                }
+                        }
+                        else -> {
+                            expanding_list_main.removeAllViews()
+                            itJson.data.list.groupBy { it.statusText }
+                                .forEach { (itemCate, subItemList) ->
+                                    createCateView(itemCate, subItemList)
+                                }
+                            Log.d("没有击中", "默认的")
+                        }
                     }
                 }
             }
@@ -268,12 +289,27 @@ class DashboardFragment : Fragment() {
         }
 
 
-        root.refreshLayout.setOnRefreshListener {
-            if (daomeng.is_login()) {
-                daomeng.getids()//得到数据
-                Log.d("refreshLayout" ,"被执行了")
+        root.refreshLayout.setOnRefreshListener(object :
+            CircleRefreshLayout.OnCircleRefreshListener {
+            override fun completeRefresh() {
+                Log.d("refresh ", "更新完成")
             }
-        }
+
+            override fun refreshing() {
+                if (context?.let { isApkInDebug(it) } == true) timer(
+                    "test refresh ",
+                    false,
+                    5000.toLong(),
+                    99999999.toLong()
+                ) { root.refreshLayout.finishRefreshing() }
+
+                if (daomeng.is_login()) {
+                    daomeng.getids()//得到数据
+                    Log.d("refreshLayout", "被执行了")
+                }
+            }
+
+        })
 
 
 
@@ -300,7 +336,7 @@ class DashboardFragment : Fragment() {
             subItemView.activity_info_statusText.text = "状态：${activity.statusText}"
             subItemView.activity_info_Id.text = activity.aid.toString()
             subItemView.activity_info_Id.setOnClickListener {
-                    Toast.makeText(Global.context, "长按id号复制id! ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(Global.context, "长按id号复制id! ", Toast.LENGTH_SHORT).show()
             }
             subItemView.activity_info_activityTime.text = "活动时间：\n${activity.activitytime}"
             Glide.with(subItemView).load(activity.imageUrl).into(subItemView.imagurl)
@@ -319,7 +355,7 @@ class DashboardFragment : Fragment() {
             }
 
             subItemView.submit_item.setOnClickListener {
-                if (subItemView.sub_title.text.isNotBlank()&&subItemView.sub_title.text.isDigitsOnly()) {
+                if (subItemView.sub_title.text.isNotBlank() && subItemView.sub_title.text.isDigitsOnly()) {
                     if (App.sleep_seekBar.value != null) App(
                         Global.context,
                         acts_info

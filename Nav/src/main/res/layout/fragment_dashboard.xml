@@ -56,11 +56,17 @@
         app:layout_constraintGuide_percent="0.10"
         app:layout_constraintTop_toBottomOf="@id/edit_join_id2" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
+    <com.zhu.nav.ui.swiperefresh.CircleRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
+        android:layout_height="0dp"
+        android:id="@+id/refreshLayout"
+        app:AniBackColor="#7AABD6"
+        app:AniForeColor="#ffffffff"
+        app:CircleSmaller="6"
+        app:layout_constraintBottom_toTopOf="@id/text_dashboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
         >
     <com.diegodobelo.expandingview.ExpandingList
         android:id="@+id/expanding_list_main"
@@ -71,7 +77,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.zhu.nav.ui.swiperefresh.CircleRefreshLayout>
 
     <TextView
         android:id="@+id/text_dashboard"

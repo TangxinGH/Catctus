@@ -147,12 +147,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 //        showNotification(this,"12","Wonderful World","HellWorld",45)//通知
-        App.log_Print.observe(this, androidx.lifecycle.Observer<String> {
-//            textView.text = it
-//            https://juejin.im/entry/6844903497033318408
-//            loop  用findviewid 有loop 问题
-        })
-        FontProgressBar.observe(this, androidx.lifecycle.Observer<Int> {
+//        App.log_Print.observe(this, {
+//            //            textView.text = it
+//            //            https://juejin.im/entry/6844903497033318408
+//            //            loop  用findviewid 有loop 问题
+//        }
+
+//        )
+        FontProgressBar.observe(this, {
             progressBar.setProgress(it, true)
             progress_text.text = it.toString() + "%"
         })
