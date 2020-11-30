@@ -300,7 +300,7 @@ class DashboardFragment : Fragment() {
                     "test refresh ",
                     false,
                     5000.toLong(),
-                    99999999.toLong()
+                    999999999.toLong()
                 ) { root.refreshLayout.finishRefreshing() }
 
                 if (daomeng.is_login()) {

@@ -107,9 +107,12 @@ class CircleRefreshLayout @JvmOverloads constructor(
             mHeader!!.requestLayout()
         }
         mUpTopAnimator.duration = BACK_TOP_DUR
-        mHeader!!.setOnViewAniDone { //                Log.i(TAG, "should invoke");
-            mUpTopAnimator.start()
-        }
+        mHeader!!.setOnViewAniDone(object : AnimationView.OnViewAniDone{
+            override fun viewAniDone() {
+                mUpTopAnimator.start()
+                //                Log.i(TAG, "should invoke");
+            }
+        })
         this.mUpTopAnimator =mUpTopAnimator
     }
 
