@@ -121,9 +121,9 @@ data class DataInfo(
     val joinmaxnum: String = "",
     val level: Int = 0,
     val levelText: String = "",
-    val joinrange: Int = 0,
+    val joinrange: String = "",
     val joinrangeText: String = "",
-    val joindaterange: Int = 0,
+    val joindaterange: String = "",//int 疸
     val labelname: String = "",
     val joindate: String = "",
     val startdate: String = "",

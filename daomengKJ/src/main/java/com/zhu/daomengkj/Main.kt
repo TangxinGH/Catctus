@@ -383,7 +383,7 @@ open class Post {
                                     ignoreUnknownKeys = true;isLenient = true;
                                 }.decodeFromString(act_info.serializer(), res))
                         } catch (e: Exception) {
-                            Log.e("detail", "返回的格式不正确")
+                            Log.e("detail返回的格式不正确", e.toString())
                         }
 
                     }
