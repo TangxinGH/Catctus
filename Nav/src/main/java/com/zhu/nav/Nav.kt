@@ -1,6 +1,7 @@
 package com.zhu.nav
 
 import act_info
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -19,10 +20,12 @@ import com.zhu.daomengkj.App.Companion.toast
 import com.zhu.daomengkj.Global
 import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.detail_dialog.*
+import kotlinx.android.synthetic.main.detail_dialog.view.*
 
 
 class Nav : AppCompatActivity() {
 
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
@@ -50,8 +53,8 @@ class Nav : AppCompatActivity() {
         })
 
         App.Dialog.observe(this, { actInfo ->
-
-            val actDetailView = act_detail_info_dialog
+            val inflate = layoutInflater.inflate(R.layout.detail_dialog, null)
+            val actDetailView =inflate.act_detail_info_dialog
 
             val array = actInfo.getArray()
             actDetailView.children.forEachIndexed { index, view ->
@@ -60,7 +63,7 @@ class Nav : AppCompatActivity() {
                     }
             }
 
-            AlertDialog.Builder(this)
+            val dialog = AlertDialog.Builder(this).create()
                 /* .apply {
                       setPositiveButton(R.string.ok,
                           DialogInterface.OnClickListener { dialog, id ->
@@ -71,12 +74,11 @@ class Nav : AppCompatActivity() {
                               // User cancelled the dialog
                           })
                   }*/
-                .setView(R.layout.detail_dialog)
-                .setTitle(actInfo.code) //标题
-                .setMessage(actInfo.data.toString()) //内容
-                .setIcon(R.mipmap.ic_launcher) //图标
-                .create()
-                .show()
+            dialog  .setView(inflate)
+//                .setTitle(actInfo.code) //标题
+//                .setMessage(actInfo.data.toString()) //内容
+//            dialog  .setIcon(R.mipmap.ic_launcher) //图标
+            dialog   .show()
 
 
         })
