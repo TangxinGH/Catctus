@@ -29,7 +29,6 @@ data class act_info(
         hashMap["activityId"] = data.activityId.toString()
         hashMap["activityId"] = data.activityId.toString()
         hashMap["activityName"] = data.activityName
-        hashMap["activityImgSet"] = data.activityImgSet.toString()
         hashMap["status"] = data.status.toString()
         hashMap["statusText"] = data.statusText
         hashMap["joinNum"] = data.joinNum.toString()

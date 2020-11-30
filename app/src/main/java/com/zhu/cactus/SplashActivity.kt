@@ -95,7 +95,7 @@ Glide.with(this).load("https://static01.imgkr.com/temp/d86e4b6de6804765af7d8b998
                 Handler(Looper.getMainLooper()).postDelayed({
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
-                }, 200)
+                }, 250)
             }
     }
 
