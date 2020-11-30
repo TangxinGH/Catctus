@@ -1,11 +1,14 @@
 package com.zhu.nav
 
+import act_info
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,6 +18,7 @@ import com.zhu.daomengkj.App
 import com.zhu.daomengkj.App.Companion.toast
 import com.zhu.daomengkj.Global
 import kotlinx.android.synthetic.main.activity_nav.*
+import kotlinx.android.synthetic.main.detail_dialog.*
 
 
 class Nav : AppCompatActivity() {
@@ -45,7 +49,17 @@ class Nav : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
 
-        App.Dialog.observe(this, {
+        App.Dialog.observe(this, { actInfo ->
+
+            val actDetailView = act_detail_info_dialog
+
+            val array = actInfo.getArray()
+            actDetailView.children.forEachIndexed { index, view ->
+                    if (array.size>index) {
+                        (view as TextView ).text=array[index].first+":"+array[index].second
+                    }
+            }
+
             AlertDialog.Builder(this)
                 /* .apply {
                       setPositiveButton(R.string.ok,
@@ -57,8 +71,9 @@ class Nav : AppCompatActivity() {
                               // User cancelled the dialog
                           })
                   }*/
-                .setTitle(it[0]) //标题
-                .setMessage(it[1]) //内容
+                .setView(R.layout.detail_dialog)
+                .setTitle(actInfo.code) //标题
+                .setMessage(actInfo.data.toString()) //内容
                 .setIcon(R.mipmap.ic_launcher) //图标
                 .create()
                 .show()

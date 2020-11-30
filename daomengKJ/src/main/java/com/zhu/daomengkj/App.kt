@@ -1,5 +1,6 @@
 package com.zhu.daomengkj
 
+import act_info
 import actsJSON
 import android.content.Context
 import android.widget.Toast
@@ -16,7 +17,7 @@ class App(dmc: Context, actLive: MutableLiveData<actsJSON>) { // 不能有多个
 companion object{
 
     val toast=MutableLiveData<String> ()
-    val Dialog= MutableLiveData<HashMap<Int,String>>()
+    val Dialog= MutableLiveData< act_info>()
     val app_update = MutableLiveData<app_update>()
     val sleep_seekBar= MutableLiveData<Int>().apply { value= 200}
 }
@@ -42,7 +43,7 @@ companion object{
         main.get_id()
     }
 
-    fun chiken(act_id: String) {
+    fun chiken(act_id: Int) {
         main.read()
         main.chiken(act_id)
 

@@ -1,6 +1,6 @@
 package com.zhu.daomengkj
 
-import android.app.AlertDialog
+import act_info
 import android.content.Context
 
 object Py_invoke_Java {
@@ -39,15 +39,15 @@ object Py_invoke_Java {
 
     }
 
-    fun showDialog(title: String,context: String){
-        val hashMap=HashMap<Int,String>()
-        hashMap[0] = title
-        hashMap[1] = context
+    fun showDialog(title: String,context: String,vararg args:act_info){
+
         try {
-            App.Dialog.postValue( hashMap)
+            App.Dialog.postValue(args[0])
+
         }catch (e: Exception){
             println("弹出框异常$e")
         }
+
 
     }
 

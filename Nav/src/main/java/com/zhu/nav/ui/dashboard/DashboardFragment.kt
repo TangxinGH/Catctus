@@ -243,7 +243,7 @@ class DashboardFragment : Fragment() {
                     "详情" -> {
                         val actInfo = App(Global.context, acts_info)
                         if (actInfo.is_login() && edit_join_id2.text.isNotBlank()) {
-                            actInfo.chiken(edit_join_id2.text.toString())
+                            actInfo.chiken(edit_join_id2.text.toString().toInt())
                             Toast.makeText(Global.context, "wait ", Toast.LENGTH_SHORT)
                                 .show()
                         } else Toast.makeText(
@@ -296,12 +296,12 @@ class DashboardFragment : Fragment() {
             }
 
             override fun refreshing() {
-                if (context?.let { isApkInDebug(it) } == true) timer(
-                    "test refresh ",
-                    false,
-                    5000.toLong(),
-                    999999999.toLong()
-                ) { root.refreshLayout.finishRefreshing() }
+//                if (context?.let { isApkInDebug(it) } == true) timer(
+//                    "test refresh ",
+//                    false,
+//                    5000.toLong(),
+//                    999999999.toLong()
+//                ) { root.refreshLayout.finishRefreshing() }
 
                 if (daomeng.is_login()) {
                     daomeng.getids()//得到数据
@@ -347,7 +347,7 @@ class DashboardFragment : Fragment() {
 
 //                Json{ignoreUnknownKeys=true }.decodeFromString(act_info.serializer(), testStrDetail)
                 if (actInfo.is_login() && subItemView.sub_title.text.isNotBlank()) {
-                    actInfo.chiken(edit_join_id2.text.toString())
+                    actInfo.chiken((subItemView.sub_title.text.toString()).toInt())
                     Toast.makeText(Global.context, "wait ", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -355,16 +355,18 @@ class DashboardFragment : Fragment() {
             }
 
             subItemView.submit_item.setOnClickListener {
+                val daomeng = App(Global.context, acts_info)
+                if (!daomeng.is_login()) return@setOnClickListener
+
                 if (subItemView.sub_title.text.isNotBlank() && subItemView.sub_title.text.isDigitsOnly()) {
                     if (App.sleep_seekBar.value != null) App(
                         Global.context,
                         acts_info
                     ).join(
-                        edit_join_id2.text.toString(),
+                        subItemView.sub_title.text.toString(),
                         App.sleep_seekBar.value!!
                     )//报名活动
-                    else App(Global.context, acts_info).join(
-                        edit_join_id2.text.toString(),
+                    else App(Global.context, acts_info).join(subItemView.sub_title.text.toString(),
                         200
                     )
                 } else Toast.makeText(

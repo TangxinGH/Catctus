@@ -17,7 +17,7 @@ android {
         applicationId "com.zhu.cactus"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 6
+        versionCode 7
         versionName "6.7.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -115,7 +115,7 @@ project.tasks.whenTaskAdded { Task task ->
             if (jsonFile.exists()) {
                 def parsedJson = new JsonSlurper().parseText(jsonFile.text)
                 def apk_file = file("release/${parsedJson.elements[0].outputFile}")//得到文件名
-                parsedJson.apkSize = apk_file.exists() ? (Integer)(apk_file.length() / 1024) / 1024 : 5.4
+                parsedJson.apkSize = apk_file.exists() ?    ((int)(apk_file.length() / 1024 / 10.24))/100 : 5.4
 
                 //    https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Exec.html
                 def hashStdOut = new ByteArrayOutputStream()

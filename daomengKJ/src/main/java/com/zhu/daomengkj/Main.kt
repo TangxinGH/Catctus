@@ -37,13 +37,13 @@ class Main(val activities: MutableLiveData<actsJSON>) : Post() {
         this.acc = account.get("username").toString()
         this.pwd = account.get("password").toString()
         this.path = this.instance.get_path() // android内部存储文件路径
-        Log.d("",this.acc + this.pwd + this.path)
+        Log.d("", this.acc + this.pwd + this.path)
     }
 
     fun read() {
-        if (!File(this.path + '/' + "a.ini").exists()){
+        if (!File(this.path + '/' + "a.ini").exists()) {
 //            如果文件不存在，先睡2s //等待login完成
-            Thread.sleep(1000*2)
+            Thread.sleep(1000 * 2)
         }
         try {
             val value = File(this.path + '/' + "a.ini").readLines()
@@ -51,7 +51,7 @@ class Main(val activities: MutableLiveData<actsJSON>) : Post() {
             this.name = value[1]
             this.uid = value[2]
         } catch (e: Exception) {
-            Log.d("read()",e.toString())
+            Log.d("read()", e.toString())
         }
 
 
@@ -79,9 +79,10 @@ class Main(val activities: MutableLiveData<actsJSON>) : Post() {
 
     }
 
-    fun notifi(result: MutableLiveData<actsJSON>,  callback: (actsJSON, int: Int) -> Unit){
-        this.get_can_join(this.token,this.uid,result, callback)
+    fun notifi(result: MutableLiveData<actsJSON>, callback: (actsJSON, int: Int) -> Unit) {
+        this.get_can_join(this.token, this.uid, result, callback)
     }
+
     fun can_join() {
 //        names = ['可报名活动']
         this.get_can_join(this.token, this.uid, this.activities)
@@ -94,8 +95,12 @@ class Main(val activities: MutableLiveData<actsJSON>) : Post() {
 
     }
 
-    fun chiken(act_id: String) {
-         this.get_info(act_id, this.token, this.uid)
+    fun chiken(act_id: Int) {
+        if (act_id <= 0) {
+            showinfo("id<0", "error")
+            return
+        }
+        this.get_info(act_id, this.token, this.uid)
 
 
     }
@@ -145,8 +150,8 @@ class Main(val activities: MutableLiveData<actsJSON>) : Post() {
 
                     try {
                         JSONObject(res)["code"]
-                    }catch (e:Exception){
-                        showinfo("data错误","转换错误")
+                    } catch (e: Exception) {
+                        showinfo("data错误", "转换错误")
                         return
                     }
 
@@ -164,9 +169,9 @@ class Main(val activities: MutableLiveData<actsJSON>) : Post() {
                             ).time,
                             delay
                         )
-                    }else showinfo("返回的code不是100","转换错误")
+                    } else showinfo("返回的code不是100", "转换错误")
 
-                }else                     showinfo("detail"," 返回空")
+                } else showinfo("detail", " 返回空")
 
             }
 /*
@@ -206,7 +211,7 @@ class Main(val activities: MutableLiveData<actsJSON>) : Post() {
 
 open class Post {
 
-    fun get_ids(token: String, uid: String, activities: MutableLiveData< actsJSON>) {
+    fun get_ids(token: String, uid: String, activities: MutableLiveData<actsJSON>) {
 
         val url = "https://appdmkj.5idream.net/v2/activity/activities"
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
@@ -240,22 +245,22 @@ open class Post {
                 }
                 if (res != null) {
                     if (res.code == "100") {
-                    /*    val acts = StringBuilder("所有活动：\n")
-                        for (index in res.data.list) {
-                            acts.append(
-                                index.activityId
-                            ).append(" ")
+                        /*    val acts = StringBuilder("所有活动：\n")
+                            for (index in res.data.list) {
+                                acts.append(
+                                    index.activityId
+                                ).append(" ")
 
-                                .append(
-                                index.catalog2name
-                            ).append(" ")
-                                .append(
-                                index.statusText
-                            ).append(" ") .append(index.activitytime).append("\n")
-                                .append(
-                                index.name
-                            ).append("\n\n")
-                        }*/
+                                    .append(
+                                    index.catalog2name
+                                ).append(" ")
+                                    .append(
+                                    index.statusText
+                                ).append(" ") .append(index.activitytime).append("\n")
+                                    .append(
+                                    index.name
+                                ).append("\n\n")
+                            }*/
                         activities.postValue(res)//展示结果
                         showinfo("查询成功", "")
                     } else {
@@ -269,7 +274,12 @@ open class Post {
         })
     }
 
-    fun get_can_join(token: String, uid: String, activities: MutableLiveData<actsJSON>, vararg args: (actsJSON, int: Int) -> Unit) {//可变参数
+    fun get_can_join(
+        token: String,
+        uid: String,
+        activities: MutableLiveData<actsJSON>,
+        vararg args: (actsJSON, int: Int) -> Unit
+    ) {//可变参数
         val url = "https://appdmkj.5idream.net/v2/activity/activities"
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
@@ -309,15 +319,15 @@ open class Post {
                                 ).append(" ")
                                 .append(
                                     index.statusText
-                                ).append(" ") .append(index.activitytime).append("\n")
+                                ).append(" ").append(index.activitytime).append("\n")
                                 .append(
                                     index.name
                                 ).append("\n\n")
                         }
                         activities.postValue(res)//展示结果
-                            showinfo("查询成功", "!")
-                        for (arg in args){
-                            arg.invoke( res,1) //回调
+                        showinfo("查询成功", "!")
+                        for (arg in args) {
+                            arg.invoke(res, 1) //回调
                         }
 
 
@@ -328,7 +338,7 @@ open class Post {
 
     }
 
-    fun get_info(toJoinActId: String, token: String, uid: String) {
+    fun get_info(toJoinActId: Int, token: String, uid: String) {
         /*先查时间*/
         val url = "https://appdmkj.5idream.net/v2/activity/detail"
         val str = "uid=${this.uid}&activityId=$toJoinActId&version=4.3.6&token=${this.token}"
@@ -363,7 +373,18 @@ open class Post {
                     }
 
                     if (JSONObject(res)["code"] == "100") { //specialList
-                        showDialog("内容", Json{ignoreUnknownKeys=true }.decodeFromString(act_info.serializer(),res).toString())
+//                        {"code":"100","data":{"scoreFlag":false,"isLeave":false,"manageFlag":false,"collectFlag":false,"signinFlag":false,"recordFlag":false,"isHitWay":false,"isCheckWay":false,"isJoinWay":false,"isChecking":false,"isBegin":false,"isEnd":false,"isCancel":false,"canSetSiginCode":false,"canJoin":false,"isTribeActivity":false,"isCollegeActivity":false,"isSchoolActivity":false,"joinCanCancel":false,"inPlan":false,"injoin":false,"iswait":false,"isrecord":false,"isgroupjoin":false,"endPassJoin":false,"end":false,"cancel":false,"hitWay":false,"checkWay":false,"checking":false,"begin":false,"tribeActivity":false,"collegeActivity":false,"schoolActivity":false}}
+                        try {
+                            showDialog(
+                                "内容",
+                               "活动信息"
+                            ,
+                                Json {
+                                    ignoreUnknownKeys = true;isLenient = true;
+                                }.decodeFromString(act_info.serializer(), res))
+                        } catch (e: Exception) {
+                            Log.e("detail", "返回的格式不正确")
+                        }
 
                     }
                 }
@@ -375,8 +396,8 @@ open class Post {
 
     fun join(id: String, token: String, uid: String, startTime: Long, delay: Int) {
 
-     val     url = "https://appdmkj.5idream.net/v2/signup/submit"
-        val str ="uid=$uid&activityId=$id&data=[]&remark=&version=4.3.6&token=$token"
+        val url = "https://appdmkj.5idream.net/v2/signup/submit"
+        val str = "uid=$uid&activityId=$id&data=[]&remark=&version=4.3.6&token=$token"
 
         val httpClientBuilder = OkHttpClient.Builder() //1.创建OkHttpClient对象
 
@@ -385,12 +406,12 @@ open class Post {
             .addInterceptor(AddHeadersInterceptor())//            .addheader()则会有多个数据
             .addInterceptor(LoggingInterceptor())//增加拦截器
             .build() //2.创建Request对象，设置一个url地址（百度地址）,设置请求方式。
-           val request = Request.Builder().url(url)
+        val request = Request.Builder().url(url)
             .post(str.toRequestBody("application/x-www-form-urlencoded".toMediaType()))
             .build()
 
-        if ((System.currentTimeMillis()/1000)>=(startTime/1000)){
-            showinfo("当前活动正在报名中","进入报名")
+        if ((System.currentTimeMillis() / 1000) >= (startTime / 1000)) {
+            showinfo("当前活动正在报名中", "进入报名")
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     println(e)
@@ -400,49 +421,53 @@ open class Post {
                 override fun onResponse(call: Call, response: Response) {
                     val result = response.body?.string()
                     if (result != null) {
-                    println("无定时报名情况：$result")
+                        println("无定时报名情况：$result")
                         try {
 //                            "code:\"(.+?)\"".toRegex().find(result).groupValues[1]!=null
                             JSONObject(result)
 
-                        }catch (e:java.lang.Exception){
+                        } catch (e: java.lang.Exception) {
                             println("转换异常")
                         }
-                        if (JSONObject(result)["code"]=="100")
-                        showinfo("报名", "成功")
-                        else showinfo("报名失败",JSONObject(result)["msg"].toString())
+                        if (JSONObject(result)["code"] == "100")
+                            showinfo("报名", "成功")
+                        else showinfo("报名失败", JSONObject(result)["msg"].toString())
                     } else showinfo("报名失败", "原因未知")
                 }
             })
-        }
-        else{
+        } else {
 //            Period.between(LocalDate.now(), LocalDate.parse("2020.11.10 16:30", DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")))
-            showinfo("开始时间",Date(startTime).toString())
-            showinfo("将sleep${startTime-System.currentTimeMillis()/1000}s 或者分钟:",(startTime-System.currentTimeMillis()/1000/60).toString())
-            Timer().schedule(object :TimerTask(){
-                override fun run() {
-                    okHttpClient.newCall(request).enqueue(object : Callback {
-                        override fun onFailure(call: Call, e: IOException) {
-                            showinfo("失败请求","网问题")
-                        }
-                        override fun onResponse(call: Call, response: Response) {
-                            val result = response.body?.string()
-                            if (result != null) {
-                                println("定时报名情况")
-                                if (JSONObject(result)["code"]=="100")
-                                    showinfo("报名", "成功")
-                                else showinfo("报名失败",JSONObject(result)["msg"].toString())
-                            } else showinfo("报名失败", "原因未知")
+            showinfo("开始时间", Date(startTime).toString())
+            showinfo(
+                "将sleep${startTime - System.currentTimeMillis() / 1000}s 或者分钟:",
+                (startTime - System.currentTimeMillis() / 1000 / 60).toString()
+            )
+            Timer().schedule(
+                object : TimerTask() {
+                    override fun run() {
+                        okHttpClient.newCall(request).enqueue(object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
+                                showinfo("失败请求", "网问题")
+                            }
 
-                        }
-                    })
-                }
-            },
+                            override fun onResponse(call: Call, response: Response) {
+                                val result = response.body?.string()
+                                if (result != null) {
+                                    println("定时报名情况")
+                                    if (JSONObject(result)["code"] == "100")
+                                        showinfo("报名", "成功")
+                                    else showinfo("报名失败", JSONObject(result)["msg"].toString())
+                                } else showinfo("报名失败", "原因未知")
+
+                            }
+                        })
+                    }
+                },
 //                (startTime-System.currentTimeMillis())+delay) //加上自定义的时间
-                Date( startTime+delay))
+                Date(startTime + delay)
+            )
 
         }
-
 
 
     }

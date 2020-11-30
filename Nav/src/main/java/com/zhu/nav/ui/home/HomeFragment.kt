@@ -79,7 +79,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
 
 
         val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) .transform(RoundedCorners(20))
-        Glide.with(this).load("https://static01.imgkr.com/temp/41d10e429f14425d8f6cad0d1de33c81.png").placeholder( R.color.colorPrimary).apply(options).into(root.imgvw)
+        Glide.with(this).load("https://static01.imgkr.com/temp/41d10e429f14425d8f6cad0d1de33c81.png").placeholder(R.color.gray).apply(options).into(root.imgvw)
         if (Global.typeface) TypefaceHelper.typeface(root)//应用字体
 
 
