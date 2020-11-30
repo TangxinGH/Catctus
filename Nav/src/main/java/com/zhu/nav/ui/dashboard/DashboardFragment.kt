@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -67,7 +68,7 @@ class DashboardFragment : Fragment() {
         //        )//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-mutablelist-mutablelistof.html
 
 
-        val acts_info = MutableLiveData<actsJSON>()
+//        val acts_info = MutableLiveData<actsJSON>() //全局不太好啊
         acts_info.observe(viewLifecycleOwner, { itJson ->
             /**先移除 原先的 */
             expanding_list_main.removeAllViews()
@@ -78,6 +79,9 @@ class DashboardFragment : Fragment() {
                 createCateView(itemCata, subItemList)
 
             }
+
+            /*停止刷新*/
+            root.refreshLayout.isRefreshing=false
 
         })
 
@@ -264,6 +268,12 @@ class DashboardFragment : Fragment() {
         }
 
 
+        root.refreshLayout.setOnRefreshListener {
+            if (daomeng.is_login()) {
+                daomeng.getids()//得到数据
+                Log.d("refreshLayout" ,"被执行了")
+            }
+        }
 
 
         return root
@@ -285,7 +295,7 @@ class DashboardFragment : Fragment() {
             val subItemView = item.getSubItemView(index)
             if (Global.typeface) TypefaceHelper.typeface(subItemView)
             subItemView.act_name.text = activity.name
-            subItemView.sub_title.text = "Id：${activity.activityId}"
+            subItemView.sub_title.text = activity.activityId.toString()
             subItemView.activity_info_statusText.text = "状态：${activity.statusText}"
             subItemView.activity_info_Id.text = activity.aid.toString()
             subItemView.activity_info_Id.setOnClickListener {
@@ -305,6 +315,26 @@ class DashboardFragment : Fragment() {
                         .show()
                 }
                 true
+            }
+
+            subItemView.submit_item.setOnClickListener {
+                if (subItemView.sub_title.text.isNotBlank()&&subItemView.sub_title.text.isDigitsOnly()) {
+                    if (App.sleep_seekBar.value != null) App(
+                        Global.context,
+                        acts_info
+                    ).join(
+                        edit_join_id2.text.toString(),
+                        App.sleep_seekBar.value!!
+                    )//报名活动
+                    else App(Global.context, acts_info).join(
+                        edit_join_id2.text.toString(),
+                        200
+                    )
+                } else Toast.makeText(
+                    context,
+                    "id输入为空了或者id不是数字:`${edit_join_id2}`",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

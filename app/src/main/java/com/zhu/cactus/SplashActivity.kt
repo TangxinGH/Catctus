@@ -43,11 +43,12 @@ class SplashActivity : AppCompatActivity() {
          }, 2000)*/
 
         /*缓存 */
-        val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).signature(
-            MediaStoreSignature("jpg", SimpleDateFormat("YYYYMMdd", Locale.CHINA).format(Date()).toLong(), 0)
-        ).transform(RoundedCorners(20))
+//        val options = RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).signature(
+//            MediaStoreSignature("jpg", SimpleDateFormat("YYYYMMdd", Locale.CHINA).format(Date()).toLong(), 0)//一天更新一次签名
+//        ).transform(RoundedCorners(20))
 
-Glide.with(this).load("https://static01.imgkr.com/temp/d86e4b6de6804765af7d8b9981b5aa4d.png").apply(options).into(splash_screen)
+Glide.with(this).load("https://static01.imgkr.com/temp/d86e4b6de6804765af7d8b9981b5aa4d.png").diskCacheStrategy(
+    DiskCacheStrategy.AUTOMATIC).into(splash_screen)
         permission()
     }
 

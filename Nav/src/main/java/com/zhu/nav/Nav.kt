@@ -1,7 +1,9 @@
 package com.zhu.nav
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -34,6 +36,9 @@ class Nav : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration) //我们没有这个东西
         navView.setupWithNavController(navController)
 
+        /*沉浸式 */
+        this.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        this.window.statusBarColor= Color.TRANSPARENT
 
         toast.observe(this, Observer {
 
