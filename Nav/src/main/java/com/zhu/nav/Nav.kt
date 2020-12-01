@@ -100,8 +100,8 @@ class Nav : AppCompatActivity() {
             val params = dialog.window?.attributes
             params?.let {
 
-                params.width =   (width * 0.8).toInt()
-                params.height =( height * 0.8).toInt()
+                params.width =   (width * 0.85).toInt()
+                params.height =( height * 0.87).toInt()
                 Log.d("设置with height params is not null ", "width:${ pxToDip(scale, (width * 0.5).toInt())}  +  ${pxToDip(scale, (height * 0.7).toInt())}")
                 dialog.window!!.attributes = params
             }
