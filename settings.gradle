@@ -1,4 +1,3 @@
-include ':tabbed'
 include ':Nav'
 include ':daomengKJ'
 include ':app'

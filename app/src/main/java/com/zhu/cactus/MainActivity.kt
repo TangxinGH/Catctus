@@ -26,9 +26,6 @@ import com.zhu.cactus.filter.FiltersPagerAdapter
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
-import com.zhu.daomengkj.update.downloadNew
-import com.zhu.daomengkj.update.isNew
-import com.zhu.daomengkj.Global
 import com.zhu.nav.Nav
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_drawer.*
@@ -59,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 //        supportActionBar?.hide()
         initData()
 //        permission()
-        isNew(this)//版本更新
     }
 
 
@@ -91,8 +87,6 @@ class MainActivity : AppCompatActivity() {
             bundle.putInt("key2",18)
             val intent = Intent(this, Nav::class.java)
             intent.putExtras(bundle)
-            if (App.typeface!=null) Global.typeface=true //标为字体可用
-            Global.context=App.context //context
             startActivity(intent)
 
         }// 服务？
@@ -159,12 +153,7 @@ class MainActivity : AppCompatActivity() {
             progress_text.text = it.toString() + "%"
         })
 
-       com.zhu.daomengkj.App.app_update.observe(this,{
-            downloadNew(
-                this,
-                it
-            )// 主线程ui
-        })
+
 
     }
 

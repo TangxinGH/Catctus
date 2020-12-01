@@ -2,11 +2,9 @@ package com.zhu.nav
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.widget.SeekBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.zhu.daomengkj.App
 import kotlinx.android.synthetic.main.bottom_dialog.*
 
 /**
@@ -23,7 +21,6 @@ class BtnBottomDialog : BottomSheetDialogFragment() {
 
         dialog.sleep_SeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                App.sleep_seekBar.postValue(progress)
                 dialog.latency.text = progress.toString()
             }
 
@@ -40,7 +37,7 @@ class BtnBottomDialog : BottomSheetDialogFragment() {
         dialog.numberpicker.maxValue = 900
         dialog.numberpicker.minValue = 50
         dialog.numberpicker.value = 200 //人的反应为0.2秒
-        dialog.numberpicker.setOnValueChangedListener { picker, oldVal, newVal ->   App.sleep_seekBar.postValue(newVal)
+        dialog.numberpicker.setOnValueChangedListener { picker, oldVal, newVal ->
             dialog.latency.text = newVal.toString()
         }
         return dialog
