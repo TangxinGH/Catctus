@@ -4,6 +4,7 @@ package com.zhu.cactus.services
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
+import android.os.Build
 import android.os.Environment
 import android.util.Log
 import com.zhu.cactus.App.Companion.context
@@ -11,6 +12,8 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 //用法
 //val audioRecord = OnlyAudioRecorder.instance
@@ -32,10 +35,12 @@ class OnlyAudioRecorder private constructor() {
         private const val SampleRate = 16000//采样率
         private const val Channel = AudioFormat.CHANNEL_IN_MONO//单声道
         private const val EncodingType = AudioFormat.ENCODING_PCM_16BIT//数据格式
-        private val PCMPath =
-            context.getExternalFilesDir(null)?.path + "/zzz/RawAudio.pcm"
-        private val WAVPath =
-            Environment.getStorageDirectory() //null)?.path + "/zzz/FinalAudio.wav"
+        private val  current_time = SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒E", Locale.getDefault()).format( System.currentTimeMillis());
+        private val PCMPath = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) Environment.getStorageDirectory().path + "/Catctus/audio/${current_time}RawAudio.pcm"
+           else context.getExternalFilesDir(null)?.path + "/Catctus/audio/${current_time}RawAudio.pcm"
+
+        private val WAVPath = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) Environment.getStorageDirectory().path + "/Catctus/audio/${current_time}FinalAudio.wav"
+            else context.getExternalFilesDir(null)?.path + "/Catctus/audio/${current_time}FinalAudio.wav"
 
         //double check单例
         val instance: OnlyAudioRecorder by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
