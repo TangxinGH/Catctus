@@ -62,7 +62,8 @@ Glide.with(this).load("https://static01.imgkr.com/temp/d86e4b6de6804765af7d8b998
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CHANGE_WIFI_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.RECORD_AUDIO
             )
         )
 

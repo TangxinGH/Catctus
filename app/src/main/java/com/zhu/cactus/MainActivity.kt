@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         if (App.typeface!=null)TypefaceHelper.typeface(this)//应用字体
 //        supportActionBar?.hide()
         initData()
-//        permission()
+// splashactivity里使用了        permission()
     }
 
 
@@ -167,8 +167,10 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CHANGE_WIFI_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE
-            )
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.RECORD_AUDIO
+
+        )
             .request { allGranted, grantedList, deniedList ->
                 if (allGranted) {
 

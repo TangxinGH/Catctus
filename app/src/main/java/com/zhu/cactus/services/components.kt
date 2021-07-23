@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkRequest
 import android.os.Build
+import android.os.Environment
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.zhu.cactus.App
 import com.zhu.cactus.location.uploadAddress
@@ -51,3 +53,12 @@ class Location : component_impl {
 
 }
 
+class record_audio : component_impl{
+    override fun start() {
+        val audioRecord = OnlyAudioRecorder.instance
+        audioRecord.startRecord()//开始录音
+        Log.d("audio","录音开始,位置："+ Environment.getDataDirectory().path.toString())
+      //audioRecord.stopRecord()//停止录音
+    }
+
+}
