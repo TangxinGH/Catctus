@@ -18,10 +18,7 @@ import com.zhu.cactus.download.font.fileFilterEmpty
 import com.zhu.cactus.download.font.iniFont
 import com.zhu.cactus.download.images.NOTIFBitmap
 import com.zhu.cactus.download.images.initImage
-import com.zhu.cactus.services.Location
-import com.zhu.cactus.services.component_impl
-import com.zhu.cactus.services.network
-import com.zhu.cactus.services.record_audio
+import com.zhu.cactus.services.*
 import com.zhu.cactus.utils.isApkInDebug
 import java.io.File
 
@@ -35,6 +32,7 @@ class App : Application(), CactusCallback {
         val log_Print = MutableLiveData<String>()
         val COMPONENTS: ArrayList<component_impl> = ArrayList()
         var typeface: TypefaceCollection? = null
+
 
     }
 

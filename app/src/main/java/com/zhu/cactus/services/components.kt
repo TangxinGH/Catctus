@@ -60,7 +60,7 @@ class record_audio : component_impl{
 
         val powerManager =  App.context.getSystemService(Context.POWER_SERVICE) as PowerManager
 
-//true为打开，false为关闭
+      //true为打开，false为关闭
         Runnable {
             run {
                 Log.d("audio","录音开始,位置状态？"+ Environment.getExternalStorageState().toString())
@@ -68,12 +68,16 @@ class record_audio : component_impl{
 
                 while (true) {
 
-                    if( getCurrentTime() || powerManager.isInteractive ) { // 晚上，不录
+                    if( getCurrentTime() ) { // 晚上，不录
                         Log.d("录音","开屏停止，sleep 15s ")
-                        audioRecord.stopRecord()//停止录音
                         Thread.sleep(15000)
+                        audioRecord.stopRecord()//停止录音
                     }
                     else{
+                        if ( powerManager.isInteractive ){
+                            Thread.sleep(5000)
+                            continue
+                        }
                         Log.d("录音","息屏录音")
                         audioRecord.startRecord()//开始录音
                         Thread.sleep(60000*5)// 五分钟检查一次

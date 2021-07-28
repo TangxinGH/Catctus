@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,6 +26,7 @@ import com.zhu.cactus.filter.FiltersLayout
 import com.zhu.cactus.filter.FiltersPagerAdapter
 import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.method.ToolbarBehavior
+import com.zhu.cactus.services.OnlyAudioRecorder
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
 import com.zhu.nav.Nav
 import kotlinx.android.synthetic.main.activity_main.*
@@ -101,6 +103,20 @@ class MainActivity : AppCompatActivity() {
                 commit()
             }
         }
+        //读取   并设置   editTextNumber  值
+         val sharedPref: SharedPreferences = getSharedPreferences(
+            getString(R.string.preference_GPS_user_key),
+            Context.MODE_PRIVATE
+        )
+        editTextNumber.setText(sharedPref.getString("user", "10088"))//显示的gpsid 文本
+        record_audio.setOnClickListener {
+            Log.d("record_audio_button","录音按钮")
+            val audio_record =OnlyAudioRecorder.instance
+            if (audio_record.isRecord)audio_record.startRecord()//开始录音
+            else audio_record.stopRecord()
+
+        }
+
         textView.movementMethod = ScrollingMovementMethod.getInstance()
         // Appbar behavior init 一种跟随着行为， 顶栏 随着 列表 下拉 隐藏
         (appbar.layoutParams as CoordinatorLayout.LayoutParams).behavior = ToolbarBehavior()

@@ -12,10 +12,10 @@ def releaseTime() {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.1'
+    buildToolsVersion '30.0.2'
     defaultConfig {
         applicationId "com.zhu.cactus"
-        minSdkVersion 28
+        minSdkVersion 29
         targetSdkVersion 30
         versionCode 7
         versionName "6.7.0"
@@ -23,7 +23,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
-
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled true
@@ -37,6 +39,7 @@ android {
             shrinkResources false//减小apk包大小
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
     android.applicationVariants.all {
         variant ->

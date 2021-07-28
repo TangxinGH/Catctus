@@ -50,7 +50,7 @@ class OnlyAudioRecorder private constructor() {
 
     private var bufferSizeInByte: Int = 0//最小录音缓存区
     private var audioRecorder: AudioRecord? = null//录音对象
-    private var isRecord = false
+    var isRecord = false
 
     private fun initRecorder() {//初始化audioRecord对象
 
