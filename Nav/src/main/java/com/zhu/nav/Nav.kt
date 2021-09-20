@@ -8,17 +8,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_nav.*
-
+//import kotlinx.android.synthetic.main.activity_nav.*
+import com.zhu.nav.databinding.ActivityNavBinding
 
 class Nav : AppCompatActivity() {
-
+    private lateinit var activityViewNav: ActivityNavBinding //Migrate from Kotlin synthetics to Jetpack view binding
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nav)
+        activityViewNav = ActivityNavBinding.inflate(layoutInflater)//Migrate from Kotlin synthetics to Jetpack view binding
+        val view = activityViewNav.root //Migrate from Kotlin synthetics to Jetpack view binding
+        setContentView(view)//Migrate from Kotlin synthetics to Jetpack view binding
+
 //        if (TypefaceHelper) TypefaceHelper.typeface(this)//应用字体
-        val navView: BottomNavigationView = nav_view
+        val navView: BottomNavigationView =activityViewNav.navView
         val intent = intent //提取数据
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each

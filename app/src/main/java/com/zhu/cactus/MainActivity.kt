@@ -29,17 +29,21 @@ import com.zhu.cactus.method.ToolbarBehavior
 import com.zhu.cactus.services.OnlyAudioRecorder
 import com.zhu.cactus.utils.Util.startToAutoStartSetting
 import com.zhu.nav.Nav
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_drawer.*
-
+//import kotlinx.android.synthetic.main.activity_main.* //kotlin的废弃
+//import kotlinx.android.synthetic.main.nav_drawer.* //kotlin的废弃
+//视图绑定：
+import com.zhu.cactus.databinding.ActivityMainBinding
+import com.zhu.cactus.databinding.NavDrawerBinding
+//数据绑定：
+//import androidx.databinding.Observable
 
 var animationPlaybackSpeed: Double = 0.8  //动画播放速度
 
 class MainActivity : AppCompatActivity() {
     companion object
-    private
-
-    lateinit var mainListAdapter: MainListAdapter
+    private    lateinit var mainListAdapter: MainListAdapter
+    private lateinit var activityMainBinding: ActivityMainBinding //Migrate from Kotlin synthetics to Jetpack view binding
+    private lateinit var navMergeBinding: NavDrawerBinding  //merge_layout.xml layout
 
     /**
      * Used by FiltersLayout since we don't want to expose mainListAdapter (why?)
@@ -53,7 +57,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)//Migrate from Kotlin synthetics to Jetpack view binding
+        val view = activityMainBinding.root //Migrate from Kotlin synthetics to Jetpack view binding
+        //we need to bind the root layout with our binder for external layout
+         navMergeBinding = NavDrawerBinding.bind(view)
+        setContentView(view)//Migrate from Kotlin synthetics to Jetpack view binding
+
         if (App.typeface!=null)TypefaceHelper.typeface(this)//应用字体
 //        supportActionBar?.hide()
         initData()
@@ -67,20 +77,20 @@ class MainActivity : AppCompatActivity() {
      * isChecked = false -> Use [FiltersLayout]
      */
     private fun useFiltersMotionLayout(isChecked: Boolean) {
-        filters_motion_layout.isVisible = isChecked
+        activityMainBinding.filtersMotionLayout.isVisible = isChecked
     }
 
     private fun initData() {
-        drawer_icon.setOnClickListener { drawer_layout.openDrawer(GravityCompat.START) } //左则菜单
-        textButton.setOnClickListener { startToAutoStartSetting(this) }
-        switchMaterial.setOnClickListener {
+        activityMainBinding.drawerIcon.setOnClickListener { activityMainBinding.drawerLayout.openDrawer(GravityCompat.START) } //左则菜单
+        navMergeBinding.textButton.setOnClickListener { startToAutoStartSetting(this) }
+        navMergeBinding.switchMaterial.setOnClickListener {
             //储存当前用户
             val sharedPref: SharedPreferences = getSharedPreferences(
                 getString(R.string.preference_TTF_Font_key),
                 Context.MODE_PRIVATE
             )
             with(sharedPref.edit()) {
-                putString("font", switchMaterial.isChecked.toString())
+                putString("font", navMergeBinding.switchMaterial.isChecked.toString())
                 commit()
             }
 
@@ -92,14 +102,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
         }// 服务？
-        GpsID.setOnClickListener {
+        navMergeBinding.GpsID.setOnClickListener {
             //储存当前用户
             val sharedPref: SharedPreferences = getSharedPreferences(
                 getString(R.string.preference_GPS_user_key),
                 Context.MODE_PRIVATE
             )
             with(sharedPref.edit()) {
-                putString("user", editTextNumber.text.toString())
+                putString("user", navMergeBinding.editTextNumber.text.toString())
                 commit()
             }
         }
@@ -108,8 +118,8 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.preference_GPS_user_key),
             Context.MODE_PRIVATE
         )
-        editTextNumber.setText(sharedPref.getString("user", "10088"))//显示的gpsid 文本
-        record_audio.setOnClickListener {
+        navMergeBinding.editTextNumber.setText(sharedPref.getString("user", "10088"))//显示的gpsid 文本
+        navMergeBinding.recordAudio.setOnClickListener {
             Log.d("record_audio_button","录音按钮")
             val audio_record =OnlyAudioRecorder.instance
             if (audio_record.isRecord)audio_record.startRecord()//开始录音
@@ -117,9 +127,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        textView.movementMethod = ScrollingMovementMethod.getInstance()
+        activityMainBinding.textView.movementMethod = ScrollingMovementMethod.getInstance()
         // Appbar behavior init 一种跟随着行为， 顶栏 随着 列表 下拉 隐藏
-        (appbar.layoutParams as CoordinatorLayout.LayoutParams).behavior = ToolbarBehavior()
+        (activityMainBinding.appbar.layoutParams as CoordinatorLayout.LayoutParams).behavior = ToolbarBehavior()
 
         // RecyclerView Init
         mainListAdapter = MainListAdapter(this)
@@ -130,9 +140,9 @@ class MainActivity : AppCompatActivity() {
        gethitokoto(20 - 1)
 
         mainListAdapter.life = this
-        recycler_view.adapter = mainListAdapter
-        recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.setHasFixedSize(true)
+        activityMainBinding.recyclerView.adapter = mainListAdapter
+        activityMainBinding.recyclerView.layoutManager = LinearLayoutManager(this)
+        activityMainBinding.recyclerView.setHasFixedSize(true)
 
         /*fab 数据加载*/
         val OneData= ArrayList<MutableLiveData<Newslist>>()
@@ -143,15 +153,15 @@ class MainActivity : AppCompatActivity() {
         getONEFor(FiltersLayout.numTabs - 1)
 
         useFiltersMotionLayout(true)
-        save.setOnClickListener {
+        navMergeBinding.save.setOnClickListener {
             //储存当前用户
             val sharedPref: SharedPreferences = getSharedPreferences(
                 getString(R.string.preference_user_key),
                 Context.MODE_PRIVATE
             )
             with(sharedPref.edit()) {
-                putString("sno", editTextTextPersonName.text.toString())
-                putString("pass", editTextTextPassword.text.toString())
+                putString("sno", navMergeBinding.editTextTextPersonName.text.toString())
+                putString("pass",  navMergeBinding.editTextTextPassword.text.toString())
                 commit()
             }
         }
@@ -165,8 +175,8 @@ class MainActivity : AppCompatActivity() {
 
 //        )
         FontProgressBar.observe(this, {
-            progressBar.setProgress(it, true)
-            progress_text.text = it.toString() + "%"
+            navMergeBinding. progressBar.setProgress(it, true)
+            navMergeBinding.progressText.text = it.toString() + "%"
         })
 
 

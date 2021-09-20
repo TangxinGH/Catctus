@@ -1,14 +1,7 @@
 package com.zhu.cactus.method
 
 import android.animation.ValueAnimator
-import android.app.admin.DeviceAdminInfo
-import android.bluetooth.BluetoothClass
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,8 +19,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.signature.MediaStoreSignature
 import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.App
@@ -35,15 +26,18 @@ import com.zhu.cactus.POJO.JsonHitokoto
 import com.zhu.cactus.R
 import com.zhu.cactus.animationPlaybackSpeed
 import com.zhu.cactus.utils.*
-import kotlinx.android.synthetic.main.item_list.view.*
+//import kotlinx.android.synthetic.main.item_list.view.* //kotlin的废弃
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import com.zhu.cactus.databinding.ItemListBinding
+//import kotlinx.android.synthetic.main.item_list.view.*
 
 /*展开动画由本类实现，以及内容？？*/
 data class MainListModel(val id: Int)
 
 class MainListAdapter(context: Context) : RecyclerView.Adapter<MainListAdapter.ListViewHolder>() {
+    private lateinit var itemListBinding: ItemListBinding  //Migrate from Kotlin synthetics to Jetpack view binding
 
     private val originalBg: Int by bindColor(context, R.color.list_item_bg_collapsed)
     private val expandedBg: Int by bindColor(context, R.color.list_item_bg_expanded)
@@ -108,14 +102,14 @@ companion object{
         ).transform(RoundedCorners(20))
             data[position]//注意越界问题
                 .observe(life,androidx.lifecycle.Observer<JsonHitokoto>{
-                    holder.scaleContainer.title.text= it.id.toString()
-                    holder.scaleContainer.OneWord.text= it.hitokoto.toString()
-                    holder.scaleContainer.wordFrom.text="————   "+ it.from.toString()
-                    holder.scaleContainer.imgAuthor.text= "作者：  "+it.creator.toString()
+                    holder.binding.title.text= it.id.toString() // //Migrate from Kotlin synthetics to Jetpack view binding
+                    holder.binding.OneWord.text= it.hitokoto.toString()  //Migrate from Kotlin synthetics to Jetpack view binding
+                    holder.binding.wordFrom.text="————   "+ it.from.toString()  //Migrate from Kotlin synthetics to Jetpack view binding
+                    holder.binding.imgAuthor.text= "作者：  "+it.creator.toString() //Migrate from Kotlin synthetics to Jetpack view binding
                     if(position<=8)
-                    Glide.with(App.context).load("https://bing.biturl.top/?resolution=1366&format=image&index=$position&mkt=zh-CN").apply(options) .into(holder.scaleContainer.myImageView)
+                    Glide.with(App.context).load("https://bing.biturl.top/?resolution=1366&format=image&index=$position&mkt=zh-CN").apply(options) .into(holder.binding.myImageView)
                     else
-                        Glide.with(App.context).load("https://api.paugram.com/wallpaper/?f=$position").apply(options) .into(holder.scaleContainer.myImageView)
+                        Glide.with(App.context).load("https://api.paugram.com/wallpaper/?f=$position").apply(options) .into(holder.binding.myImageView)
 
 //                       .fallback( ColorDrawable(Color.GRAY))
 
@@ -298,10 +292,17 @@ companion object{
     ///////////////////////////////////////////////////////////////////////////
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ItemListBinding.bind(itemView)//Migrate from Kotlin synthetics to Jetpack view binding  // add by xf.zhu because of view binding
+
         val expandView: View by bindView(R.id.expand_view)
+
         val chevron: View by bindView(R.id.chevron)
+
         val cardContainer: View by bindView(R.id.card_container)
+
         val scaleContainer: View by bindView(R.id.scale_container)
+
         val listItemFg: View by bindView(R.id.list_item_fg)
+
     }
 }

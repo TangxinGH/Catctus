@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -19,13 +18,11 @@ import com.norbsoft.typefacehelper.TypefaceHelper
 import com.zhu.cactus.App
 import com.zhu.cactus.POJO.Newslist
 import com.zhu.cactus.R
-import com.zhu.cactus.method.MainListAdapter
 import com.zhu.cactus.utils.bindColor
 import com.zhu.cactus.utils.bindOptionalViews
 import com.zhu.cactus.utils.blendColors
 import com.zhu.cactus.utils.getValueAnimator
 import com.zhu.cactus.views.FilterSeekbar
-import kotlinx.android.synthetic.main.filter_layout_1.view.*
 
 /**
  * ViewPager adapter to display all the filters

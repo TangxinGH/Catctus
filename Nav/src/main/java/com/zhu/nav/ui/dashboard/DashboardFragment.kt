@@ -11,12 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.chenantao.fabMenu.FabMenu
 import com.ramotion.circlemenu.CircleMenuView
 import com.zhu.nav.R
-import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.fragment_dashboard.view.*
-
+//import kotlinx.android.synthetic.main.fragment_dashboard.*  //kotlin的废弃
+//import kotlinx.android.synthetic.main.fragment_dashboard.view.*  //kotlin的废弃
+import com.zhu.nav.databinding.FragmentDashboardBinding
 
 class DashboardFragment : androidx.fragment.app.Fragment() {
-
+    private lateinit var fragmentDashboardBinding: FragmentDashboardBinding  //Migrate from Kotlin synthetics to Jetpack view binding
+    private val binding get() = fragmentDashboardBinding!!
     private lateinit var dashboardViewModel: DashboardViewModel
     val indicatorsColor = listOf(
         R.color.pink,
@@ -36,7 +37,12 @@ class DashboardFragment : androidx.fragment.app.Fragment() {
     ): View? {
         dashboardViewModel =
             ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+
+        fragmentDashboardBinding = FragmentDashboardBinding.inflate(inflater, container, false)  //Migrate from Kotlin synthetics to Jetpack view binding
+        val root = binding.root //Migrate from Kotlin synthetics to Jetpack view binding
+
+//        val root = inflater.inflate(R.layout.fragment_dashboard, container, false) //mark
+
         val textView: TextView = root.findViewById(R.id.text_dashboard)
         textView.movementMethod = ScrollingMovementMethod.getInstance()
         dashboardViewModel.text.observe(viewLifecycleOwner, {
@@ -47,7 +53,7 @@ class DashboardFragment : androidx.fragment.app.Fragment() {
 
 
             /**先移除 原先的 */
-            expanding_list_main.removeAllViews()
+            fragmentDashboardBinding.expandingListMain.removeAllViews()
             /**保存一下 圆形菜单用*/
             /**分组*/
 //            itJson.data.list.groupBy { it.catalog2name }.forEach { itemCata, subItemList ->
@@ -55,11 +61,11 @@ class DashboardFragment : androidx.fragment.app.Fragment() {
 
 
             /*停止刷新*/
-            refreshLayout.getmHeader()?.let {
-                refreshLayout.finishRefreshing()// 第一次 没有刷新所以是空的
+        fragmentDashboardBinding.refreshLayout.getmHeader()?.let {
+            fragmentDashboardBinding.refreshLayout.finishRefreshing()// 第一次 没有刷新所以是空的
             }
 
-        val menu = root.circle_menu
+        val menu = fragmentDashboardBinding.circleMenu
         menu.eventListener = object : CircleMenuView.EventListener() {
             /*    override fun onMenuOpenAnimationStart(view: CircleMenuView) {
                     Log.d("D", "onMenuOpenAnimationStart")
@@ -92,7 +98,7 @@ class DashboardFragment : androidx.fragment.app.Fragment() {
 
 
 
-        root.fabMenu.setOnMenuItemClickListener(object : FabMenu.OnMenuClickListener() {
+        fragmentDashboardBinding.fabMenu.setOnMenuItemClickListener(object : FabMenu.OnMenuClickListener() {
             override fun onMenuItemClick(view: View?, title: String?) {
 
                 when (title) {
@@ -112,7 +118,8 @@ class DashboardFragment : androidx.fragment.app.Fragment() {
         }})
 
 
- 
+
+
 
         return root
     }

@@ -14,15 +14,21 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.MediaStoreSignature
 import com.permissionx.guolindev.PermissionX
-import kotlinx.android.synthetic.main.splash_layout.*
+import com.zhu.cactus.databinding.ActivityMainBinding
+//import kotlinx.android.synthetic.main.splash_layout.* ////Migrate from Kotlin synthetics to Jetpack view binding
+import com.zhu.cactus.databinding.SplashLayoutBinding //Migrate from Kotlin synthetics to Jetpack view binding
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SplashActivity : AppCompatActivity() {
+    private lateinit var SplashBinding: SplashLayoutBinding //Migrate from Kotlin synthetics to Jetpack view binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.splash_layout)
+
+        SplashBinding = SplashLayoutBinding.inflate(layoutInflater)//Migrate from Kotlin synthetics to Jetpack view binding
+        val view = SplashBinding.root //Migrate from Kotlin synthetics to Jetpack view binding
+        setContentView(view)//Migrate from Kotlin synthetics to Jetpack view binding
 
         /*  view.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener {
               override fun onPreDraw(): Boolean {
@@ -48,7 +54,7 @@ class SplashActivity : AppCompatActivity() {
 //        ).transform(RoundedCorners(20))
 
 Glide.with(this).load("https://static01.imgkr.com/temp/d86e4b6de6804765af7d8b9981b5aa4d.png").diskCacheStrategy(
-    DiskCacheStrategy.AUTOMATIC).into(splash_screen)
+    DiskCacheStrategy.AUTOMATIC).into(SplashBinding.splashScreen)
         permission()
     }
 
