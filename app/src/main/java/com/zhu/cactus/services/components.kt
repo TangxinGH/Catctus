@@ -71,10 +71,10 @@ class record_audio : component_impl{
                     if( getCurrentTime() ) { // 晚上，不录
                         Log.d("录音","开屏停止，sleep 15s ")
                         Thread.sleep(15000)
-                        audioRecord.stopRecord()//停止录音
                     }
                     else{
                         if ( powerManager.isInteractive ){
+                            audioRecord.stopRecord()//停止录音
                             Thread.sleep(5000)
                             continue
                         }

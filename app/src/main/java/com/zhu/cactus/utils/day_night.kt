@@ -7,5 +7,5 @@ fun getCurrentTime(): Boolean {
      val  sdf =   SimpleDateFormat("HH")
      val  hour= sdf.format(Date())
     val  k  = Integer.parseInt(hour)
-    return (k in 0..5) ||(k in 19..23)
+    return (k in 0..7) ||(k in 19..23)
 }
